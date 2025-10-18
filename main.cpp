@@ -14,6 +14,8 @@ int main(int argc, char *argv[]) {
 
     const std::filesystem::path sandbox{"."};
 
+    std::cout << "Current Working Directory: " << std::filesystem::current_path() << '\n';
+
     // directory_iterator can be iterated using a range-for loop
     for (auto const& dir_entry : filesystem::directory_iterator{sandbox})
         if (!dir_entry.is_directory()) {
