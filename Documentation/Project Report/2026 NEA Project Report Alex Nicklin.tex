@@ -3,12 +3,17 @@
 
 % Preamble
 \documentclass[11pt]{article}
+\AddToHook{cmd/section/before}{\clearpage}
 
 % Packages
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{fullpage}
 
 % Document
+
+\begin{document}
+
 \begin{titlepage}
     \begin{center}
 
@@ -41,13 +46,44 @@
         The Henley College, Henley-on-Thames, Oxfordshire\\
         Centre Number: 62441\\
 
-        \vspace{3.5cm}
+        \vspace{0.5cm}
 
         19\textsuperscript{th} October 2025 \\
 
     \end{center}
 \end{titlepage}
 
-\begin{document}
+
+\tableofcontents
+
+\section{Introduction and Declaration}
+\subsection{Introduction}
+This is the Introduction
+\subsection{Declaration}
+This is the Declaration
+
+
+\section{Analysis}
+This is the Analysis section
+
+
+\section{Documented Design}
+This is the Documented Design section
+
+
+\section{Technical Solution}
+
+\subsection{Documention}
+This Documentation was written in Latex. I use the CLion IDE from JetBrains with the TeXiFy-IDEA plugin.
+https://plugins.jetbrains.com/plugin/9473-texify-idea
+
+
+\section{Testing}
+This is the Testing section
+
+
+\section{Evaluation}
+
+This is the Evaluation section
 
 \end{document}
