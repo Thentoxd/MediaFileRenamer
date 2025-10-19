@@ -4,11 +4,13 @@
 % Preamble
 \documentclass[11pt]{article}
 \AddToHook{cmd/section/before}{\clearpage}
+\setlength{\parindent}{0pt}
 
 % Packages
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{fullpage}
+\usepackage{listings}
 
 % Document
 
@@ -58,9 +60,30 @@
 
 \section{Introduction and Declaration}
 \subsection{Introduction}
-This is the Introduction
+This goal of this project is the write a \textbf{utility program} for renaming files. The main target will be media files on the Ubuntu operating system.
+
+Most Windows users will use the Bulk Rename Utility\footnote{https://www.bulkrenameutility.co.uk/} ("\textbf{BRU}") to rename large numbers of files.
+BRU is an excellent and powerful tool for renaming large numbers of files but it has a few problems and weaknesses.
+They are, in order of importance:
+\begin{itemize}
+    \item Not available on Linux
+    \item Limited options to change media file's meta-data
+    \item Not intuitive to use. A powerful utility once you understand it, but not easy for most casual users
+    \item Code is closed-source
+    \item Code is not free for commercial use
+\end{itemize}
+
+
+
+
+
+\textit{The design will be as simple as possible. Adding unnessary back-ends, such as a database, will not be done. If a library is commonly available, it will be used.}
 \subsection{Declaration}
-This is the Declaration
+\textbf{All code and text is my own work.}
+
+\textbf{No previous or related utility program has been reviewed before designing and coding this project. }
+
+\textbf{No search for other NEA's close to this one has been done. All code and design is my solo attempt to best deliver this project and expand on the programming aspects of the course.}
 
 
 \section{Analysis}
@@ -72,6 +95,37 @@ This is the Documented Design section
 
 
 \section{Technical Solution}
+MFR has been written in C++ using the QT 6 cross-platform UI library.
+I have created build IDE's using CLion under Windows 11 and Ubuntu Desktop 25.10 to code and test this tool.
+
+\textit{Windows installers and Ubuntu packages will be created for end users of this tool.
+As this is a programming report, how these installers and packages were created is not documented here.}
+
+\subsection{Windows IDE Platforms}
+
+\subsection{Ubuntu IDE Platforms}
+
+\begin{lstlisting}
+chmod a+x qt-online-installer-linux-x64-4.10.0.run
+sudo ./qt-online-installer-linux-x64-4.10.0.run
+
+tar -xvzf CLion-2025.2.3.tar.gz
+
+export Qt6_DIR=/opt/Qt/6.9.3/gcc_64
+
+sudo apt-get install build-essential libgl1-mesa-dev
+sudo apt-get install libxkbcommon-x11-dev
+
+sudo apt install texlive-full
+\end{lstlisting}
+
+\subsection{Tested Deployment Platforms}
+
+\subsection{GitHub}
+
+\subsection{Legal}
+All source code is available under the GPL licence.
+
 
 \subsection{Documention}
 This Documentation was written in Latex. I use the CLion IDE from JetBrains with the TeXiFy-IDEA plugin.
@@ -79,7 +133,9 @@ https://plugins.jetbrains.com/plugin/9473-texify-idea
 
 
 \section{Testing}
-This is the Testing section
+\subsection{Valgrind}
+\textit{One of the weakness of C and C++ is memory control. Its easy to create memory leaks and memory errors (malloc 10 bytes, write 20 etc) which can corrupt the stack and result in difficult-to-trace bugs.
+To try and fix this, we use the Valgrind library to trace memory usage.}
 
 
 \section{Evaluation}
