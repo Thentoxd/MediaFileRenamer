@@ -35,7 +35,7 @@
         \textbf{Alexander Nicklin}
 
         \Large
-        Candidate number: 2444  \\
+        Candidate number: 2444\\
 
         \vspace{1.5cm}
 
@@ -106,7 +106,33 @@ As this is a programming report, how these installers and packages were created 
 
 \subsection{Windows IDE Platforms}
 
-Using the mingw_64 compiler.
+\begin{itemize}
+    \item Download QT from https://www.qt.io/download-qt-installer-oss
+    \item Download MiKTeX from https://miktex.org/download
+    \item Set to check/install updates automatically. Wait until it says updates are avaiable and do those
+    \item Git from https://git-scm.com/install/windows
+    \item CLion from https://www.jetbrains.com/clion/download/?section=windows
+    \item Install the CLion extensions TeXiFy-IDEA and intellij-pdf-viewer
+    \item Restart CLion
+    \item Update all CLion Plugins
+    \item Clone Repository https://github.com/Thentoxd/MediaFileRenamer
+    \item MinGW toolchain dialog should appear - Click Next
+    \item In the profile, add the following CMAKE options: "-DCMAKE_PREFIX_PATH=C:\Qt\6.9.3\mingw_64\lib\cmake"
+    \item Build files should now be created
+    \item Now load up main.cpp and click Run. The project should compile and execute the program
+    \item Under cmake-build-debug/logs will be the logfile generated from the program
+\end{itemize}
+
+Before trying to edit the documentation (.tex file) I would Restart your computer at this point.
+
+To edit the documentation:
+
+\begin{itemize}
+    \item Under \Documentation\Project Report
+    \item Open 2026 NEA Project Report Alex Nicklin.tex in CLion
+    \item You should be able to run this .tex file to produce a PDF
+    \item This pdf will be generated in the out subdirectory
+\end{itemize}
 
 
 \subsection{Ubuntu IDE Platforms}
