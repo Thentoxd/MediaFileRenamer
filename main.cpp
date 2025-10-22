@@ -2,19 +2,11 @@
 #include <iostream>
 #include <string>
 
-#include <QApplication>
-#include <QPushButton>
-#include <QDir>
+#include "main.h"
 
-using namespace std;
-
-#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
-
-#include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/rotating_file_sink.h"
-
 
 int main(int argc, char *argv[]) {
     try
@@ -22,7 +14,7 @@ int main(int argc, char *argv[]) {
 
         //
         // This code sets up the SPD loggers. See https://github.com/gabime/spdlog
-        // Bascially we setup two loggers (sinks), one for console output and one for a rotating 3 * 5MB files in the log sub-directory
+        // Basically we create two loggers (sinks), one for console output and one for a rotating 3 * 5MB files in the log sub-directory
         // We join them together and set the default logger to that sink_list
         //
         auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
@@ -47,13 +39,6 @@ int main(int argc, char *argv[]) {
         // SPDLOG_WARN("This is a warning level message");
         // SPDLOG_ERROR("This is a error level message {}", 1);
         // SPDLOG_CRITICAL("This is a critical level message");
-
-
-        /* QApplication a(argc, argv);
-        # QPushButton button("Hello world!", nullptr);
-        # button.resize(200, 100);
-        # button.show();
-        # return QApplication::exec(); */
 
         const std::filesystem::path sandbox{"."};
 
@@ -82,6 +67,4 @@ int main(int argc, char *argv[]) {
     {
         std::cout << "Log initialization failed: " << ex.what() << std::endl;
     }
-
-
 }

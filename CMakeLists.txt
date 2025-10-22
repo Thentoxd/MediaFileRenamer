@@ -22,6 +22,13 @@ add_executable(MediaFileRenamer main.cpp
         spdlog/file_sinks.cpp
         spdlog/spdlog.cpp
         spdlog/stdout_sinks.cpp
+        Model/model.cpp
+        Model/model.h
+        View/view.cpp
+        View/view.h
+        main.h
+        Controller/controller.cpp
+        Controller/controller.h
 )
 
 target_link_libraries(MediaFileRenamer

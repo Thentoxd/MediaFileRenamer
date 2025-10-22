@@ -77,7 +77,7 @@ They are, in order of importance:
 
 
 
-\textit{The design will be as simple as possible. Adding unnessary back-ends, such as a database, will not be done. If a library is commonly available, it will be used.}
+\textit{The design will be as simple as possible. Adding unnessary back-ends, such as a database, will not be done. If a well known and maintained library for a feature is commonly available, it will be used.}
 \subsection{Declaration}
 \textbf{All code - except those modules listed below - and this report is my own work.}
 
@@ -85,9 +85,11 @@ They are, in order of importance:
 
 \textbf{No search for other NEA's close to this one has been done. All code and design is my solo attempt to best deliver this project and expand on the programming aspects of the course.}
 
-Code Modules credited to other people:
-SimpleQtLogger is LGPL code by Mario Ban, 2015. https://github.com/Mokolea/SimpleQtLogger
 
+Code Modules credited to other people:
+\begin{itemize}
+    \item spdlog is used as a logging library. https://github.com/gabime/spdlog
+\end{itemize}
 
 \section{Analysis}
 This is the Analysis section
@@ -98,44 +100,32 @@ This is the Documented Design section
 
 
 \section{Technical Solution}
-MFR has been written in C++ using the QT 6 cross-platform UI library.
+MediaFileRenamer has been written in C++ using the QT 6 cross-platform UI library.
 I have created build IDE's using CLion under Windows 11 and Ubuntu Desktop 25.10 to code and test this tool.
-
+\linebreak
+\linebreak
 \textit{Windows installers and Ubuntu packages will be created for end users of this tool.
 As this is a programming report, how these installers and packages were created is not documented here.}
 
-\subsection{Windows IDE Platforms}
-
+\subsection{Creating a Windows Development Environment}
+Follow these steps to create a Windows development environment:
 \begin{itemize}
-    \item Download QT from https://www.qt.io/download-qt-installer-oss
-    \item Download MiKTeX from https://miktex.org/download
-    \item Set to check/install updates automatically. Wait until it says updates are avaiable and do those
-    \item Git from https://git-scm.com/install/windows
-    \item CLion from https://www.jetbrains.com/clion/download/?section=windows
-    \item Install the CLion extensions TeXiFy-IDEA and intellij-pdf-viewer
-    \item Restart CLion
+    \item Install QT from https://www.qt.io/download-qt-installer-oss
+    \item Install Git from https://git-scm.com/install/windows
+    \item Install CLion from https://www.jetbrains.com/clion/download/?section=windows
     \item Update all CLion Plugins
-    \item Clone Repository https://github.com/Thentoxd/MediaFileRenamer
+    \item Clone the MediaFileRenamer repository from https://github.com/Thentoxd/MediaFileRenamer
     \item MinGW toolchain dialog should appear - Click Next
-    \item In the profile, add the following CMAKE options: "-DCMAKE_PREFIX_PATH=C:\Qt\6.9.3\mingw_64\lib\cmake"
+    \item In the profile, add the following CMAKE options: \begin{verbatim}"-DCMAKE_PREFIX_PATH=C:\Qt\6.9.3\mingw_64\lib\cmake"\end{verbatim}
     \item Build files should now be created
     \item Now load up main.cpp and click Run. The project should compile and execute the program
     \item Under cmake-build-debug/logs will be the logfile generated from the program
 \end{itemize}
 
-Before trying to edit the documentation (.tex file) I would Restart your computer at this point.
-
-To edit the documentation:
-
-\begin{itemize}
-    \item Under \Documentation\Project Report
-    \item Open 2026 NEA Project Report Alex Nicklin.tex in CLion
-    \item You should be able to run this .tex file to produce a PDF
-    \item This pdf will be generated in the out subdirectory
-\end{itemize}
 
 
-\subsection{Ubuntu IDE Platforms}
+
+\subsection{Creating a Linux Development Environment}
 
 We are using the gcc compiler (version 14.2.0) on Ubuntu Desktop 25.10.
 
@@ -156,23 +146,29 @@ sudo apt install texlive-full
 
 \subsection{Tested Deployment Platforms}
 
-\subsection{GitHub}
-
 \subsection{Legal}
-All my source code is available under the GPL licence.
+All my source code is available under the GPL licence. GPL is a copyleft license that requires all derivative works to also be released under the GPL, ensuring they remain open source
 
-SimpleQtLogger is
+spdlog is used as a logging library. https://github.com/gabime/spdlog. Code uses the MIT licence, so can be used in both open source and proprietry programs.
+
 
 \subsection{Runtime Logging}
 https://github.com/Mokolea/SimpleQtLogger
 
 \subsection{Documention}
-This Documentation was written in Latex.  There are a number of cross-platform implementations, I used MiTex. https://miktex.org/download
+This Documentation was written in Latex.
+To edit and compile the Latex documentation, first:
 
-I use the CLion IDE from JetBrains with the TeXiFy-IDEA plugin.
-https://plugins.jetbrains.com/plugin/9473-texify-idea
-
-IntelliJ PDF Viewer
+\begin{itemize}
+    \item Within CLion, install the extensions TeXiFy-IDEA and intellij-pdf-viewer
+    \item Install MiKTeX from https://miktex.org/download
+    \item Set MiKTeX to check and install updates automatically. Wait until it says updates are avaiable and do those
+    \item I would recommend a full restart of the computer at this point
+    \item Within CLion ... Under \Documentation\Project Report
+    \item Open 2026 NEA Project Report Alex Nicklin.tex in CLion
+    \item You should be able to run this .tex file to produce a PDF
+    \item This pdf will be generated in the out subdirectory
+\end{itemize}
 
 \section{Testing}
 \subsection{Valgrind}
