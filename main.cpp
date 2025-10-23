@@ -8,9 +8,23 @@
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/rotating_file_sink.h"
 
+// We use the third-party CLI11 library for managing the command-line parameters
+// https://github.com/CLIUtils/CLI11?tab=readme-ov-file#usage
+#include "CLI11/CLI.hpp"
+
 int main(int argc, char *argv[]) {
     try
     {
+        // CLI11 https://github.com/CLIUtils/CLI11
+        CLI::App app{"Media File Renamer. A utility to rename media files"};
+        argv = app.ensure_utf8(argv);
+
+        std::filesystem::path sandbox{"."};
+        app.add_option("-d,--directory", sandbox, "The default ");
+
+        app.set_version_flag("--version", std::string(MFR_VERSION));
+
+        CLI11_PARSE(app, argc, argv);
 
         //
         // This code sets up the SPD loggers. See https://github.com/gabime/spdlog
@@ -40,7 +54,7 @@ int main(int argc, char *argv[]) {
         // SPDLOG_ERROR("This is a error level message {}", 1);
         // SPDLOG_CRITICAL("This is a critical level message");
 
-        const std::filesystem::path sandbox{"."};
+
 
         SPDLOG_INFO("Current Working Directory: {}", std::filesystem::current_path().string());
 

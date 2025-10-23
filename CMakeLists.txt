@@ -29,6 +29,24 @@ add_executable(MediaFileRenamer main.cpp
         main.h
         Controller/controller.cpp
         Controller/controller.h
+        CLI11/App.hpp
+        CLI11/Argv.hpp
+        CLI11/CLI.hpp
+        CLI11/Config.hpp
+        CLI11/ConfigFwd.hpp
+        CLI11/Encoding.hpp
+        CLI11/Error.hpp
+        CLI11/ExtraValidators.hpp
+        CLI11/Formatter.hpp
+        CLI11/FormatterFwd.hpp
+        CLI11/Macros.hpp
+        CLI11/Option.hpp
+        CLI11/Split.hpp
+        CLI11/StringTools.hpp
+        CLI11/Timer.hpp
+        CLI11/TypeTools.hpp
+        CLI11/Validators.hpp
+        CLI11/Version.hpp
 )
 
 target_link_libraries(MediaFileRenamer
