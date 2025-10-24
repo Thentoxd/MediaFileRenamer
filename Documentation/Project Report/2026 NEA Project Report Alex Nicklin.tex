@@ -11,11 +11,25 @@
 \usepackage{graphicx}
 \usepackage{fullpage}
 \usepackage{listings}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={2026 NEA Project Report Alex Nicklin},
+    pdfpagemode=FullScreen,
+}
+
+
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{2026NEAProjectReportAlexNicklin.bib}
+
 
 % Document
 
 \begin{document}
-
 \begin{titlepage}
     \begin{center}
 
@@ -58,11 +72,12 @@
 
 \tableofcontents
 
-\section{Introduction and Declaration}
+\section{Introduction and Declaration}\label{sec:introduction-and-declaration}
+
 \subsection{Introduction}
 This goal of this project is the write a \textbf{utility program} for renaming files. The main target will be media files on the Ubuntu operating system.
 
-Most Windows users will use the Bulk Rename Utility\footnote{https://www.bulkrenameutility.co.uk/} ("\textbf{BRU}") to rename large numbers of files.
+Most Windows users will use the Bulk Rename Utility \cite{BulkRenameUtility} to rename large numbers of files.
 BRU is an excellent and powerful tool but it has a few problems and weaknesses. They are, in order of importance:
 \begin{itemize}
     \item Not available on Linux
@@ -87,7 +102,7 @@ BRU is an excellent and powerful tool but it has a few problems and weaknesses. 
 
 Code Modules credited to other people:
 \begin{itemize}
-    \item spdlog is used as a logging library. https://github.com/gabime/spdlog
+    \item spdlog \cite{spdlog} is used as a logging library
 \end{itemize}
 
 \section{Analysis}
@@ -99,7 +114,7 @@ This is the Documented Design section
 
 
 \section{Technical Solution}
-MediaFileRenamer has been written in C++ using the QT 6 cross-platform UI library.
+MediaFileRenamer has been written in C++ using the QT 6\cite{QT} cross-platform UI library.
 I have created build IDE's using CLion under Windows 11 and Ubuntu Desktop 25.10 to code and test this tool.
 \linebreak
 \linebreak
@@ -109,11 +124,11 @@ As this is a programming report, how these installers and packages were created 
 \subsection{Creating a Windows Development Environment}
 Follow these steps to create a Windows development environment:
 \begin{itemize}
-    \item Install QT from https://www.qt.io/download-qt-installer-oss
-    \item Install Git from https://git-scm.com/install/windows
-    \item Install CLion from https://www.jetbrains.com/clion/download/?section=windows
+    \item Install QT from \url{https://www.qt.io/download-qt-installer-oss}
+    \item Install Git from \url{https://git-scm.com/install/windows}
+    \item Install CLion from \url{https://www.jetbrains.com/clion/download/?section=windows}
     \item Update all CLion Plugins
-    \item Clone the MediaFileRenamer repository from https://github.com/Thentoxd/MediaFileRenamer
+    \item Clone the MediaFileRenamer repository from \url{https://github.com/Thentoxd/MediaFileRenamer}
     \item MinGW toolchain dialog should appear - Click Next
     \item In the profile, add the following CMAKE options: \begin{verbatim}"-DCMAKE_PREFIX_PATH=C:\Qt\6.10.0\mingw_64\lib\cmake"\end{verbatim}
     \item Build files should now be created
@@ -149,15 +164,17 @@ sudo apt install texlive-full
 All my source code is available under the GPL licence. GPL is a copyleft license that requires all derivative works to also be released under the GPL, ensuring they remain open source
 
 \smallskip
-spdlog is used as a logging library. https://github.com/gabime/spdlog. Code uses the MIT licence, so can be used in both open source and proprietry programs.
+spdlog\cite{spdlog} is used as a logging library. Code uses the MIT licence, so can be used in both open source and proprietry programs.
 
+\subsection{Command Line Parameters}
+We are using the third-party CLI11 library to process command line parameters.
 
 \subsection{Runtime Logging}
-spdlog is used as a logging library. https://github.com/gabime/spdlog. This has been setup to provide one stream of messages that get sent to the console and to a three rotating 5Mb log files.
-Each log "sink" (console and file) can be set to log all message at or above a certain threshold. The logging also produces source code and line information, eg:
+spdlog\cite{spdlog} is used as a logging library. This has been setup to provide one stream of messages that get sent to the console and to a three rotating 5Mb log files.
+Each log sink (console and file) can be set to log all message at or above a certain threshold. The logging also produces source code and line information, eg:
 
 \bigskip
-\includegraphics[width=0.8\textwidth]{Media/2025-10-23 11_15_40 logging.jpg}
+\includegraphics[width=0.8\textwidth]{Media/2025-10-23 11_15_40 logging}
 
 \subsection{Documention}
 This Documentation was written in Latex.
@@ -165,10 +182,10 @@ To edit and compile the Latex documentation, first:
 
 \begin{itemize}
     \item Within CLion, install the extensions TeXiFy-IDEA and intellij-pdf-viewer
-    \item Install MiKTeX from https://miktex.org/download
+    \item Install MiKTeX from \url{https://miktex.org/download}
     \item Set MiKTeX to check and install updates automatically. Wait until it says updates are avaiable and do those
     \item I would recommend a full restart of the computer at this point
-    \item Within CLion ... Under \Documentation\Project Report
+    \item Within CLion, under \begin{verbatim}\Documentation\Project Report\end{verbatim}
     \item Open 2026 NEA Project Report Alex Nicklin.tex in CLion
     \item You should be able to run this .tex file to produce a PDF
     \item This pdf will be generated in the out subdirectory
@@ -177,7 +194,7 @@ To edit and compile the Latex documentation, first:
 \section{Testing}
 
 \subsection{Unit Testing}
-Testing with Catch2 : https://github.com/catchorg/Catch2/tree/devel
+Testing with Catch2\cite{Catch2}
 
 \subsection{Valgrind}
 \textit{One of the weakness of C and C++ is memory control. Its easy to create memory leaks and memory errors (malloc 10 bytes, write 20 etc) which can corrupt the stack and result in difficult-to-trace bugs.
@@ -187,5 +204,8 @@ To try and fix this, we use the Valgrind library to trace memory usage.}
 \section{Evaluation}
 
 This is the Evaluation section
+
+
+\printbibliography
 
 \end{document}
