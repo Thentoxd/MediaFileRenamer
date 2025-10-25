@@ -2,27 +2,33 @@
 #include <iostream>
 #include <string>
 
-#include <QApplication>
-#include <QPushButton>
-#include <QDir>
+#include "main.h"
 
-using namespace std;
-
-#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
-
-#include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/rotating_file_sink.h"
 
+// We use the third-party CLI11 library for managing the command-line parameters
+// https://github.com/CLIUtils/CLI11?tab=readme-ov-file#usage
+#include "CLI11/CLI.hpp"
 
 int main(int argc, char *argv[]) {
     try
     {
+        // CLI11 https://github.com/CLIUtils/CLI11
+        CLI::App app{"Media File Renamer. A utility to rename media files"};
+        argv = app.ensure_utf8(argv);
+
+        std::filesystem::path sandbox{"."};
+        app.add_option("-d,--directory", sandbox, "The default ");
+
+        app.set_version_flag("--version", std::string(MFR_VERSION));
+
+        CLI11_PARSE(app, argc, argv);
 
         //
         // This code sets up the SPD loggers. See https://github.com/gabime/spdlog
-        // Bascially we setup two loggers (sinks), one for console output and one for a rotating 3 * 5MB files in the log sub-directory
+        // Basically we create two loggers (sinks), one for console output and one for a rotating 3 * 5MB files in the log sub-directory
         // We join them together and set the default logger to that sink_list
         //
         auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
@@ -49,13 +55,6 @@ int main(int argc, char *argv[]) {
         // SPDLOG_CRITICAL("This is a critical level message");
 
 
-        /* QApplication a(argc, argv);
-        # QPushButton button("Hello world!", nullptr);
-        # button.resize(200, 100);
-        # button.show();
-        # return QApplication::exec(); */
-
-        const std::filesystem::path sandbox{"."};
 
         SPDLOG_INFO("Current Working Directory: {}", std::filesystem::current_path().string());
 
@@ -82,6 +81,4 @@ int main(int argc, char *argv[]) {
     {
         std::cout << "Log initialization failed: " << ex.what() << std::endl;
     }
-
-
 }
