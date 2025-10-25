@@ -12,8 +12,6 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-
-
 add_executable(MediaFileRenamer main.cpp
         spdlog/async.cpp
         spdlog/bundled_fmtlib_format.cpp
@@ -58,6 +56,17 @@ target_link_libraries(MediaFileRenamer
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
 
 target_compile_definitions(MediaFileRenamer PUBLIC SPDLOG_COMPILED_LIB)
+
+Include(FetchContent)
+FetchContent_Declare(
+        Catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG        v3.11.0 # or a later release
+)
+FetchContent_MakeAvailable(Catch2)
+add_executable(tests test.cpp)
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(DEBUG_SUFFIX)
