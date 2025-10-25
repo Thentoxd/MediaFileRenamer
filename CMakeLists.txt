@@ -6,20 +6,29 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+Include(FetchContent)
+
 find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
         REQUIRED)
 
+FetchContent_Declare(
+        spdlog
+        GIT_REPOSITORY https://github.com/gabime/spdlog.git
+        GIT_TAG        v1.16.0 # or a later release
+)
+FetchContent_MakeAvailable(spdlog)
+
+FetchContent_Declare(
+        CLI11
+        GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
+        GIT_TAG        v2.5.0 # or a later release
+)
+FetchContent_MakeAvailable(CLI11)
+
 add_executable(MediaFileRenamer main.cpp
-        spdlog/async.cpp
-        spdlog/bundled_fmtlib_format.cpp
-        spdlog/cfg.cpp
-        spdlog/color_sinks.cpp
-        spdlog/file_sinks.cpp
-        spdlog/spdlog.cpp
-        spdlog/stdout_sinks.cpp
         Model/model.cpp
         Model/model.h
         View/view.cpp
@@ -27,37 +36,27 @@ add_executable(MediaFileRenamer main.cpp
         main.h
         Controller/controller.cpp
         Controller/controller.h
-        CLI11/App.hpp
-        CLI11/Argv.hpp
-        CLI11/CLI.hpp
-        CLI11/Config.hpp
-        CLI11/ConfigFwd.hpp
-        CLI11/Encoding.hpp
-        CLI11/Error.hpp
-        CLI11/ExtraValidators.hpp
-        CLI11/Formatter.hpp
-        CLI11/FormatterFwd.hpp
-        CLI11/Macros.hpp
-        CLI11/Option.hpp
-        CLI11/Split.hpp
-        CLI11/StringTools.hpp
-        CLI11/Timer.hpp
-        CLI11/TypeTools.hpp
-        CLI11/Validators.hpp
-        CLI11/Version.hpp
 )
 
 target_link_libraries(MediaFileRenamer
         Qt::Core
         Qt::Gui
         Qt::Widgets
+        spdlog::spdlog
+        CLI11::CLI11
 )
 
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
+# add_library (spdlog)
 
-target_compile_definitions(MediaFileRenamer PUBLIC SPDLOG_COMPILED_LIB)
+# target_include_directories (spdlog PUBLIC "${CMAKE_CURRENT_LIST_DIR}/include")
+# target_include_directories(MediaFileRenamer PUBLIC include CLI11::CLI11)
+target_include_directories(MediaFileRenamer PRIVATE include)
 
-Include(FetchContent)
+
+# include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
+# target_compile_definitions(MediaFileRenamer PUBLIC SPDLOG_COMPILED_LIB)
+
+
 FetchContent_Declare(
         Catch2
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git

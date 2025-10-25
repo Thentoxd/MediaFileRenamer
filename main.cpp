@@ -10,7 +10,7 @@
 
 // We use the third-party CLI11 library for managing the command-line parameters
 // https://github.com/CLIUtils/CLI11?tab=readme-ov-file#usage
-#include "CLI11/CLI.hpp"
+#include "CLI/CLI.hpp"
 
 int main(int argc, char *argv[]) {
     try
@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
         // SPDLOG_INFO("This is a info level message");
         // SPDLOG_WARN("This is a warning level message");
         // SPDLOG_ERROR("This is a error level message {}", 1);
-        // SPDLOG_CRITICAL("This is a critical level message");
+        SPDLOG_CRITICAL("This is a critical level message");
 
 
 
