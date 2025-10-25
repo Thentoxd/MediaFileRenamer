@@ -46,16 +46,7 @@ target_link_libraries(MediaFileRenamer
         CLI11::CLI11
 )
 
-# add_library (spdlog)
-
-# target_include_directories (spdlog PUBLIC "${CMAKE_CURRENT_LIST_DIR}/include")
-# target_include_directories(MediaFileRenamer PUBLIC include CLI11::CLI11)
 target_include_directories(MediaFileRenamer PRIVATE include)
-
-
-# include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
-# target_compile_definitions(MediaFileRenamer PUBLIC SPDLOG_COMPILED_LIB)
-
 
 FetchContent_Declare(
         Catch2
