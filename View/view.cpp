@@ -4,8 +4,15 @@
 
 #include "view.h"
 
-/* QApplication a(argc, argv);
-# QPushButton button("Hello world!", nullptr);
-# button.resize(200, 100);
-# button.show();
-# return QApplication::exec(); */
+view::view (int argc, char *argv[]) {
+    QApplication a(argc, argv);
+    QPushButton button("Hello world!", nullptr);
+
+    QFont font ("Courier");
+    button.setFont(font);
+
+    button.resize(200, 100);
+    button.show();
+    QApplication::exec();
+}
+

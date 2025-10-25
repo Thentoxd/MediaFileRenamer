@@ -4,6 +4,9 @@
 
 #include "main.h"
 
+#include <bits/ranges_algo.h>
+#include "View/view.h"
+
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/rotating_file_sink.h"
@@ -52,11 +55,11 @@ int main(int argc, char *argv[]) {
         // SPDLOG_INFO("This is a info level message");
         // SPDLOG_WARN("This is a warning level message");
         // SPDLOG_ERROR("This is a error level message {}", 1);
-        SPDLOG_CRITICAL("This is a critical level message");
+        // SPDLOG_CRITICAL("This is a critical level message");
 
 
 
-        SPDLOG_INFO("Current Working Directory: {}", std::filesystem::current_path().string());
+        SPDLOG_INFO("Current Working Directory: {}", sandbox.string());
 
         // directory_iterator can be iterated using a range-for loop
         for (auto const& dir_entry : filesystem::directory_iterator{sandbox})
@@ -76,6 +79,9 @@ int main(int argc, char *argv[]) {
                     std::cout << final_filename << '\n';
                 }
             }
+
+        view my_vew(argc, argv);
+
     }
     catch (const spdlog::spdlog_ex& ex)
     {
