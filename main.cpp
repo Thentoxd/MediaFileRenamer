@@ -80,7 +80,8 @@ int main(int argc, char *argv[]) {
                 }
             }
 
-        view my_vew(argc, argv);
+        view * my_vew = new view ();
+        my_vew -> create_window(argc, argv);
 
     }
     catch (const spdlog::spdlog_ex& ex)
