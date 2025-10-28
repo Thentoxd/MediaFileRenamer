@@ -7,11 +7,10 @@
 
 #include <QApplication>
 
-class view {
+class mediaFileRenamerMainView {
     public:
-        view() = default;
+        mediaFileRenamerMainView();
         int create_window(int argc, char *argv[]);
-        int Exit();
 };
 
 

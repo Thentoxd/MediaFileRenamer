@@ -1,17 +1,13 @@
-//
-// Created by Alex Nicklin on 28/10/2025.
-//
-
 /********************************************************************************
-** Form generated from reading UI file 'MediaFileRenamerYJoWZu.ui'
+** Form generated from reading UI file 'media_file_renamerErQNql.ui'
 **
 ** Created by: Qt User Interface Compiler version 6.10.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MEDIAFILERENAMERYJOWZU_H
-#define MEDIAFILERENAMERYJOWZU_H
+#ifndef MEDIA_FILE_RENAMERERQNQL_H
+#define MEDIA_FILE_RENAMERERQNQL_H
 
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
@@ -35,6 +31,7 @@ class Ui_MediaFileRenamer
 {
 public:
     QAction *actionExit;
+    QAction *actionAbout;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
@@ -60,6 +57,8 @@ public:
         MediaFileRenamer->setSizePolicy(sizePolicy);
         actionExit = new QAction(MediaFileRenamer);
         actionExit->setObjectName("actionExit");
+        actionAbout = new QAction(MediaFileRenamer);
+        actionAbout->setObjectName("actionAbout");
         centralwidget = new QWidget(MediaFileRenamer);
         centralwidget->setObjectName("centralwidget");
         verticalLayout = new QVBoxLayout(centralwidget);
@@ -112,6 +111,7 @@ public:
         menubar->addAction(menuFile->menuAction());
         menubar->addAction(menuHelp->menuAction());
         menuFile->addAction(actionExit);
+        menuHelp->addAction(actionAbout);
 
         retranslateUi(MediaFileRenamer);
 
@@ -122,6 +122,7 @@ public:
     {
         MediaFileRenamer->setWindowTitle(QCoreApplication::translate("MediaFileRenamer", "Media File Renamer", nullptr));
         actionExit->setText(QCoreApplication::translate("MediaFileRenamer", "Exit", nullptr));
+        actionAbout->setText(QCoreApplication::translate("MediaFileRenamer", "About", nullptr));
         groupBox->setTitle(QCoreApplication::translate("MediaFileRenamer", "Folder Selection", nullptr));
         pushButton->setText(QCoreApplication::translate("MediaFileRenamer", "Select Folder", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MediaFileRenamer", "File", nullptr));
@@ -136,4 +137,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // MEDIAFILERENAMERYJOWZU_H
+#endif // MEDIA_FILE_RENAMERERQNQL_H
