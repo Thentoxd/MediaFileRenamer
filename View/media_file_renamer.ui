@@ -90,6 +90,11 @@
     <string>About</string>
    </property>
   </action>
+  <action name="actionAbout2">
+   <property name="text">
+    <string>About2</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
