@@ -11,6 +11,7 @@ class view {
     public:
         view() = default;
         int create_window(int argc, char *argv[]);
+        int Exit();
 };
 
 
