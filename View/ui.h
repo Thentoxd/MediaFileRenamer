@@ -10,7 +10,13 @@
 class mediaFileRenamerMainWindow : public QMainWindow, private Ui::MediaFileRenamer {
 public:
     mediaFileRenamerMainWindow();
-    int Exit();
+
+private slots:
+    void Exit();
+
+signals:
+
+
 };
 
 #endif //MEDIAFILERENAMER_UI_H

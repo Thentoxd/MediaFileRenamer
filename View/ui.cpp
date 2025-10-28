@@ -11,9 +11,11 @@
 mediaFileRenamerMainWindow::mediaFileRenamerMainWindow() {
     this -> setupUi(this);
     this -> show();
+
+    // Connect a slot to the button's clicked signal
+    // QObject::connect(this -> actionExit, &QPushButton::clicked, this, &mediaFileRenamerMainWindow::Exit);
 }
 
-int mediaFileRenamerMainWindow::Exit() {
+void mediaFileRenamerMainWindow::Exit() {
     SPDLOG_DEBUG("Exit button pressed");
-    return 0;
 }

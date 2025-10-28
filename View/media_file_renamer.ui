@@ -75,6 +75,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionAbouyt3"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
@@ -93,6 +94,11 @@
   <action name="actionAbout2">
    <property name="text">
     <string>About2</string>
+   </property>
+  </action>
+  <action name="actionAbouyt3">
+   <property name="text">
+    <string>Abouyt3</string>
    </property>
   </action>
  </widget>
