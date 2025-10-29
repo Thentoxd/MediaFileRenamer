@@ -5,9 +5,9 @@
 #ifndef MEDIAFILERENAMER_MODEL_H
 #define MEDIAFILERENAMER_MODEL_H
 
-#include "model_interface.h"
+#include "../model_interface.h"
 
-class Model {
+class Model : public ModelInterface {
 };
 
 
