@@ -40,6 +40,7 @@ add_executable(MediaFileRenamer main.cpp
         Controller/controller.cpp
         Controller/controller.h
         model_interface.h
+        controller_interface.h
 )
 
 target_link_libraries(MediaFileRenamer
