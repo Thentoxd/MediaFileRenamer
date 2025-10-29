@@ -76,11 +76,12 @@ int main(int argc, char *argv[]) {
                     else {
                         final_filename = raw_filename.substr(0, dot_position);
                     }
-                    std::cout << final_filename << '\n';
+                    // SPDLOG_INFO("File in CWD: {}", final_filename);
+                    // std::cout << final_filename << '\n';
                 }
             }
 
-        // We are using the Model-View-Controller design pattern to separate and insulate objects
+        // We are using the Model-View-Controller design pattern to better separate classes
         // [1] The model is created, and it initializes its data
         // [2] The view is created and observes the Model
         // [3] The controller is created and gets references to the model and the view; it observes the model
@@ -88,12 +89,10 @@ int main(int argc, char *argv[]) {
 
         auto p_model = new Model();
 
-        auto p_vew = new mediaFileRenamerMainView();
-        p_vew -> create_window(argc, argv);
-
-        auto p_controller = new Controller();
-
-
+        auto p_view = new mediaFileRenamerMainView();
+        p_view -> create_window(argc, argv);
+        auto p_controller = new Controller(p_model, p_view);
+        p_view -> displayWindow();
     }
     catch (const spdlog::spdlog_ex& ex)
     {

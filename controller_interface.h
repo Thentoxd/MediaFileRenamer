@@ -10,7 +10,7 @@ using namespace std;
 
 class ControllerInterface {
 public:
-    virtual ~ControllerInterface();
+    // virtual ~ControllerInterface() = 0;
     // virtual void updateCurrentWorkingDirectory(string newCurrentWorkingDirectory) = 0;
     // virtual void reload() = 0;
     // virtual void clear() = 0;

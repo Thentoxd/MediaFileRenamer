@@ -8,9 +8,11 @@
 #include <QApplication>
 
 class mediaFileRenamerMainView {
+    QApplication * p_QApplication;
     public:
         mediaFileRenamerMainView();
-        int create_window(int argc, char *argv[]);
+        void create_window(int argc, char *argv[]);
+        int displayWindow();
 };
 
 

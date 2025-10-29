@@ -11,15 +11,18 @@ mediaFileRenamerMainView::mediaFileRenamerMainView() {
 
 }
 
-int mediaFileRenamerMainView::create_window(int argc, char *argv[]) {
-    QApplication a(argc, argv);
+void mediaFileRenamerMainView::create_window(int argc, char *argv[]) {
+    SPDLOG_INFO("Initialising View ....");
+    QApplication * p_QApplication = new QApplication(argc, argv);
     auto p_mediaFileRenamerMainWindow = new mediaFileRenamerMainWindow();
 
     QPushButton * lpTestBtn = p_mediaFileRenamerMainWindow -> window()->findChild<QPushButton*>("pushButton");
     QObject::connect(lpTestBtn, &QPushButton::clicked, [=]() {
         SPDLOG_DEBUG("Select folder button pressed");
     });
+}
 
-    return a.exec();
+int mediaFileRenamerMainView::displayWindow() {
+    return p_QApplication -> exec();
 }
 
