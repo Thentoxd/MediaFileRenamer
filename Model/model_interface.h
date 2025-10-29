@@ -10,9 +10,9 @@
 #include <string>
 using namespace std;
 
-class model_interface {
+class ModelInterface {
 public:
-    virtual ~model_interface();
+    virtual ~ModelInterface();
     virtual void updateCurrentWorkingDirectory(string newCurrentWorkingDirectory) = 0;
     virtual void reload() = 0;
     virtual void clear() = 0;
