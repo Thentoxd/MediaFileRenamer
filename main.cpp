@@ -88,10 +88,11 @@ int main(int argc, char *argv[]) {
 
         auto p_model = new Model();
 
-        auto p_
-
         auto p_vew = new mediaFileRenamerMainView();
         p_vew -> create_window(argc, argv);
+
+        auto p_controller = new Controller();
+
 
     }
     catch (const spdlog::spdlog_ex& ex)
