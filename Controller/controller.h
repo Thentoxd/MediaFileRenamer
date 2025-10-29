@@ -5,8 +5,9 @@
 #ifndef MEDIAFILERENAMER_CONTROLLER_H
 #define MEDIAFILERENAMER_CONTROLLER_H
 
+#include "controller_interface.h"
 
-class Controller {
+class Controller : public ControllerInterface {
 };
 
 
