@@ -6,7 +6,7 @@
 #define MEDIAFILERENAMER_CONTROLLER_H
 
 
-class controller {
+class Controller {
 };
 
 

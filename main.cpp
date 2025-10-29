@@ -80,6 +80,16 @@ int main(int argc, char *argv[]) {
                 }
             }
 
+        // We are using the Model-View-Controller design pattern to separate and insulate objects
+        // [1] The model is created, and it initializes its data
+        // [2] The view is created and observes the Model
+        // [3] The controller is created and gets references to the model and the view; it observes the model
+        // [4] The application starts event processing
+
+        auto p_model = new Model();
+
+        auto p_
+
         auto p_vew = new mediaFileRenamerMainView();
         p_vew -> create_window(argc, argv);
 
