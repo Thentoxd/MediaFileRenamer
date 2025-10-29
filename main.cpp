@@ -3,12 +3,11 @@
 #include <string>
 
 #include "main.h"
-
-#include <bits/ranges_algo.h>
 #include "View/view.h"
+#include "Model/model.h"
+#include "Controller/controller.h"
 
 #include "spdlog/sinks/stdout_color_sinks.h"
-#include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/rotating_file_sink.h"
 
 // We use the third-party CLI11 library for managing the command-line parameters
@@ -22,8 +21,9 @@ int main(int argc, char *argv[]) {
         CLI::App app{"Media File Renamer. A utility to rename media files"};
         argv = app.ensure_utf8(argv);
 
-        std::filesystem::path sandbox{"."};
-        app.add_option("-d,--directory", sandbox, "The default ");
+        auto current_working_directory = std::filesystem::current_path();
+
+        app.add_option("-d,--directory", current_working_directory, "The default ");
 
         app.set_version_flag("--version", std::string(MFR_VERSION));
 
@@ -59,10 +59,10 @@ int main(int argc, char *argv[]) {
 
 
 
-        SPDLOG_INFO("Current Working Directory: {}", sandbox.string());
+        SPDLOG_INFO("Current Working Directory: {}", current_working_directory.string());
 
         // directory_iterator can be iterated using a range-for loop
-        for (auto const& dir_entry : filesystem::directory_iterator{sandbox})
+        for (auto const& dir_entry : filesystem::directory_iterator{current_working_directory})
             if (!dir_entry.is_directory()) {
                 string raw_filename = dir_entry.path().string();
                 raw_filename = raw_filename.substr(2);
