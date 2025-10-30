@@ -47,8 +47,8 @@ target_link_libraries(MediaFileRenamer
         Qt::Core
         Qt::Gui
         Qt::Widgets
-        spdlog::spdlog
-        CLI11::CLI11
+        spdlog
+        CLI11
 )
 
 target_include_directories(MediaFileRenamer PRIVATE include)
