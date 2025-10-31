@@ -8,9 +8,14 @@
 #include "../model_interface.h"
 
 class Model : public ModelInterface {
+
+    private:
+        string currentWorkingDirectory;
+
     public:
         Model();
-        void updateCurrentWorkingDirectory(string newCurrentWorkingDirectory);
+        void setCurrentWorkingDirectory(string newCurrentWorkingDirectory);
+        string getCurrentWorkingDirectory();
         void reload();
         void clear();
 };

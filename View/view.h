@@ -7,12 +7,22 @@
 
 #include <QApplication>
 
-class mediaFileRenamerMainView {
+#include "ui_media_file_renamer.h"
+#include "../model_interface.h"
+
+class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer {
     QApplication * p_QApplication;
+
+    private:
+    ModelInterface * p_model;
+
     public:
-        mediaFileRenamerMainView();
-        void create_window(int argc, char *argv[]);
+        mediaFileRenamerMainView(ModelInterface * p_model);
+        void create_window();
         int displayWindow();
+
+    public slots:
+        void selectFolderButtonClicked();
 };
 
 

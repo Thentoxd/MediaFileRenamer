@@ -13,7 +13,8 @@ using namespace std;
 class ModelInterface {
 public:
     // virtual ~ModelInterface();
-    virtual void updateCurrentWorkingDirectory(string newCurrentWorkingDirectory) = 0;
+    virtual void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) = 0;
+    virtual string getCurrentWorkingDirectory() = 0;
     virtual void reload() = 0;
     virtual void clear() = 0;
     //...

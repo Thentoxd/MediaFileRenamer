@@ -9,8 +9,14 @@ Model::Model() {
     SPDLOG_INFO("Initialising Model ....");
 }
 
-void Model::updateCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
+void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
     SPDLOG_INFO("Model: updating current working directory");
+    currentWorkingDirectory = newCurrentWorkingDirectory;
+}
+
+string Model::getCurrentWorkingDirectory() {
+    SPDLOG_INFO("Model: getting current working directory");
+    return(currentWorkingDirectory);
 }
 
 void Model::reload() {

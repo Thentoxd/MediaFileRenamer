@@ -89,10 +89,13 @@ int main(int argc, char *argv[]) {
 
         auto p_model = new Model();
 
-        auto p_view = new mediaFileRenamerMainView();
-        p_view -> create_window(argc, argv);
+        p_model -> setCurrentWorkingDirectory(current_working_directory.string());
+
+        auto * p_QApplication = new QApplication(argc, argv);
+        auto p_view = new mediaFileRenamerMainView(p_model);
+        p_view -> create_window();
         auto p_controller = new Controller(p_model, p_view);
-        p_view -> displayWindow();
+        QApplication::exec();
     }
     catch (const spdlog::spdlog_ex& ex)
     {
