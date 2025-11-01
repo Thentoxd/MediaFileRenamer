@@ -22,6 +22,20 @@ void mediaFileRenamerMainView::create_window() {
     QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
     lineEdit -> setText(qstr);
 
+    // tableWidget->setModel(model);
+    // tableView->show();
+
+    tableWidget->setRowCount(10);
+    tableWidget->setColumnCount(4);
+
+    // Disable editing directly
+    tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    QStringList m_TableHeader;
+    m_TableHeader<<"Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
+    tableWidget->setHorizontalHeaderLabels(m_TableHeader);
+    tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
     QObject::connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
 }
 
