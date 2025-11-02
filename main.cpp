@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
                     time_t current_time = time(nullptr);
 
                     p_model -> addEntry(final_filename, current_time);
-                    // SPDLOG_INFO("File in CWD: {}", final_filename);
+                    SPDLOG_INFO("File in CWD: {}", final_filename);
                 }
             }
 
