@@ -36,6 +36,12 @@ void mediaFileRenamerMainView::create_window() {
     tableWidget->setHorizontalHeaderLabels(m_TableHeader);
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
+    // Make a call onto the model to get the table data
+    // Model returns an iterable object. Each iteration returns a Line Interface which
+    // has the following virtual methods implemented ..
+    // getFilename, getNewFile, getOriginalDateTaken, getNewOriginalDateTaken
+    //
+
     QObject::connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
 }
 

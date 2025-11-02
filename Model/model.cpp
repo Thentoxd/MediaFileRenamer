@@ -11,8 +11,11 @@ using namespace std;
 
 #include "../main.h"
 
+
+
 Model::Model() {
     SPDLOG_INFO("Initialising Model ....");
+    // myFileEntries = new FileEntries();
 }
 
 void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {

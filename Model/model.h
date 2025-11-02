@@ -10,17 +10,15 @@
 
 #include "../model_interface.h"
 
-namespace std {
-    class any;
-}
+using namespace std;
 
-class FileEntry {
+class FileEntry : public FileEntryInterface {
 
     private:
     string currentFileName;
     string newFileName;
-    time_t currentDateTakenOriginal;
-    time_t newDateTakenOriginal;
+    time_t currentDateTakenOriginal{};
+    time_t newDateTakenOriginal{};
 
 public:
     FileEntry(string fileName, time_t currentDateTakenOriginal) {
@@ -30,51 +28,59 @@ public:
         this->newDateTakenOriginal = currentDateTakenOriginal;
     }
 
-    string getCurrentFileName() {
+    FileEntry() {};
+
+    string getCurrentFileName() override {
         return currentFileName;
     }
-    string getNewFileName() {
+    string getNewFileName() override {
         return newFileName;
     }
-    time_t getCurrentDateTakenOriginal() {
+    time_t getCurrentDateTakenOriginal() override {
         return currentDateTakenOriginal;
     }
-    time_t getNewDateTakenOriginal() {
+    time_t getNewDateTakenOriginal() override {
         return newDateTakenOriginal;
     }
 
-    void setFileName(string fileName) {
+    void setFileName(string fileName) override {
         currentFileName = fileName;
         newFileName = fileName;
     }
 
-    void setNewFileName(string newFileName) {
+    void setNewFileName(string newFileName) override {
         this->newFileName = newFileName;
     }
 
-    void setDateTaken(time_t dateTaken) {
+    void setDateTaken(time_t dateTaken) override {
         currentDateTakenOriginal = dateTaken;
         newDateTakenOriginal = dateTaken;
     }
 
-    void setNewDateTaken(time_t newDateTaken) {
+    void setNewDateTaken(time_t newDateTaken) override {
         newDateTakenOriginal = newDateTaken;
     }
 };
 
-class FileEntries {
+
+class Model : public ModelInterface {
+
+private:
+    string currentWorkingDirectory;
     vector<FileEntry> fileEntries;
 
 public:
+    Model();
 
-    void populateTable(const vector<pair<string, time_t>>& values) {
-       for (const auto& value : values) {
-           fileEntries.emplace_back(value.first, value.second);
-       }
-    }
+    void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
+    string getCurrentWorkingDirectory() override;
+    void reload();
+    void clear();
 
-    void addEntry(FileEntry entry) {
-        fileEntries.push_back(entry);
+
+    void addEntry(string fileName, time_t currentDateTakenOriginal) {
+        FileEntry newFileEntry(fileName, currentDateTakenOriginal);
+        fileEntries.push_back(newFileEntry);
     }
     void addEntry(FileEntry entry, int row) {
         fileEntries.insert(fileEntries.begin() + row - 1, entry);
@@ -95,21 +101,6 @@ public:
     FileEntry getFileEntry(int row) {
         return fileEntries[row - 1];
     }
-
-
-};
-
-class Model : public ModelInterface {
-
-    private:
-        string currentWorkingDirectory;
-
-    public:
-        Model();
-        void setCurrentWorkingDirectory(string newCurrentWorkingDirectory);
-        string getCurrentWorkingDirectory();
-        void reload();
-        void clear();
 };
 
 
