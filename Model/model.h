@@ -5,7 +5,24 @@
 #ifndef MEDIAFILERENAMER_MODEL_H
 #define MEDIAFILERENAMER_MODEL_H
 
+#include <ctime>
+
 #include "../model_interface.h"
+
+class FileEntry {
+
+    private:
+    string currentFileName;
+    string newFileName;
+    time_t currentDateTakenOriginal;
+    time_t newDateTakenOriginal;
+
+
+};
+
+class FileEntries {
+
+};
 
 class Model : public ModelInterface {
 
