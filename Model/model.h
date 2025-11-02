@@ -10,6 +10,10 @@
 
 #include "../model_interface.h"
 
+namespace std {
+    class any;
+}
+
 class FileEntry {
 
     private:
@@ -62,6 +66,17 @@ class FileEntries {
     vector<FileEntry> fileEntries;
 
 public:
+
+    void PopulateTable(int rowCount, vector<pair<string, time_t>> values) {
+        int p1 = 0;
+        while (p1 < rowCount) {
+            FileEntry entry(values[p1].first, values[p1].second);
+            addEntry(entry);
+
+            p1++;
+        }
+    }
+
     void addEntry(FileEntry entry) {
         fileEntries.push_back(entry);
     }
