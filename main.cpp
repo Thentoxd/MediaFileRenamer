@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
         auto current_working_directory = std::filesystem::current_path();
 
         app.add_option("-d,--directory", current_working_directory, "The default ");
-
         app.set_version_flag("--version", std::string(MFR_VERSION));
 
         CLI11_PARSE(app, argc, argv);
@@ -57,8 +56,6 @@ int main(int argc, char *argv[]) {
         // SPDLOG_ERROR("This is a error level message {}", 1);
         // SPDLOG_CRITICAL("This is a critical level message");
 
-
-
         SPDLOG_INFO("Current Working Directory: {}", current_working_directory.string());
 
         // directory_iterator can be iterated using a range-for loop
@@ -76,8 +73,7 @@ int main(int argc, char *argv[]) {
                     else {
                         final_filename = raw_filename.substr(0, dot_position);
                     }
-                    // SPDLOG_INFO("File in CWD: {}", final_filename);
-                    // std::cout << final_filename << '\n';
+                    SPDLOG_INFO("File in CWD: {}", final_filename);
                 }
             }
 
