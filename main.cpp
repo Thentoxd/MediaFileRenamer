@@ -58,6 +58,17 @@ int main(int argc, char *argv[]) {
 
         SPDLOG_INFO("Current Working Directory: {}", current_working_directory.string());
 
+
+        // We are using the Model-View-Controller design pattern to better separate classes
+        // [1] The model is created, and it initializes its data
+        // [2] The view is created and observes the Model
+        // [3] The controller is created and gets references to the model and the view; it observes the model
+        // [4] The application starts event processing
+
+        auto p_model = new Model();
+
+        vector<string> filename_list;
+
         // directory_iterator can be iterated using a range-for loop
         for (auto const& dir_entry : filesystem::directory_iterator{current_working_directory})
             if (!dir_entry.is_directory()) {
@@ -77,15 +88,9 @@ int main(int argc, char *argv[]) {
                 }
             }
 
-        // We are using the Model-View-Controller design pattern to better separate classes
-        // [1] The model is created, and it initializes its data
-        // [2] The view is created and observes the Model
-        // [3] The controller is created and gets references to the model and the view; it observes the model
-        // [4] The application starts event processing
-
-        auto p_model = new Model();
-
+        // Populate the model
         p_model -> setCurrentWorkingDirectory(current_working_directory.string());
+        // p_model -> setFilenames(filename_list);
 
         auto * p_QApplication = new QApplication(argc, argv);
         auto p_view = new mediaFileRenamerMainView(p_model);
