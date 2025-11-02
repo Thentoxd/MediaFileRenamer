@@ -2,7 +2,13 @@
 // Created by Alex Nicklin on 22/10/2025.
 //
 
+#include "string"
 #include "model.h"
+
+#include <vector>
+
+using namespace std;
+
 #include "../main.h"
 
 Model::Model() {

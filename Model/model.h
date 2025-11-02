@@ -67,14 +67,10 @@ class FileEntries {
 
 public:
 
-    void PopulateTable(int rowCount, vector<pair<string, time_t>> values) {
-        int p1 = 0;
-        while (p1 < rowCount) {
-            FileEntry entry(values[p1].first, values[p1].second);
-            addEntry(entry);
-
-            p1++;
-        }
+    void populateTable(const vector<pair<string, time_t>>& values) {
+       for (const auto& value : values) {
+           fileEntries.emplace_back(value.first, value.second);
+       }
     }
 
     void addEntry(FileEntry entry) {
