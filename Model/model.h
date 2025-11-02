@@ -16,6 +16,7 @@ class FileEntry {
     string newFileName;
     time_t currentDateTakenOriginal;
     time_t newDateTakenOriginal;
+    string deleteme;
 
 
 };
