@@ -28,6 +28,14 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(CLI11)
 
+FetchContent_Declare(
+        tinyxml2
+        GIT_REPOSITORY https://github.com/leethomason/tinyxml2.git
+        GIT_TAG        11.0.0
+)
+FetchContent_MakeAvailable(tinyxml2)
+
+
 add_executable(MediaFileRenamer main.cpp
         Model/model.cpp
         Model/model.h
@@ -37,6 +45,8 @@ add_executable(MediaFileRenamer main.cpp
         View/media_file_renamer.ui
         Controller/controller.cpp
         Controller/controller.h
+        TinyEXIF/TinyEXIF.cpp
+        TinyEXIF/TinyEXIF.h
 )
 
 target_link_libraries(MediaFileRenamer
@@ -45,6 +55,7 @@ target_link_libraries(MediaFileRenamer
         Qt::Widgets
         spdlog
         CLI11
+        tinyxml2
 )
 
 target_include_directories(MediaFileRenamer PRIVATE include)
