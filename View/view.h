@@ -19,6 +19,8 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
     public:
         mediaFileRenamerMainView(ModelInterface * p_model);
         void create_window();
+        void setTextInCell(int row, int column, QString text);
+        void populateTableView(QString currentWorkingDirectory);
         int displayWindow();
 
     public slots:

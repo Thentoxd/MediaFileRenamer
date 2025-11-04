@@ -10,10 +10,6 @@
 
 #include "../model_interface.h"
 
-namespace std {
-    class any;
-}
-
 class FileEntry {
 
     private:

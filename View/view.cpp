@@ -19,14 +19,13 @@ mediaFileRenamerMainView::mediaFileRenamerMainView(ModelInterface * modelParam) 
 void mediaFileRenamerMainView::create_window() {
     SPDLOG_INFO("Creating main window ....");
 
-    QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
+    QString qstr = QString::fromStdString("C:\\Users\\alex\\OneDrive\\Desktop\\arduino\\test\\first\\build\\sketch"); // test directory
     lineEdit -> setText(qstr);
 
     // tableWidget->setModel(model);
     // tableView->show();
 
-    tableWidget->setRowCount(10);
-    tableWidget->setColumnCount(4);
+    populateTableView(qstr);
 
     // Disable editing directly
     tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -37,6 +36,36 @@ void mediaFileRenamerMainView::create_window() {
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     QObject::connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
+}
+
+void mediaFileRenamerMainView::populateTableView(QString currentWorkingDirectory) {
+    const QDir root(currentWorkingDirectory);
+    if (!root.exists()) {
+        SPDLOG_CRITICAL("Directory does not exist!");
+        return;
+    }
+    QFileInfoList list = root.entryInfoList(QDir::Filter::NoDotAndDotDot | QDir::Filter::Files);
+    tableWidget->setRowCount(list.count());
+    tableWidget->setColumnCount(4);
+
+    int row = 0;
+    for (QFileInfo file : list) {
+        setTextInCell(row, 0, file.fileName());
+        setTextInCell(row, 1, file.fileName());
+        setTextInCell(row, 2, file.lastModified().toString());
+        setTextInCell(row, 3, file.lastModified().toString());
+
+        row++;
+    }
+}
+
+void mediaFileRenamerMainView::setTextInCell(int row, int column, QString text) {
+    QTableWidgetItem *item = tableWidget->item(row, column);
+    if (!item) {
+        item = new QTableWidgetItem();
+        tableWidget->setItem(row, column, item);
+    }
+    item->setText(text);
 }
 
 void mediaFileRenamerMainView::selectFolderButtonClicked() {
