@@ -35,8 +35,8 @@ public:
     virtual void reload() = 0;
     virtual void clear() = 0;
     // virtual vector<FileEntryInterface>::iterator getTableDataIterator() = 0;
-    virtual void getNumberOfFileEntries() = 0;
-    virtual FileEntryInterface * getNthFileEntries(int fileEntryNumber) = 0;
+    virtual int getEntryCount() = 0;
+    virtual FileEntryInterface * getFileEntry(int row) = 0;
     //...
 };
 

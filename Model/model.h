@@ -74,8 +74,21 @@ public:
 
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
     string getCurrentWorkingDirectory() override;
-    void reload();
-    void clear();
+    void reload() override ;
+    void clear() override ;
+
+    FileEntry * getFileEntry(int row) override {
+        FileEntry * p_entry = &fileEntries[row - 1];
+        return p_entry;
+    }
+
+    // This function should do
+    // return fileEntries.iterator();
+    // This function should do
+    // return fileEntries.iterator();
+    //virtual vector<FileEntryInterface>::iterator getTableDataIterator() {
+    //    return fileEntries.begin();
+    //}
 
 
     void addEntry(string fileName, time_t currentDateTakenOriginal) {
@@ -98,25 +111,8 @@ public:
         return fileEntries.size();
     }
 
-    FileEntry getFileEntry(int row) {
-        return fileEntries[row - 1];
-    }
 
-    // This function should do
-    // return fileEntries.iterator();
-    // This function should do
-    // return fileEntries.iterator();
-    //virtual vector<FileEntryInterface>::iterator getTableDataIterator() {
-    //    return fileEntries.begin();
-    //}
 
-    void getNumberOfFileEntries() {
-
-    }
-
-    FileEntryInterface * getNthFileEntries(int fileEntryNumber) {
-
-    }
 };
 
 
