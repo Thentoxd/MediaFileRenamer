@@ -6,6 +6,7 @@
 #define MEDIAFILERENAMER_VIEW_H
 
 #include <QApplication>
+#include <QMainWindow>
 
 #include "ui_media_file_renamer.h"
 #include "../model_interface.h"

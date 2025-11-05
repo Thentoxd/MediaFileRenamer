@@ -101,6 +101,22 @@ public:
     FileEntry getFileEntry(int row) {
         return fileEntries[row - 1];
     }
+
+    // This function should do
+    // return fileEntries.iterator();
+    // This function should do
+    // return fileEntries.iterator();
+    //virtual vector<FileEntryInterface>::iterator getTableDataIterator() {
+    //    return fileEntries.begin();
+    //}
+
+    void getNumberOfFileEntries() {
+
+    }
+
+    FileEntryInterface * getNthFileEntries(int fileEntryNumber) {
+
+    }
 };
 
 

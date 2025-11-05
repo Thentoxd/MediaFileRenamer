@@ -34,6 +34,9 @@ public:
     virtual string getCurrentWorkingDirectory() = 0;
     virtual void reload() = 0;
     virtual void clear() = 0;
+    // virtual vector<FileEntryInterface>::iterator getTableDataIterator() = 0;
+    virtual void getNumberOfFileEntries() = 0;
+    virtual FileEntryInterface * getNthFileEntries(int fileEntryNumber) = 0;
     //...
 };
 

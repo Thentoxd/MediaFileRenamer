@@ -25,8 +25,16 @@ void mediaFileRenamerMainView::create_window() {
     // tableWidget->setModel(model);
     // tableView->show();
 
-    tableWidget->setRowCount(10);
+    // tableWidget->setRowCount(10);
     tableWidget->setColumnCount(4);
+
+    // This function should do
+    // return fileEntries.iterator();
+    //auto tableDataIterator = p_model -> getTableDataIterator();
+    //for (auto eachTableModel: tableDataIterator) {
+    //    string currentFileName = eachTableModel -> getNewFileName();
+    //    SPDLOG_INFO("Table data (name): {}", currentFileName);
+    //}
 
     // Disable editing directly
     tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
