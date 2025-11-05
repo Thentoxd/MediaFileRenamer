@@ -17,6 +17,8 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
     private:
     ModelInterface * p_model;
 
+    void updateTable();
+
     public:
         mediaFileRenamerMainView(ModelInterface * p_model);
         void create_window();

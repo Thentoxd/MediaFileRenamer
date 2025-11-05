@@ -4,6 +4,7 @@
 
 #include <QFileDialog>
 #include <QString>
+#include <QDateTime>
 
 #include "../main.h"
 #include "view.h"
@@ -48,11 +49,7 @@ void mediaFileRenamerMainView::create_window() {
     tableWidget->setHorizontalHeaderLabels(m_TableHeader);
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    // Make a call onto the model to get the table data
-    // Model returns an iterable object. Each iteration returns a Line Interface which
-    // has the following virtual methods implemented ..
-    // getFilename, getNewFile, getOriginalDateTaken, getNewOriginalDateTaken
-    //
+    this -> updateTable();
 
     QObject::connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
 }
@@ -70,20 +67,63 @@ void mediaFileRenamerMainView::selectFolderButtonClicked() {
     string newCurrentWorkingDirectory = dir.toStdString();
     p_model -> setCurrentWorkingDirectory(newCurrentWorkingDirectory);
 
+    this -> updateTable();
+}
+
+void mediaFileRenamerMainView::updateTable() {
+
+    // Make a call onto the model to get the table data
+    // Model returns an iterable object. Each iteration returns a Line Interface which
+    // has the following virtual methods implemented ..
+    // getFilename, getNewFile, getOriginalDateTaken, getNewOriginalDateTaken
+
     int entryCount = p_model -> getEntryCount();
     SPDLOG_INFO("Number of files in the model: {}", entryCount);
 
+    tableWidget->setRowCount(0); // This will delete all the data in the current table
     tableWidget->setRowCount(entryCount);
 
-    FileEntryInterface * p_fileEntryInterface = p_model -> getFileEntry(0);
+    for (int row = 0; row < entryCount; row++) {
+        FileEntryInterface * p_fileEntryInterface = p_model -> getFileEntry(row);
 
-    string fileName = p_fileEntryInterface->getCurrentFileName();
-    SPDLOG_INFO("Filename 1: {}", fileName);
+        string fileName = p_fileEntryInterface->getCurrentFileName();
+        // SPDLOG_INFO("Filename 1: {}", fileName);
+        auto item = new QTableWidgetItem();
+        item->setText(QString::fromStdString(fileName));
+        tableWidget->setItem(row,0,item);
 
-    auto item = new QTableWidgetItem();
-    item->setText(QString::fromStdString(fileName));
-    tableWidget->setItem(0,0,item);
+        string newFileName = p_fileEntryInterface->getNewFileName();
+        // SPDLOG_INFO("Filename 1: {}", newFileName);
+        auto item2 = new QTableWidgetItem();
+        item2->setText(QString::fromStdString(newFileName));
+        tableWidget->setItem(row,1,item2);
+
+        time_t currentOrigTakenDate = p_fileEntryInterface->getCurrentDateTakenOriginal();
+        // SPDLOG_INFO("Filename 1: {}", newFileName);
+        auto item3 = new QTableWidgetItem();
+
+        std::tm * ptm = std::localtime(&currentOrigTakenDate);
+        char buffer[32];
+        // Format: Mo, 15.06.2009 20:20:00
+        std::strftime(buffer, 32, "%a, %d.%m.%Y %H:%M:%S", ptm);
+
+        item3->setText(QString::fromStdString(buffer));
+        tableWidget->setItem(row,2,item3);
+
+        time_t newOrigTakenDate = p_fileEntryInterface->getCurrentDateTakenOriginal();
+        // SPDLOG_INFO("Filename 1: {}", newFileName);
+        auto item4 = new QTableWidgetItem();
+
+        std::tm * ptm2 = std::localtime(&newOrigTakenDate);
+        char buffer2[32];
+        // Format: Mo, 15.06.2009 20:20:00
+        std::strftime(buffer2, 32, "%a, %d.%m.%Y %H:%M:%S", ptm2);
+
+        item4->setText(QString::fromStdString(buffer2));
+        tableWidget->setItem(row,3,item4);
+    }
 }
+
 
 int mediaFileRenamerMainView::displayWindow() {
     return p_QApplication -> exec();
