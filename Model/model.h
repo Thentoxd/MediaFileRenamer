@@ -78,7 +78,7 @@ public:
     void clear() override ;
 
     FileEntry * getFileEntry(int row) override {
-        FileEntry * p_entry = &fileEntries[row - 1];
+        FileEntry * p_entry = &fileEntries[row];
         return p_entry;
     }
 
@@ -96,7 +96,7 @@ public:
         fileEntries.push_back(newFileEntry);
     }
     void addEntry(FileEntry entry, int row) {
-        fileEntries.insert(fileEntries.begin() + row - 1, entry);
+        fileEntries.insert(fileEntries.begin() + row, entry);
     }
 
     void removeBackEntry() {
@@ -104,7 +104,7 @@ public:
     }
 
     void removeEntry(int row) {
-        fileEntries.erase(fileEntries.begin() + row - 1);
+        fileEntries.erase(fileEntries.begin() + row);
     }
 
     int getEntryCount() {
