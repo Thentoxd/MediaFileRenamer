@@ -4,7 +4,7 @@
 
 #include <QFileDialog>
 #include <QString>
-#include <QDateTime>
+#include <QFont>
 
 #include "../main.h"
 #include "view.h"
@@ -28,7 +28,9 @@ void mediaFileRenamerMainView::create_window() {
     // tableView->show();
 
     // tableWidget->setRowCount(10);
-    tableWidget->setColumnCount(4);
+    QFont font("Courier", 11);
+    tableWidget -> setFont(font);
+    tableWidget -> setColumnCount(4);
 
     // This function should do
     // return fileEntries.iterator();
@@ -105,7 +107,7 @@ void mediaFileRenamerMainView::updateTable() {
         std::tm * ptm = std::localtime(&currentOrigTakenDate);
         char buffer[32];
         // Format: Mo, 15.06.2009 20:20:00
-        std::strftime(buffer, 32, "%a, %d.%m.%Y %H:%M:%S", ptm);
+        std::strftime(buffer, 32, "%Y-%m-%d %H:%M:%S", ptm);
 
         item3->setText(QString::fromStdString(buffer));
         tableWidget->setItem(row,2,item3);
@@ -117,7 +119,7 @@ void mediaFileRenamerMainView::updateTable() {
         std::tm * ptm2 = std::localtime(&newOrigTakenDate);
         char buffer2[32];
         // Format: Mo, 15.06.2009 20:20:00
-        std::strftime(buffer2, 32, "%a, %d.%m.%Y %H:%M:%S", ptm2);
+        std::strftime(buffer2, 32, "%Y-%m-%d %H:%M:%S", ptm2);
 
         item4->setText(QString::fromStdString(buffer2));
         tableWidget->setItem(row,3,item4);
