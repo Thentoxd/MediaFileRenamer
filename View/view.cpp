@@ -3,6 +3,7 @@
 //
 
 #include <QFileDialog>
+#include <QString>
 
 #include "../main.h"
 #include "view.h"
@@ -71,6 +72,17 @@ void mediaFileRenamerMainView::selectFolderButtonClicked() {
 
     int entryCount = p_model -> getEntryCount();
     SPDLOG_INFO("Number of files in the model: {}", entryCount);
+
+    tableWidget->setRowCount(entryCount);
+
+    FileEntryInterface * p_fileEntryInterface = p_model -> getFileEntry(0);
+
+    string fileName = p_fileEntryInterface->getCurrentFileName();
+    SPDLOG_INFO("Filename 1: {}", fileName);
+
+    auto item = new QTableWidgetItem();
+    item->setText(QString::fromStdString(fileName));
+    tableWidget->setItem(0,0,item);
 }
 
 int mediaFileRenamerMainView::displayWindow() {
