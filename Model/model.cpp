@@ -8,6 +8,7 @@
 #include <vector>
 
 #include <filesystem>
+#include <iostream>
 
 using namespace std;
 
@@ -33,28 +34,12 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
     */
 
     // directory_iterator can be iterated using a range-for loop
-    for (auto const& dir_entry : filesystem::directory_iterator{currentWorkingDirectory}) {
-        if (!dir_entry.is_directory()) {
-            string raw_filename = dir_entry.path().string();
-            raw_filename = raw_filename.substr(2);
+    for (auto const& entry : filesystem::directory_iterator{currentWorkingDirectory}) {
+        if(!entry.is_directory()) {
+            filesystem::path outfilename = entry.path().filename();
+            string outfilename_str = outfilename.string();
 
-            if (raw_filename[0] != '.') {
-                int dot_position = raw_filename.find(".");
-                string final_filename;
-
-                if (dot_position == -1)
-                    final_filename = raw_filename;
-                else {
-                    final_filename = raw_filename.substr(0, dot_position);
-                }
-
-                time_t current_time = time(nullptr);
-
-                // p_model -> addEntry(final_filename, current_time);
-                SPDLOG_INFO("File in CWD: {}", final_filename);
-
-                this -> addEntry(final_filename, current_time);
-            }
+            addEntry(outfilename_str, time_t(nullptr));
         }
     }
     SPDLOG_INFO("New model built");
