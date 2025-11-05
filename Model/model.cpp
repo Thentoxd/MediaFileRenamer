@@ -39,9 +39,17 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
             filesystem::path outfilename = entry.path().filename();
             string outfilename_str = outfilename.string();
 
-            SPDLOG_INFO("Filename found: {}", outfilename_str);
+            if(outfilename_str[0] != '.') {
+                for(int i = outfilename_str.size() - 1; i >= 0; i--) {
+                    if(outfilename_str[i] == '.') {
+                        outfilename_str = outfilename_str.substr(0, i);
+                        break;
+                    }
+                }
 
-            addEntry(outfilename_str, time_t(nullptr));
+                SPDLOG_INFO("Filename found: {}", outfilename_str);
+                addEntry(outfilename_str, time_t(nullptr));
+            }
         }
     }
     SPDLOG_INFO("New model built");
