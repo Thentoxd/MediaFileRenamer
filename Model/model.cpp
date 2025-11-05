@@ -25,7 +25,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
     SPDLOG_INFO("Model: updating current working directory");
     currentWorkingDirectory = newCurrentWorkingDirectory;
 
-    // this -> clear();
+    this -> clear();
     /*
     virtual void setFileName(string fileName) = 0;
     virtual void setNewFileName(string newFileName) = 0;
@@ -38,6 +38,8 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
         if(!entry.is_directory()) {
             filesystem::path outfilename = entry.path().filename();
             string outfilename_str = outfilename.string();
+
+            SPDLOG_INFO("Filename found: {}", outfilename_str);
 
             addEntry(outfilename_str, time_t(nullptr));
         }
@@ -56,4 +58,5 @@ void Model::reload() {
 
 void Model::clear(){
     SPDLOG_INFO("Model: clear");
+    fileEntries.clear();
 }

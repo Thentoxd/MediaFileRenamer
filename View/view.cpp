@@ -68,6 +68,9 @@ void mediaFileRenamerMainView::selectFolderButtonClicked() {
     lineEdit -> setText(dir);
     string newCurrentWorkingDirectory = dir.toStdString();
     p_model -> setCurrentWorkingDirectory(newCurrentWorkingDirectory);
+
+    int entryCount = p_model -> getEntryCount();
+    SPDLOG_INFO("Number of files in the model: {}", entryCount);
 }
 
 int mediaFileRenamerMainView::displayWindow() {
