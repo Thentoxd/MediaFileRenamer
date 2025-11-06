@@ -36,6 +36,16 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(tinyxml2)
 
 
+include(FetchContent)
+FetchContent_Declare(
+        tomlplusplus
+        GIT_REPOSITORY https://github.com/marzer/tomlplusplus.git
+        GIT_TAG        v3.4.0
+)
+FetchContent_MakeAvailable(tomlplusplus)
+
+
+
 add_executable(MediaFileRenamer main.cpp
         Model/model.cpp
         Model/model.h
@@ -56,6 +66,7 @@ target_link_libraries(MediaFileRenamer
         spdlog
         CLI11
         tinyxml2
+        tomlplusplus::tomlplusplus
 )
 
 target_include_directories(MediaFileRenamer PRIVATE include)

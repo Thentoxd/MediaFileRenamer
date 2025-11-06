@@ -14,6 +14,8 @@
 // https://github.com/CLIUtils/CLI11?tab=readme-ov-file#usage
 #include "CLI/CLI.hpp"
 
+#include "toml++/toml.hpp"
+
 int main(int argc, char *argv[]) {
     try
     {
@@ -58,6 +60,21 @@ int main(int argc, char *argv[]) {
 
         SPDLOG_INFO("Current Working Directory: {}", current_working_directory.string());
 
+        auto configFilename = current_working_directory;
+        configFilename.append("mfr.toml");
+
+        SPDLOG_INFO("Trying to load config file: {}", configFilename.string());
+
+        toml::table tbl;
+        try {
+            tbl = toml::parse_file(configFilename.string());
+        }
+        catch (const toml::parse_error& err)
+        {
+            SPDLOG_CRITICAL("Failed to load config file: {}", configFilename.string());
+            std::cerr << err << "\n";
+            return 1;
+        }
 
         // We are using the Model-View-Controller design pattern to better separate classes
         // [1] The model is created, and it initializes its data
