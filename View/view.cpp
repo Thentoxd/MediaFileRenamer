@@ -36,8 +36,7 @@ void mediaFileRenamerMainView::create_window() {
     //    SPDLOG_INFO("Table data (name): {}", currentFileName);
     //}
 
-    int entryCount = p_model -> getEntryCount();
-    SPDLOG_INFO("Number of files in the model: {}", entryCount);
+    this -> updateTable();
 
     // Disable editing directly
     tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
