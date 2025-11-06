@@ -1,6 +1,0 @@
-# Media File Renamer config file
-
-install_directory = 'C:\Users\steph\CLionProjects\MediaFileRenamer4'
-last_directory = 'C:\Users\steph\CLionProjects\MediaFileRenamer4'
-
-filetypes_parsed = [ "jpg", "JPG" ]
