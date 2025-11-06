@@ -65,12 +65,16 @@ void mediaFileRenamerMainView::selectFolderButtonClicked() {
                                             QFileDialog::ShowDirsOnly
                                             | QFileDialog::DontResolveSymlinks);
 
-    lineEdit -> setText(dir);
-    string newCurrentWorkingDirectory = dir.toStdString();
-    p_model -> setCurrentWorkingDirectory(newCurrentWorkingDirectory);
+    if(dir == nullptr) {
+        SPDLOG_INFO("No directory selected");
+    } else {
+        lineEdit -> setText(dir);
+        string newCurrentWorkingDirectory = dir.toStdString();
+        p_model -> setCurrentWorkingDirectory(newCurrentWorkingDirectory);
 
-    int entryCount = p_model -> getEntryCount();
-    SPDLOG_INFO("Number of files in the model: {}", entryCount);
+        int entryCount = p_model -> getEntryCount();
+        SPDLOG_INFO("Number of files in the model: {}", entryCount);
+    }
 }
 
 int mediaFileRenamerMainView::displayWindow() {
