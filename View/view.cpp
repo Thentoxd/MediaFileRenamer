@@ -66,7 +66,7 @@ void mediaFileRenamerMainView::selectFolderButtonClicked() {
                                             | QFileDialog::DontResolveSymlinks);
 
     if(dir == nullptr) {
-        SPDLOG_INFO("No directory selected");
+        SPDLOG_INFO("No directory selected!");
     } else {
         lineEdit -> setText(dir);
         string newCurrentWorkingDirectory = dir.toStdString();
