@@ -4,8 +4,12 @@
 
 #include <QFileDialog>
 
+#include "../TinyEXIF/TinyEXIF.h"
 #include "../main.h"
 #include "view.h"
+
+#include <fstream>
+#include <iostream>
 
 mediaFileRenamerMainView::mediaFileRenamerMainView(ModelInterface * modelParam) {
     SPDLOG_INFO("Initialising View ....");
@@ -109,24 +113,15 @@ void mediaFileRenamerMainView::updateTable() {
         // SPDLOG_INFO("Filename 1: {}", newFileName);
         auto item3 = new QTableWidgetItem();
 
-        std::tm * ptm = std::localtime(&currentOrigTakenDate);
-        char buffer[32];
-        // Format: Mo, 15.06.2009 20:20:00
-        std::strftime(buffer, 32, "%Y-%m-%d %H:%M:%S", ptm);
+        std::ifstream my_stream(p_model->getCurrentWorkingDirectory() + "/" + fileName, std::ios::binary);
+        TinyEXIF::EXIFInfo imageEXIF(my_stream);
 
-        item3->setText(QString::fromStdString(buffer));
+        item3->setText(QString::fromStdString(imageEXIF.DateTimeOriginal));
         tableWidget->setItem(row,2,item3);
 
-        time_t newOrigTakenDate = p_fileEntryInterface->getCurrentDateTakenOriginal();
-        // SPDLOG_INFO("Filename 1: {}", newFileName);
         auto item4 = new QTableWidgetItem();
 
-        std::tm * ptm2 = std::localtime(&newOrigTakenDate);
-        char buffer2[32];
-        // Format: Mo, 15.06.2009 20:20:00
-        std::strftime(buffer2, 32, "%Y-%m-%d %H:%M:%S", ptm2);
-
-        item4->setText(QString::fromStdString(buffer2));
+        item4->setText(QString::fromStdString(imageEXIF.DateTimeOriginal));
         tableWidget->setItem(row,3,item4);
     }
 }

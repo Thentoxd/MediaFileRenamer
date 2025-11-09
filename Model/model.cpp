@@ -40,13 +40,6 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
             string outfilename_str = outfilename.string();
 
             if(outfilename_str[0] != '.') {
-                for(int i = outfilename_str.size() - 1; i >= 0; i--) {
-                    if(outfilename_str[i] == '.') {
-                        outfilename_str = outfilename_str.substr(0, i);
-                        break;
-                    }
-                }
-
                 SPDLOG_INFO("Filename found: {}", outfilename_str);
                 addEntry(outfilename_str, time_t(nullptr));
             }
