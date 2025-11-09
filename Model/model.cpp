@@ -65,6 +65,16 @@ void Model::reload() {
 }
 
 void Model::clear(){
-    SPDLOG_INFO("Model: clear");
+    SPDLOG_INFO("Model: clear fileEntries");
     fileEntries.clear();
+}
+
+void Model::setFileTypesToParse(const vector<string> fileTypesToParseParameter) {
+    SPDLOG_INFO("Model::setFileTypesToParse");
+    this -> fileTypesToParse = fileTypesToParseParameter;
+}
+
+void Model::setMediaFileRenamerVersion(const std::string_view versionParameter) {
+    SPDLOG_INFO("Model::setMediaFileRenamerVersion: {}", versionParameter);
+    this -> mediaFileRenamerVersion = versionParameter;
 }

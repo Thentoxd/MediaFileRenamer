@@ -14,7 +14,9 @@
 // https://github.com/CLIUtils/CLI11?tab=readme-ov-file#usage
 #include "CLI/CLI.hpp"
 
-#include "toml++/toml.hpp"
+#include <fstream>
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 int main(int argc, char *argv[]) {
     try
@@ -60,21 +62,23 @@ int main(int argc, char *argv[]) {
 
         SPDLOG_INFO("Current Working Directory: {}", current_working_directory.string());
 
+        current_working_directory = current_working_directory.parent_path();
+        SPDLOG_INFO("Moving up one level Directory: {}", current_working_directory.string());
+
         auto configFilename = current_working_directory;
-        configFilename.append("mfr.toml");
+        configFilename.append("mfr.configconfig");
 
         SPDLOG_INFO("Trying to load config file: {}", configFilename.string());
 
-        toml::table tbl;
-        try {
-            tbl = toml::parse_file(configFilename.string());
-        }
-        catch (const toml::parse_error& err)
-        {
-            SPDLOG_CRITICAL("Failed to load config file: {}", configFilename.string());
-            std::cerr << err << "\n";
-            return 1;
-        }
+        std::ifstream f("../config.json");
+        json data = json::parse(f);
+
+        SPDLOG_INFO("Loaded config file");
+
+        string install_directory_from_config_file = data["install_directory"];
+        SPDLOG_INFO("Install directory loaded from config file: {}", install_directory_from_config_file);
+
+        // const tao::config::value config = tao::config::from_file( "foo.cfg" );
 
         // We are using the Model-View-Controller design pattern to better separate classes
         // [1] The model is created, and it initializes its data
@@ -84,8 +88,7 @@ int main(int argc, char *argv[]) {
 
         auto p_model = new Model();
 
-        p_model -> setCurrentWorkingDirectory(current_working_directory.string());
-
+        p_model -> setCurrentWorkingDirectory(install_directory_from_config_file);
 
         auto * p_QApplication = new QApplication(argc, argv);
         auto p_view = new mediaFileRenamerMainView(p_model);

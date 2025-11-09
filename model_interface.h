@@ -37,6 +37,8 @@ public:
     // virtual vector<FileEntryInterface>::iterator getTableDataIterator() = 0;
     virtual int getEntryCount() = 0;
     virtual FileEntryInterface * getFileEntry(int row) = 0;
+    virtual void setFileTypesToParse(const vector<string> fileTypesToParse) = 0;
+    virtual void setMediaFileRenamerVersion(const std::string_view version) = 0;
     //...
 };
 

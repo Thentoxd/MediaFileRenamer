@@ -67,7 +67,9 @@ class Model : public ModelInterface {
 
 private:
     string currentWorkingDirectory;
+    string mediaFileRenamerVersion;
     vector<FileEntry> fileEntries;
+    vector<string> fileTypesToParse;
 
 public:
     Model();
@@ -111,7 +113,9 @@ public:
         return fileEntries.size();
     }
 
+    void setFileTypesToParse(const vector<string> fileTypesToParse) override;
 
+    void setMediaFileRenamerVersion(const std::string_view) override;;
 
 };
 
