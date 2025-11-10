@@ -51,7 +51,13 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
 
                 string media_file_to_read = getCurrentWorkingDirectory() + "/" + outfilename_str;
 
-                // Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(media_file_to_read);
+                try {
+                    Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(media_file_to_read);
+                }
+                catch (Exiv2::Error& e) {
+                    SPDLOG_INFO("Exiv2 exception - usually means no EXIF data found in {}", outfilename_str);
+                }
+
                 // assert(image.get() != nullptr);
                 // image->readMetadata();
                 //
