@@ -96,8 +96,6 @@ void mediaFileRenamerMainView::updateTable() {
     tableWidget->setRowCount(0); // This will delete all the data in the current table
     tableWidget->setRowCount(entryCount);
 
-    p_model->updateEntries();
-
     for (int row = 0; row < entryCount; row++) {
         FileEntryInterface *entry = p_model->getFileEntry(row);
         auto item1 = new QTableWidgetItem(), item2 = new QTableWidgetItem(), item3 = new QTableWidgetItem(), item4 = new QTableWidgetItem();

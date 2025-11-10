@@ -74,7 +74,6 @@ public:
 
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
     string getCurrentWorkingDirectory() override;
-    void updateEntries() override ;
     void reload() override ;
     void clear() override ;
 

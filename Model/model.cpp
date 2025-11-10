@@ -11,6 +11,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "exiv2/exiv2.hpp"
 #include "../TinyEXIF/TinyEXIF.h"
 
 using namespace std;
@@ -44,6 +45,22 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
 
             if(outfilename_str[0] != '.') {
                 SPDLOG_INFO("Filename found: {}", outfilename_str);
+
+                // std::ifstream stream(getCurrentWorkingDirectory() + "/" + outfilename_str, std::ios::binary);
+                // TinyEXIF::EXIFInfo imageEXIF(stream);
+
+                string media_file_to_read = getCurrentWorkingDirectory() + "/" + outfilename_str;
+
+                // Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(media_file_to_read);
+                // assert(image.get() != nullptr);
+                // image->readMetadata();
+                //
+                // Exiv2::ExifData &exifData = image->exifData();
+                // if (exifData.empty()) {
+                //     SPDLOG_INFO("No EXIF data found in: {}", outfilename_str);
+                // }
+
+                // addEntry(outfilename_str, imageEXIF.DateTimeOriginal);
                 addEntry(outfilename_str, "");
             }
         }
@@ -56,18 +73,18 @@ string Model::getCurrentWorkingDirectory() {
     return(currentWorkingDirectory);
 }
 
-void Model::updateEntries() {
-    int entryCount = getEntryCount();
-    for(int row = 0; row < entryCount; row++) {
-        FileEntryInterface* p_fileEntryInterface = getFileEntry(row);
-        string fileName = p_fileEntryInterface->getCurrentFileName();
-
-        std::ifstream stream(getCurrentWorkingDirectory() + "/" + fileName, std::ios::binary);
-        TinyEXIF::EXIFInfo imageEXIF(stream);
-
-        addEntry(fileName, imageEXIF.DateTimeOriginal);
-    }
-}
+// void Model::updateEntries() {
+//     int entryCount = getEntryCount();
+//     for(int row = 0; row < entryCount; row++) {
+//         FileEntryInterface* p_fileEntryInterface = getFileEntry(row);
+//         string fileName = p_fileEntryInterface->getCurrentFileName();
+//
+//         std::ifstream stream(getCurrentWorkingDirectory() + "/" + fileName, std::ios::binary);
+//         TinyEXIF::EXIFInfo imageEXIF(stream);
+//
+//         addEntry(fileName, imageEXIF.DateTimeOriginal);
+//     }
+// }
 
 void Model::reload() {
     SPDLOG_INFO("Model: reload");

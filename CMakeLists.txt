@@ -39,6 +39,17 @@ FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download
 FetchContent_MakeAvailable(json)
 
 
+FetchContent_Declare(
+        exiv2
+        GIT_REPOSITORY https://github.com/Exiv2/exiv2.git
+        GIT_TAG        v0.28.7
+)
+FetchContent_MakeAvailable(exiv2)
+set (EXIV2_BUILD_DOC OFF CACHE INTERNAL "Add 'doc' target to generate documentation")
+set (EXIV2_ENABLE_INIH OFF CACHE INTERNAL "Use inih library")
+set (EXIV2_ENABLE_PNG OFF CACHE INTERNAL "Build with PNG support (requires zlib)")
+
+
 add_executable(MediaFileRenamer main.cpp
         Model/model.cpp
         Model/model.h
@@ -60,9 +71,11 @@ target_link_libraries(MediaFileRenamer
         CLI11
         tinyxml2
         nlohmann_json::nlohmann_json
+        exiv2lib
 )
 
 target_include_directories(MediaFileRenamer PRIVATE include)
+target_include_directories(MediaFileRenamer PRIVATE cmake-build-debug)
 
 FetchContent_Declare(
         Catch2
