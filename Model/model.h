@@ -17,18 +17,16 @@ class FileEntry : public FileEntryInterface {
     private:
     string currentFileName;
     string newFileName;
-    time_t currentDateTakenOriginal{};
-    time_t newDateTakenOriginal{};
+    string currentDateTakenOriginal;
+    string newDateTakenOriginal;
 
 public:
-    FileEntry(string fileName, time_t currentDateTakenOriginal) {
+    FileEntry(string fileName, string currentDateTakenOriginal) {
         this->currentFileName = fileName;
         this->newFileName = fileName;
         this->currentDateTakenOriginal = currentDateTakenOriginal;
         this->newDateTakenOriginal = currentDateTakenOriginal;
     }
-
-    FileEntry() {};
 
     string getCurrentFileName() override {
         return currentFileName;
@@ -36,10 +34,10 @@ public:
     string getNewFileName() override {
         return newFileName;
     }
-    time_t getCurrentDateTakenOriginal() override {
+    string getCurrentDateTakenOriginal() override {
         return currentDateTakenOriginal;
     }
-    time_t getNewDateTakenOriginal() override {
+    string getNewDateTakenOriginal() override {
         return newDateTakenOriginal;
     }
 
@@ -52,12 +50,12 @@ public:
         this->newFileName = newFileName;
     }
 
-    void setDateTaken(time_t dateTaken) override {
+    void setDateTaken(string dateTaken) override {
         currentDateTakenOriginal = dateTaken;
         newDateTakenOriginal = dateTaken;
     }
 
-    void setNewDateTaken(time_t newDateTaken) override {
+    void setNewDateTaken(string newDateTaken) override {
         newDateTakenOriginal = newDateTaken;
     }
 };
@@ -76,6 +74,7 @@ public:
 
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
     string getCurrentWorkingDirectory() override;
+    void updateEntries() override ;
     void reload() override ;
     void clear() override ;
 
@@ -93,7 +92,7 @@ public:
     //}
 
 
-    void addEntry(string fileName, time_t currentDateTakenOriginal) {
+    void addEntry(string fileName, string currentDateTakenOriginal) {
         FileEntry newFileEntry(fileName, currentDateTakenOriginal);
         fileEntries.push_back(newFileEntry);
     }

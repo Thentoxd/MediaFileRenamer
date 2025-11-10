@@ -18,12 +18,12 @@ public:
 
     virtual string getCurrentFileName() = 0;
     virtual string getNewFileName() = 0;
-    virtual time_t getCurrentDateTakenOriginal() = 0;
-    virtual time_t getNewDateTakenOriginal() = 0;
+    virtual string getCurrentDateTakenOriginal() = 0;
+    virtual string getNewDateTakenOriginal() = 0;
     virtual void setFileName(string fileName) = 0;
     virtual void setNewFileName(string newFileName) = 0;
-    virtual void setDateTaken(time_t dateTaken) = 0;
-    virtual void setNewDateTaken(time_t newDateTaken) = 0;
+    virtual void setDateTaken(string dateTaken) = 0;
+    virtual void setNewDateTaken(string newDateTaken) = 0;
 };
 
 class ModelInterface {
@@ -32,6 +32,7 @@ public:
 
     virtual void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) = 0;
     virtual string getCurrentWorkingDirectory() = 0;
+    virtual void updateEntries() = 0;
     virtual void reload() = 0;
     virtual void clear() = 0;
     // virtual vector<FileEntryInterface>::iterator getTableDataIterator() = 0;

@@ -8,7 +8,10 @@
 #include <vector>
 
 #include <filesystem>
+#include <fstream>
 #include <iostream>
+
+#include "../TinyEXIF/TinyEXIF.h"
 
 using namespace std;
 
@@ -41,7 +44,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
 
             if(outfilename_str[0] != '.') {
                 SPDLOG_INFO("Filename found: {}", outfilename_str);
-                addEntry(outfilename_str, time_t(nullptr));
+                addEntry(outfilename_str, "");
             }
         }
     }
@@ -51,6 +54,19 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
 string Model::getCurrentWorkingDirectory() {
     SPDLOG_INFO("Model: getting current working directory");
     return(currentWorkingDirectory);
+}
+
+void Model::updateEntries() {
+    int entryCount = getEntryCount();
+    for(int row = 0; row < entryCount; row++) {
+        FileEntryInterface* p_fileEntryInterface = getFileEntry(row);
+        string fileName = p_fileEntryInterface->getCurrentFileName();
+
+        std::ifstream stream(getCurrentWorkingDirectory() + "/" + fileName, std::ios::binary);
+        TinyEXIF::EXIFInfo imageEXIF(stream);
+
+        addEntry(fileName, imageEXIF.DateTimeOriginal);
+    }
 }
 
 void Model::reload() {

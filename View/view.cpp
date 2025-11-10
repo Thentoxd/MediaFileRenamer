@@ -11,6 +11,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "../Model/model.h"
+
 mediaFileRenamerMainView::mediaFileRenamerMainView(ModelInterface * modelParam) {
     SPDLOG_INFO("Initialising View ....");
 
@@ -94,34 +96,22 @@ void mediaFileRenamerMainView::updateTable() {
     tableWidget->setRowCount(0); // This will delete all the data in the current table
     tableWidget->setRowCount(entryCount);
 
+    p_model->updateEntries();
+
     for (int row = 0; row < entryCount; row++) {
-        FileEntryInterface * p_fileEntryInterface = p_model -> getFileEntry(row);
+        FileEntryInterface *entry = p_model->getFileEntry(row);
+        auto item1 = new QTableWidgetItem(), item2 = new QTableWidgetItem(), item3 = new QTableWidgetItem(), item4 = new QTableWidgetItem();
 
-        string fileName = p_fileEntryInterface->getCurrentFileName();
-        // SPDLOG_INFO("Filename 1: {}", fileName);
-        auto item = new QTableWidgetItem();
-        item->setText(QString::fromStdString(fileName));
-        tableWidget->setItem(row,0,item);
+        item1->setText(QString::fromStdString(entry->getCurrentFileName()));
+        tableWidget->setItem(row,0,item1);
 
-        string newFileName = p_fileEntryInterface->getNewFileName();
-        // SPDLOG_INFO("Filename 1: {}", newFileName);
-        auto item2 = new QTableWidgetItem();
-        item2->setText(QString::fromStdString(newFileName));
+        item2->setText(QString::fromStdString(entry->getNewFileName()));
         tableWidget->setItem(row,1,item2);
 
-        time_t currentOrigTakenDate = p_fileEntryInterface->getCurrentDateTakenOriginal();
-        // SPDLOG_INFO("Filename 1: {}", newFileName);
-        auto item3 = new QTableWidgetItem();
-
-        std::ifstream my_stream(p_model->getCurrentWorkingDirectory() + "/" + fileName, std::ios::binary);
-        TinyEXIF::EXIFInfo imageEXIF(my_stream);
-
-        item3->setText(QString::fromStdString(imageEXIF.DateTimeOriginal));
+        item3->setText(QString::fromStdString(entry->getCurrentDateTakenOriginal()));
         tableWidget->setItem(row,2,item3);
 
-        auto item4 = new QTableWidgetItem();
-
-        item4->setText(QString::fromStdString(imageEXIF.DateTimeOriginal));
+        item4->setText(QString::fromStdString(entry->getNewDateTakenOriginal()));
         tableWidget->setItem(row,3,item4);
     }
 }
