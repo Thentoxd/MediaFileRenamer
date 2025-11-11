@@ -50,9 +50,29 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
                 // TinyEXIF::EXIFInfo imageEXIF(stream);
 
                 string media_file_to_read = getCurrentWorkingDirectory() + "/" + outfilename_str;
+                string dateTakenOriginal = "";
 
                 try {
                     Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(media_file_to_read);
+                    if(!image.get()) {
+                        SPDLOG_INFO("Failed to open image: {}", media_file_to_read);
+                    } else {
+                        image->readMetadata();
+                        Exiv2::ExifData &exifData = image->exifData();
+
+                        if(exifData.empty()) {
+                            SPDLOG_INFO("No EXIF data found in: {}", media_file_to_read);
+                        } else {
+                            Exiv2::ExifKey key("Exif.Photo.DateTimeOriginal");
+                            auto pos = exifData.findKey(key);
+                            if (pos != exifData.end()) {
+                                dateTakenOriginal = pos->toString();
+                            } else {
+                                SPDLOG_INFO("DateTimeOriginal not found.");
+                            }
+                        }
+                    }
+
                 }
                 catch (Exiv2::Error& e) {
                     SPDLOG_INFO("Exiv2 exception - usually means no EXIF data found in {}", outfilename_str);
@@ -67,7 +87,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
                 // }
 
                 // addEntry(outfilename_str, imageEXIF.DateTimeOriginal);
-                addEntry(outfilename_str, "");
+                addEntry(outfilename_str, dateTakenOriginal);
             }
         }
     }
