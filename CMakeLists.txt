@@ -38,16 +38,19 @@ FetchContent_MakeAvailable(tinyxml2)
 FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
 FetchContent_MakeAvailable(json)
 
-
+set (EXIV2_BUILD_DOC OFF CACHE INTERNAL "Add 'doc' target to generate documentation")
+set (EXIV2_ENABLE_INIH OFF CACHE INTERNAL "Use inih library")
+set (EXIV2_ENABLE_PNG OFF CACHE INTERNAL "Build with PNG support (requires zlib)")
+set (EXIV2_ENABLE_BROTLI OFF CACHE INTERNAL "Use Brotli for JPEG XL compressed boxes (BMFF)")
+set (BUILD_SHARED_LIBS OFF CACHE INTERNAL "Build exiv2lib as a shared library")
+SET (EXIV2_ENABLE_XMP OFF CACHE INTERNAL "Build with XMP metadata support")
 FetchContent_Declare(
         exiv2
         GIT_REPOSITORY https://github.com/Exiv2/exiv2.git
         GIT_TAG        v0.28.7
 )
 FetchContent_MakeAvailable(exiv2)
-set (EXIV2_BUILD_DOC OFF CACHE INTERNAL "Add 'doc' target to generate documentation")
-set (EXIV2_ENABLE_INIH OFF CACHE INTERNAL "Use inih library")
-set (EXIV2_ENABLE_PNG OFF CACHE INTERNAL "Build with PNG support (requires zlib)")
+
 
 
 add_executable(MediaFileRenamer main.cpp
