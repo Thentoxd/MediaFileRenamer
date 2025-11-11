@@ -12,7 +12,6 @@
 #include <iostream>
 
 #include "exiv2/exiv2.hpp"
-#include "../TinyEXIF/TinyEXIF.h"
 
 using namespace std;
 

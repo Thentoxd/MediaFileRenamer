@@ -4,7 +4,6 @@
 
 #include <QFileDialog>
 
-#include "../TinyEXIF/TinyEXIF.h"
 #include "../main.h"
 #include "view.h"
 
