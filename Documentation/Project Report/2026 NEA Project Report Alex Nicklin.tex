@@ -92,7 +92,7 @@ BRU is an excellent and powerful tool but it has a few problems and weaknesses. 
 
 
 
-\textit{The design will be as simple as possible. Adding unnessary back-ends, such as a database, will not be done. If a well known and maintained library for a feature is commonly available, it will be used.}
+\textit{The design will be as simple as possible. Adding unnecessary back-ends, such as a database, will not be done. If a well known and maintained library for a feature is commonly available, it will be used.}
 \subsection{Declaration}
 \textbf{All code - except those modules listed below - and this report is my own work.}
 
@@ -166,6 +166,7 @@ sudo apt install texlive-full
 
 \subsection{Tested Deployment Platforms}
 
+
 \subsection{Legal}
 All my source code is available under the GPL licence. GPL is a copyleft license that requires all derivative works to also be released under the GPL, ensuring they remain open source
 
@@ -203,11 +204,36 @@ To edit and compile the Latex documentation, first:
     \item Install MiKTeX from \url{https://miktex.org/download}
     \item Set MiKTeX to check and install updates automatically. Wait until it says updates are avaiable and do those
     \item I would recommend a full restart of the computer at this point
-    \item Within CLion, under \begin{verbatim}\Documentation\Project Report\end{verbatim}
-    \item Open 2026 NEA Project Report Alex Nicklin.tex in CLion
-    \item You should be able to run this .tex file to produce a PDF
-    \item This pdf will be generated in the out subdirectory
 \end{itemize}
+
+There are two source files for the documentation:
+
+
+\begin{enumerate}
+   \item 2026 NEA Project Report Alex Nicklin.tex
+   \item 2026NEAProjectReportAlexNicklin.bib
+\end{enumerate}
+
+[1] is the Latex source file for the report and [2] is the bibliography.
+
+We used BibTeX and MikTeX to compile these two source files to make the final, single report file in pff format.
+
+The Media subfolder contains any pictures referenced by [1].
+
+In CLion, we need to add two custom Run/Debug configurations to "compile" [1] and [2].
+
+\includegraphics[width=0.8\textwidth]{Media/2025-11-11 BibTeX Run_Debug Configurations}
+
+\includegraphics[width=0.8\textwidth]{Media/2025-11-11 LaTeX Run_Debug Configurations.jpg}
+
+To fully rebuild the documentation, you have to do four compiles in this order:
+
+\begin{enumerate}
+    \item LaTeX compile
+    \item BibTeX compile
+    \item LaTeX compile
+    \item LaTeX compile
+\end{enumerate}
 
 \section{Testing}
 
