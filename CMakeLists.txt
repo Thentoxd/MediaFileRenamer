@@ -38,6 +38,8 @@ FetchContent_MakeAvailable(tinyxml2)
 FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
 FetchContent_MakeAvailable(json)
 
+
+# Exiv2 has dependencies which make building complicated. We turn most of these off to get the basics working
 set (EXIV2_BUILD_DOC OFF CACHE INTERNAL "Add 'doc' target to generate documentation")
 set (EXIV2_ENABLE_INIH OFF CACHE INTERNAL "Use inih library")
 set (EXIV2_ENABLE_PNG OFF CACHE INTERNAL "Build with PNG support (requires zlib)")
@@ -52,7 +54,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(exiv2)
 
 
-
 add_executable(MediaFileRenamer main.cpp
         Model/model.cpp
         Model/model.h
@@ -62,8 +63,6 @@ add_executable(MediaFileRenamer main.cpp
         View/media_file_renamer.ui
         Controller/controller.cpp
         Controller/controller.h
-        TinyEXIF/TinyEXIF.cpp
-        TinyEXIF/TinyEXIF.h
 )
 
 target_link_libraries(MediaFileRenamer
