@@ -92,6 +92,9 @@ void mediaFileRenamerMainView::updateTable() {
     int entryCount = p_model -> getEntryCount();
     SPDLOG_INFO("Number of files in the model: {}", entryCount);
 
+    string status_message = "Total number of files " + std::to_string(entryCount);
+    statusBar()->showMessage(tr(status_message.c_str()));
+
     tableWidget->setRowCount(0); // This will delete all the data in the current table
     tableWidget->setRowCount(entryCount);
 
