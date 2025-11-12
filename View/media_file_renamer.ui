@@ -202,7 +202,7 @@
             </size>
            </property>
            <property name="title">
-            <string>Filename</string>
+            <string>Filename Body</string>
            </property>
            <widget class="QLineEdit" name="lineEdit_5">
             <property name="geometry">
