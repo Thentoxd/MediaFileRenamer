@@ -5,7 +5,6 @@
 #include "main.h"
 #include "View/view.h"
 #include "Model/model.h"
-#include "Controller/controller.h"
 
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/rotating_file_sink.h"
@@ -94,7 +93,6 @@ int main(int argc, char *argv[]) {
         auto * p_QApplication = new QApplication(argc, argv);
         auto p_view = new mediaFileRenamerMainView(p_model);
         p_view -> create_window();
-        auto p_controller = new Controller(p_model, p_view);
         QApplication::exec();
     }
     catch (const spdlog::spdlog_ex& ex)
