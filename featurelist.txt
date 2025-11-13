@@ -1,1 +1,1 @@
-1. Ability to identify rows that you've clicked / dragged on?
+Ability to identify rows that you've clicked / dragged on?
