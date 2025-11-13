@@ -25,21 +25,9 @@ void mediaFileRenamerMainView::create_window() {
     SPDLOG_INFO("Creating main window ....");
 
     QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
-    lineEdit -> setText(qstr);
+    folder_comboBox -> addItem(qstr);
 
-    // tableWidget->setModel(model);
-    // tableView->show();
-
-    tableWidget->setRowCount(10);
     tableWidget->setColumnCount(4);
-
-    // This function should do
-    // return fileEntries.iterator();
-    //auto tableDataIterator = p_model -> getTableDataIterator();
-    //for (auto eachTableModel: tableDataIterator) {
-    //    string currentFileName = eachTableModel -> getNewFileName();
-    //    SPDLOG_INFO("Table data (name): {}", currentFileName);
-    //}
 
     this -> updateTable();
 
@@ -50,12 +38,6 @@ void mediaFileRenamerMainView::create_window() {
     m_TableHeader<<"Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
     tableWidget->setHorizontalHeaderLabels(m_TableHeader);
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-    // Make a call onto the model to get the table data
-    // Model returns an iterable object. Each iteration returns a Line Interface which
-    // has the following virtual methods implemented ..
-    // getFilename, getNewFile, getOriginalDateTaken, getNewOriginalDateTaken
-    //
 
     QObject::connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
 }
@@ -72,7 +54,7 @@ void mediaFileRenamerMainView::selectFolderButtonClicked() {
     if(dir == nullptr) {
         SPDLOG_INFO("No directory selected!");
     } else {
-        lineEdit -> setText(dir);
+        folder_comboBox -> addItem(dir);
         string newCurrentWorkingDirectory = dir.toStdString();
         p_model -> setCurrentWorkingDirectory(newCurrentWorkingDirectory);
 

@@ -1,5 +1,5 @@
 #include <filesystem>
-#include <iostream>
+
 #include <string>
 
 #include "main.h"
@@ -14,8 +14,7 @@
 #include "CLI/CLI.hpp"
 
 #include <fstream>
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
+
 
 
 int main(int argc, char *argv[]) {
@@ -65,18 +64,6 @@ int main(int argc, char *argv[]) {
         current_working_directory = current_working_directory.parent_path();
         SPDLOG_INFO("Moving up one level Directory: {}", current_working_directory.string());
 
-        auto configFilename = current_working_directory;
-        configFilename.append("mfr.configconfig");
-
-        SPDLOG_INFO("Trying to load config file: {}", configFilename.string());
-
-        std::ifstream f("../config.json");
-        json data = json::parse(f);
-
-        SPDLOG_INFO("Loaded config file");
-
-        string install_directory_from_config_file = data["install_directory"];
-        SPDLOG_INFO("Install directory loaded from config file: {}", install_directory_from_config_file);
 
         // const tao::config::value config = tao::config::from_file( "foo.cfg" );
 
@@ -88,7 +75,7 @@ int main(int argc, char *argv[]) {
 
         auto p_model = new Model();
 
-        p_model -> setCurrentWorkingDirectory(install_directory_from_config_file);
+        p_model->initialise();
 
         auto * p_QApplication = new QApplication(argc, argv);
         auto p_view = new mediaFileRenamerMainView(p_model);

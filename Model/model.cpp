@@ -16,12 +16,24 @@
 using namespace std;
 
 #include "../main.h"
-
+#include "configfile_model.h"
 
 
 Model::Model() {
     SPDLOG_INFO("Initialising Model ....");
     // myFileEntries = new FileEntries();
+}
+
+void Model::initialise() {
+    SPDLOG_INFO("Initialising Model");
+
+    p_config_model = new ConfigFileModel();
+
+    p_config_model -> loadConfigFile("config.json");
+
+    string install_directory_from_config_file = p_config_model -> getCurrentWorkingDirectory();
+
+    this -> setCurrentWorkingDirectory(install_directory_from_config_file);
 }
 
 void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {

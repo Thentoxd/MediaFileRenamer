@@ -61,6 +61,9 @@ add_executable(MediaFileRenamer main.cpp
         View/view.h
         main.h
         View/media_file_renamer.ui
+        Model/configfile_model.h
+        Model/configfile_model.cpp
+        media_file_renamer_exceptions.h
 )
 
 target_link_libraries(MediaFileRenamer

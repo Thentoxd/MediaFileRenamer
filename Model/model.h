@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "../model_interface.h"
+#include "configfile_model.h"
 
 using namespace std;
 
@@ -64,6 +65,8 @@ public:
 class Model : public ModelInterface {
 
 private:
+    ConfigFileModel * p_config_model;
+
     string currentWorkingDirectory;
     string mediaFileRenamerVersion;
     vector<FileEntry> fileEntries;
@@ -71,6 +74,8 @@ private:
 
 public:
     Model();
+
+    void initialise();
 
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
     string getCurrentWorkingDirectory() override;
