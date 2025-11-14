@@ -44,6 +44,10 @@ void mediaFileRenamerMainView::create_window() {
     QObject::connect(this -> folder_comboBox, &QComboBox::currentIndexChanged, this, &mediaFileRenamerMainView::selectFolderComboBox);
 }
 
+void mediaFileRenamerMainView::onUpdateSelectedButton() {
+
+}
+
 void mediaFileRenamerMainView::selectFolderButtonClicked() {
     SPDLOG_DEBUG("mediaFileRenamerMainView::selectFolderButtonClicked");
 
@@ -70,9 +74,11 @@ void mediaFileRenamerMainView::selectFolderComboBox(int index) {
     SPDLOG_INFO("mediaFileRenamerMainView::selectFolderComboBox");
     SPDLOG_INFO("folder combo box index changed to {}", index);
 
-    vector<string> folders = p_model -> getFolderHistory();
-    p_model -> setCurrentWorkingDirectory(folders[index]);
-    this -> updateTable();
+    if (index != -1) {
+        vector<string> folders = p_model -> getFolderHistory();
+        p_model -> setCurrentWorkingDirectory(folders[index]);
+        this -> updateTable();
+    }
 }
 
 void mediaFileRenamerMainView::updateFolderComboBox() {

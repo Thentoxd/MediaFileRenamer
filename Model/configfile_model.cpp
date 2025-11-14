@@ -81,7 +81,7 @@ void ConfigFileModel::setCurrentWorkingDirectory(string path) {
 
     bool seen_this_directory_before = false;
     for(const string each_directory : file_history)
-        if (path.compare(each_directory) == true) {
+        if (each_directory == path) {
             seen_this_directory_before = true;
         }
     if (!seen_this_directory_before) {
