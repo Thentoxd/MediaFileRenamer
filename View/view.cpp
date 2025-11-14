@@ -25,11 +25,12 @@ void mediaFileRenamerMainView::create_window() {
     SPDLOG_INFO("Creating main window ....");
 
     QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
-    folder_comboBox -> addItem(qstr);
 
     tableWidget->setColumnCount(4);
 
     this -> updateTable();
+
+    this -> updateFolderComboBox();
 
     // Disable editing directly
     tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -40,10 +41,11 @@ void mediaFileRenamerMainView::create_window() {
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     QObject::connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
+    QObject::connect(this -> folder_comboBox, &QComboBox::currentIndexChanged, this, &mediaFileRenamerMainView::selectFolderComboBox);
 }
 
 void mediaFileRenamerMainView::selectFolderButtonClicked() {
-    SPDLOG_DEBUG("Select folder button pressed");
+    SPDLOG_DEBUG("mediaFileRenamerMainView::selectFolderButtonClicked");
 
     QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
@@ -54,17 +56,39 @@ void mediaFileRenamerMainView::selectFolderButtonClicked() {
     if(dir == nullptr) {
         SPDLOG_INFO("No directory selected!");
     } else {
-        folder_comboBox -> addItem(dir);
+
         string newCurrentWorkingDirectory = dir.toStdString();
         p_model -> setCurrentWorkingDirectory(newCurrentWorkingDirectory);
 
         int entryCount = p_model -> getEntryCount();
         SPDLOG_INFO("Number of files in the model: {}", entryCount);
-        this -> updateTable();
+        this -> updateFolderComboBox();
     }
 }
 
+void mediaFileRenamerMainView::selectFolderComboBox(int index) {
+    SPDLOG_INFO("mediaFileRenamerMainView::selectFolderComboBox");
+    SPDLOG_INFO("folder combo box index changed to {}", index);
+
+    vector<string> folders = p_model -> getFolderHistory();
+    p_model -> setCurrentWorkingDirectory(folders[index]);
+    this -> updateTable();
+}
+
+void mediaFileRenamerMainView::updateFolderComboBox() {
+    SPDLOG_INFO("mediaFileRenamerMainView::updateFolderComboBox");
+    vector<string> folders = p_model -> getFolderHistory();
+
+    folder_comboBox -> clear();
+
+    for(const string folder : folders)
+        folder_comboBox -> addItem(QString::fromStdString(folder));
+}
+
+
+
 void mediaFileRenamerMainView::updateTable() {
+
 
     // Make a call onto the model to get the table data
     // Model returns an iterable object. Each iteration returns a Line Interface which

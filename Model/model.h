@@ -118,8 +118,9 @@ public:
 
     void setFileTypesToParse(const vector<string> fileTypesToParse) override;
 
-    void setMediaFileRenamerVersion(const std::string_view) override;;
+    void setMediaFileRenamerVersion(const std::string_view) override;
 
+    vector<string> getFolderHistory() override;
 };
 
 

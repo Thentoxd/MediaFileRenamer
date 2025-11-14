@@ -36,6 +36,7 @@ void ConfigFileModel::loadConfigFile(string config_file_name_param) {
 
         // Get the current working directory and set the install_directory to that
         current_working_directory = std::filesystem::current_path().string();
+        std::replace( current_working_directory.begin(), current_working_directory.end(), '\\', '/' );
         SPDLOG_INFO("Setting install directory to {}", current_working_directory);
 
         json_data_from_file["install_directory"] = current_working_directory;
@@ -47,6 +48,12 @@ void ConfigFileModel::loadConfigFile(string config_file_name_param) {
     current_working_directory = json_data_from_file["install_directory"];
 
     SPDLOG_INFO("Install directory loaded from config file: {}", install_directory_from_config_file);
+
+    file_history = json_data_from_file["directory_history"].get<std::vector<string>>();
+    SPDLOG_INFO("Loaded file history from config file");
+
+    file_types_processed = json_data_from_file["filetypes_parsed"].get<std::vector<string>>();
+    SPDLOG_INFO("Loaded filetypes_parsed from config file");
 }
 
 void ConfigFileModel::saveConfigFile() {
@@ -63,12 +70,36 @@ string ConfigFileModel::getCurrentWorkingDirectory() {
     return current_working_directory;
 }
 
-void ConfigFileModel::setCurrentWorkingDirectory(string path) {
-    SPDLOG_INFO("ConfigFileModel::setCurrentWorkingDirectory");
+void ConfigFileModel::updateLastDirectories() {
+    SPDLOG_INFO("ConfigFileModel::updateLastDirectories");
+
+    json_data_from_file["directory_history"] = file_history;
 }
 
-vector<std::string> ConfigFileModel::getFileHistory() {
-    SPDLOG_INFO("ConfigFileModel::getFileHistory");
+void ConfigFileModel::setCurrentWorkingDirectory(string path) {
+    SPDLOG_INFO("ConfigFileModel::setCurrentWorkingDirectory");
+
+    bool seen_this_directory_before = false;
+    for(const string each_directory : file_history)
+        if (path.compare(each_directory) == true) {
+            seen_this_directory_before = true;
+        }
+    if (!seen_this_directory_before) {
+        file_history.push_back(path);
+        if (file_history.size() > 10) {
+            file_history.erase(file_history.begin());
+        }
+        SPDLOG_INFO("ConfigFileModel::setCurrentWorkingDirectory: Stored a new working directory {}", path);
+
+        this -> updateLastDirectories();
+
+        this -> saveConfigFile();
+    }
+}
+
+vector<std::string> ConfigFileModel::getFolderHistory() {
+    SPDLOG_INFO("ConfigFileModel::getFolderHistory");
+    return file_history;
 }
 
 void ConfigFileModel::appendFileHistory(string new_directory_parameter) {

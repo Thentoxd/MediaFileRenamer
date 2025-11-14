@@ -102,6 +102,9 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
             }
         }
     }
+
+    p_config_model -> setCurrentWorkingDirectory(newCurrentWorkingDirectory);
+
     SPDLOG_INFO("New model built");
 }
 
@@ -140,4 +143,8 @@ void Model::setFileTypesToParse(const vector<string> fileTypesToParseParameter) 
 void Model::setMediaFileRenamerVersion(const std::string_view versionParameter) {
     SPDLOG_INFO("Model::setMediaFileRenamerVersion: {}", versionParameter);
     this -> mediaFileRenamerVersion = versionParameter;
+}
+
+vector<string> Model::getFolderHistory() {
+    return p_config_model -> getFolderHistory();
 }

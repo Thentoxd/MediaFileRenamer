@@ -36,11 +36,13 @@ public:
     string getCurrentWorkingDirectory();
     void setCurrentWorkingDirectory(string path);
 
-    vector<std::string> getFileHistory();
+    vector<std::string> getFolderHistory();
     void appendFileHistory(string new_directory_parameter);
 
     vector<std::string> getFileTypesProcessed();
     void reloadFileTypesProcessed();
+
+    void updateLastDirectories();
 };
 
 #endif //MEDIAFILERENAMER_CONFIGFILE_MODEL_H
