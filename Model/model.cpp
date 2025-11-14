@@ -16,7 +16,6 @@
 using namespace std;
 
 #include "../main.h"
-#include "configfile_model.h"
 
 
 Model::Model() {
@@ -27,18 +26,14 @@ Model::Model() {
 void Model::initialise() {
     SPDLOG_INFO("Initialising Model");
 
-    p_config_model = new ConfigFileModel();
+    this -> loadConfigFile("config.json");
 
-    p_config_model -> loadConfigFile("config.json");
-
-    string install_directory_from_config_file = p_config_model -> getCurrentWorkingDirectory();
-
-    this -> setCurrentWorkingDirectory(install_directory_from_config_file);
+    this -> setCurrentWorkingDirectory(current_working_directory);
 }
 
 void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
     SPDLOG_INFO("Model: updating current working directory");
-    currentWorkingDirectory = newCurrentWorkingDirectory;
+    current_working_directory = newCurrentWorkingDirectory;
 
     this -> clear();
     /*
@@ -49,7 +44,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
     */
 
     // directory_iterator can be iterated using a range-for loop
-    for (auto const& entry : filesystem::directory_iterator{currentWorkingDirectory}) {
+    for (auto const& entry : filesystem::directory_iterator{current_working_directory}) {
         if(!entry.is_directory()) {
             filesystem::path outfilename = entry.path().filename();
             string outfilename_str = outfilename.string();
@@ -103,14 +98,29 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
         }
     }
 
-    p_config_model -> setCurrentWorkingDirectory(newCurrentWorkingDirectory);
+    bool seen_this_directory_before = false;
+    for(const string each_directory : file_history)
+        if (newCurrentWorkingDirectory == each_directory) {
+            seen_this_directory_before = true;
+        }
+    if (!seen_this_directory_before) {
+        file_history.insert(file_history.begin(),newCurrentWorkingDirectory);
+        if (file_history.size() > 10) {
+            file_history.erase(file_history.begin());
+        }
+        SPDLOG_INFO("ConfigFileModel::setCurrentWorkingDirectory: Stored a new working directory {}", newCurrentWorkingDirectory);
+
+        this -> updateLastDirectories();
+
+        this -> saveConfigFile();
+    }
 
     SPDLOG_INFO("New model built");
 }
 
 string Model::getCurrentWorkingDirectory() {
     SPDLOG_INFO("Model: getting current working directory");
-    return(currentWorkingDirectory);
+    return(current_working_directory);
 }
 
 // void Model::updateEntries() {
@@ -137,7 +147,7 @@ void Model::clear(){
 
 void Model::setFileTypesToParse(const vector<string> fileTypesToParseParameter) {
     SPDLOG_INFO("Model::setFileTypesToParse");
-    this -> fileTypesToParse = fileTypesToParseParameter;
+    this -> file_types_processed = fileTypesToParseParameter;
 }
 
 void Model::setMediaFileRenamerVersion(const std::string_view versionParameter) {
@@ -145,6 +155,57 @@ void Model::setMediaFileRenamerVersion(const std::string_view versionParameter) 
     this -> mediaFileRenamerVersion = versionParameter;
 }
 
-vector<string> Model::getFolderHistory() {
-    return p_config_model -> getFolderHistory();
+vector<std::string> Model::getFolderHistory() {
+    SPDLOG_INFO("ConfigFileModel::getFolderHistory");
+    return file_history;
+}
+
+void Model::loadConfigFile(string config_file_name_param) {
+    SPDLOG_INFO("ConfigFileModel::loadConfigFile");
+
+    config_file_name = config_file_name_param;
+
+    ifstream f(config_file_name_param);
+    json_data_from_file = json::parse(f);
+
+    SPDLOG_INFO("Loaded config file");
+
+    string install_directory_from_config_file = json_data_from_file["install_directory"];
+    if (install_directory_from_config_file == "") {
+        SPDLOG_ERROR("No install directory specified in the ");
+
+        // Get the current working directory and set the install_directory to that
+        current_working_directory = std::filesystem::current_path().string();
+        std::replace( current_working_directory.begin(), current_working_directory.end(), '\\', '/' );
+        SPDLOG_INFO("Setting install directory to {}", current_working_directory);
+
+        json_data_from_file["install_directory"] = current_working_directory;
+
+        this->saveConfigFile();
+
+        SPDLOG_INFO("Updated config file {}", config_file_name);
+    }
+
+    SPDLOG_INFO("Install directory loaded from config file: {}", install_directory_from_config_file);
+
+    file_history = json_data_from_file["directory_history"].get<std::vector<string>>();
+    SPDLOG_INFO("Loaded file history from config file");
+    current_working_directory = file_history[0];
+
+    file_types_processed = json_data_from_file["filetypes_parsed"].get<std::vector<string>>();
+    SPDLOG_INFO("Loaded filetypes_parsed from config file");
+}
+
+void Model::saveConfigFile() {
+    SPDLOG_INFO("ConfigFileModel::saveConfigFile");
+
+    std::ofstream file(config_file_name);
+
+    file << std::setw(4) << json_data_from_file << std::endl;
+}
+
+void Model::updateLastDirectories() {
+    SPDLOG_INFO("ConfigFileModel::updateLastDirectories");
+
+    json_data_from_file["directory_history"] = file_history;
 }

@@ -86,4 +86,8 @@ int main(int argc, char *argv[]) {
     {
         std::cout << "Log initialization failed: " << ex.what() << std::endl;
     }
+    catch (const std::exception& ex)
+    {
+        std::cout << "General std::exception caught: " << ex.what() << std::endl;
+    }
 }
