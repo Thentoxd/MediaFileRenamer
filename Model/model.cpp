@@ -52,48 +52,52 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
             if(outfilename_str[0] != '.') {
                 SPDLOG_INFO("Filename found: {}", outfilename_str);
 
-                // std::ifstream stream(getCurrentWorkingDirectory() + "/" + outfilename_str, std::ios::binary);
-                // TinyEXIF::EXIFInfo imageEXIF(stream);
+                bool allowed_file_type = false;
+                int dot_position = outfilename_str.rfind('.');
+                if (dot_position != string::npos) {
+                    string extension = outfilename_str.substr(dot_position + 1);
 
-                string media_file_to_read = getCurrentWorkingDirectory() + "/" + outfilename_str;
-                string dateTakenOriginal = "";
+                    for(const string each_file_type : file_types_processed)
+                        if (extension == each_file_type) {
+                            allowed_file_type = true;
+                        }
+                }
+                else {
+                    allowed_file_type = true;
+                }
 
-                try {
-                    Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(media_file_to_read);
-                    if(!image.get()) {
-                        SPDLOG_INFO("Failed to open image: {}", media_file_to_read);
-                    } else {
-                        image->readMetadata();
-                        Exiv2::ExifData &exifData = image->exifData();
+                if (allowed_file_type) {
+                    string media_file_to_read = getCurrentWorkingDirectory() + "/" + outfilename_str;
+                    string dateTakenOriginal = "";
 
-                        if(exifData.empty()) {
-                            SPDLOG_INFO("No EXIF data found in: {}", media_file_to_read);
+                    try {
+                        Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(media_file_to_read);
+                        if(!image.get()) {
+                            SPDLOG_INFO("Failed to open image: {}", media_file_to_read);
                         } else {
-                            Exiv2::ExifKey key("Exif.Photo.DateTimeOriginal");
-                            auto pos = exifData.findKey(key);
-                            if (pos != exifData.end()) {
-                                dateTakenOriginal = pos->toString();
+                            image->readMetadata();
+                            Exiv2::ExifData &exifData = image->exifData();
+
+                            if(exifData.empty()) {
+                                SPDLOG_INFO("No EXIF data found in: {}", media_file_to_read);
                             } else {
-                                SPDLOG_INFO("DateTimeOriginal not found.");
+                                Exiv2::ExifKey key("Exif.Photo.DateTimeOriginal");
+                                auto pos = exifData.findKey(key);
+                                if (pos != exifData.end()) {
+                                    dateTakenOriginal = pos->toString();
+                                } else {
+                                    SPDLOG_INFO("DateTimeOriginal not found.");
+                                }
                             }
                         }
+
+                    }
+                    catch (Exiv2::Error& e) {
+                        SPDLOG_INFO("Exiv2 exception - usually means no EXIF data found in {}", outfilename_str);
                     }
 
+                    addEntry(outfilename_str, dateTakenOriginal);
                 }
-                catch (Exiv2::Error& e) {
-                    SPDLOG_INFO("Exiv2 exception - usually means no EXIF data found in {}", outfilename_str);
-                }
-
-                // assert(image.get() != nullptr);
-                // image->readMetadata();
-                //
-                // Exiv2::ExifData &exifData = image->exifData();
-                // if (exifData.empty()) {
-                //     SPDLOG_INFO("No EXIF data found in: {}", outfilename_str);
-                // }
-
-                // addEntry(outfilename_str, imageEXIF.DateTimeOriginal);
-                addEntry(outfilename_str, dateTakenOriginal);
             }
         }
     }
