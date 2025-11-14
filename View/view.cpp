@@ -29,11 +29,11 @@ void mediaFileRenamerMainView::create_window() {
     tableWidget->setColumnCount(4);
 
     this -> updateTable();
-
     this -> updateFolderComboBox();
 
     // Disable editing directly
     tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     QStringList m_TableHeader;
     m_TableHeader<<"Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
@@ -86,10 +86,12 @@ void mediaFileRenamerMainView::updateFolderComboBox() {
         folder_comboBox -> addItem(QString::fromStdString(folder));
 }
 
+void mediaFileRenamerMainView::onSelectedRowsChange() {
 
+}
 
 void mediaFileRenamerMainView::updateTable() {
-
+    disconnect(tableWidget, &QTableWidget::itemClicked, this, &mediaFileRenamerMainView::onSelectedRowsChange);
 
     // Make a call onto the model to get the table data
     // Model returns an iterable object. Each iteration returns a Line Interface which
@@ -121,6 +123,7 @@ void mediaFileRenamerMainView::updateTable() {
         item4->setText(QString::fromStdString(entry->getNewDateTakenOriginal()));
         tableWidget->setItem(row,3,item4);
     }
+    connect(tableWidget, &QTableWidget::itemClicked, this, &mediaFileRenamerMainView::onSelectedRowsChange);
 }
 
 int mediaFileRenamerMainView::displayWindow() {

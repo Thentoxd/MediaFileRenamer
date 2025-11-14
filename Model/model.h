@@ -67,8 +67,6 @@ public:
 
 
 class Model : public ModelInterface {
-
-private:
     string mediaFileRenamerVersion;
 
     vector<FileEntry> fileEntries;
@@ -84,7 +82,7 @@ public:
     Model();
 
     void initialise();
-
+    void renameEXIFFile(FileEntry* newFile);
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
     string getCurrentWorkingDirectory() override;
     void reload() override ;

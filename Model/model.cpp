@@ -115,11 +115,15 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
         SPDLOG_INFO("ConfigFileModel::setCurrentWorkingDirectory: Stored a new working directory {}", newCurrentWorkingDirectory);
 
         this -> updateLastDirectories();
-
         this -> saveConfigFile();
     }
 
     SPDLOG_INFO("New model built");
+}
+
+void Model::renameEXIFFile(FileEntry* newFile) {
+    rename((getCurrentWorkingDirectory() + newFile->getCurrentFileName()).c_str(), newFile->getNewFileName().c_str());
+    newFile->setFileName(newFile->getNewFileName());
 }
 
 string Model::getCurrentWorkingDirectory() {
