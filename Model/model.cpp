@@ -121,6 +121,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
     SPDLOG_INFO("New model built");
 }
 
+
 void Model::renameEXIFFile(FileEntry* newFile) {
     rename((getCurrentWorkingDirectory() + newFile->getCurrentFileName()).c_str(), newFile->getNewFileName().c_str());
     newFile->setFileName(newFile->getNewFileName());
@@ -131,42 +132,35 @@ string Model::getCurrentWorkingDirectory() {
     return(current_working_directory);
 }
 
-// void Model::updateEntries() {
-//     int entryCount = getEntryCount();
-//     for(int row = 0; row < entryCount; row++) {
-//         FileEntryInterface* p_fileEntryInterface = getFileEntry(row);
-//         string fileName = p_fileEntryInterface->getCurrentFileName();
-//
-//         std::ifstream stream(getCurrentWorkingDirectory() + "/" + fileName, std::ios::binary);
-//         TinyEXIF::EXIFInfo imageEXIF(stream);
-//
-//         addEntry(fileName, imageEXIF.DateTimeOriginal);
-//     }
-// }
 
 void Model::reload() {
     SPDLOG_INFO("Model: reload");
 }
+
 
 void Model::clear(){
     SPDLOG_INFO("Model: clear fileEntries");
     fileEntries.clear();
 }
 
+
 void Model::setFileTypesToParse(const vector<string> fileTypesToParseParameter) {
     SPDLOG_INFO("Model::setFileTypesToParse");
     this -> file_types_processed = fileTypesToParseParameter;
 }
+
 
 void Model::setMediaFileRenamerVersion(const std::string_view versionParameter) {
     SPDLOG_INFO("Model::setMediaFileRenamerVersion: {}", versionParameter);
     this -> mediaFileRenamerVersion = versionParameter;
 }
 
+
 vector<std::string> Model::getFolderHistory() {
     SPDLOG_INFO("ConfigFileModel::getFolderHistory");
     return file_history;
 }
+
 
 void Model::loadConfigFile(string config_file_name_param) {
     SPDLOG_INFO("ConfigFileModel::loadConfigFile");
@@ -198,7 +192,13 @@ void Model::loadConfigFile(string config_file_name_param) {
 
     file_history = json_data_from_file["directory_history"].get<std::vector<string>>();
     SPDLOG_INFO("Loaded file history from config file");
-    current_working_directory = file_history[0];
+
+    if (file_history[0] != "") {
+        current_working_directory = file_history[0];
+    }
+    else {
+        current_working_directory = install_directory_from_config_file;
+    }
 
     file_types_processed = json_data_from_file["filetypes_parsed"].get<std::vector<string>>();
     SPDLOG_INFO("Loaded filetypes_parsed from config file");
