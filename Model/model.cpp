@@ -9,7 +9,6 @@
 
 #include <filesystem>
 #include <fstream>
-#include <iostream>
 
 #include "exiv2/exiv2.hpp"
 
@@ -57,7 +56,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
                 if (dot_position != string::npos) {
                     string extension = outfilename_str.substr(dot_position + 1);
 
-                    for(const string each_file_type : file_types_processed)
+                    for(const string& each_file_type : file_types_processed)
                         if (extension == each_file_type) {
                             allowed_file_type = true;
                         }
@@ -68,7 +67,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
 
                 if (allowed_file_type) {
                     string media_file_to_read = getCurrentWorkingDirectory() + "/" + outfilename_str;
-                    string dateTakenOriginal = "";
+                    string dateTakenOriginal;
 
                     try {
                         Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(media_file_to_read);
@@ -93,7 +92,9 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
 
                     }
                     catch (Exiv2::Error& e) {
-                        SPDLOG_INFO("Exiv2 exception - usually means no EXIF data found in {}", outfilename_str);
+                        string exception_text = "Caught Exiv2 exception '";
+                        exception_text.append(e.what());
+                        SPDLOG_INFO("Exiv2 exception trying to process file {}: {}", outfilename_str[0], exception_text);
                     }
 
                     addEntry(outfilename_str, dateTakenOriginal);
@@ -103,7 +104,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
     }
 
     bool seen_this_directory_before = false;
-    for(const string each_directory : file_history)
+    for(const string& each_directory : file_history)
         if (newCurrentWorkingDirectory == each_directory) {
             seen_this_directory_before = true;
         }
@@ -162,7 +163,7 @@ vector<std::string> Model::getFolderHistory() {
 }
 
 
-void Model::loadConfigFile(string config_file_name_param) {
+void Model::loadConfigFile(const string config_file_name_param) {
     SPDLOG_INFO("ConfigFileModel::loadConfigFile");
 
     config_file_name = config_file_name_param;
@@ -173,7 +174,7 @@ void Model::loadConfigFile(string config_file_name_param) {
     SPDLOG_INFO("Loaded config file");
 
     string install_directory_from_config_file = json_data_from_file["install_directory"];
-    if (install_directory_from_config_file == "") {
+    if (install_directory_from_config_file.empty()) {
         SPDLOG_ERROR("No install directory specified in the ");
 
         // Get the current working directory and set the install_directory to that
@@ -193,7 +194,7 @@ void Model::loadConfigFile(string config_file_name_param) {
     file_history = json_data_from_file["directory_history"].get<std::vector<string>>();
     SPDLOG_INFO("Loaded file history from config file");
 
-    if (file_history[0] != "") {
+    if (!file_history[0].empty()) {
         current_working_directory = file_history[0];
     }
     else {
