@@ -18,20 +18,18 @@ using namespace std;
 
 
 Model::Model() {
-    SPDLOG_INFO("Initialising Model ....");
-    // myFileEntries = new FileEntries();
+    SPDLOG_INFO("Model Contructor");
 }
 
 void Model::initialise() {
-    SPDLOG_INFO("Initialising Model");
+    SPDLOG_INFO("Model::initialise");
 
     this -> loadConfigFile("config.json");
-
     this -> setCurrentWorkingDirectory(current_working_directory);
 }
 
 void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
-    SPDLOG_INFO("Model: updating current working directory");
+    SPDLOG_INFO("Model::setCurrentWorkingDirectory");
     current_working_directory = newCurrentWorkingDirectory;
 
     this -> clear();
@@ -119,7 +117,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
         this -> saveConfigFile();
     }
 
-    SPDLOG_INFO("New model built");
+    SPDLOG_INFO("Model::setCurrentWorkingDirectory. New model built");
 }
 
 
@@ -128,19 +126,20 @@ void Model::renameEXIFFile(FileEntry* newFile) {
     newFile->setFileName(newFile->getNewFileName());
 }
 
+
 string Model::getCurrentWorkingDirectory() {
-    SPDLOG_INFO("Model: getting current working directory");
+    SPDLOG_INFO("Model::getCurrentWorkingDirectory");
     return(current_working_directory);
 }
 
 
 void Model::reload() {
-    SPDLOG_INFO("Model: reload");
+    SPDLOG_INFO("Model::reload");
 }
 
 
 void Model::clear(){
-    SPDLOG_INFO("Model: clear fileEntries");
+    SPDLOG_INFO("Model::clear");
     fileEntries.clear();
 }
 
@@ -158,13 +157,13 @@ void Model::setMediaFileRenamerVersion(const std::string_view versionParameter) 
 
 
 vector<std::string> Model::getFolderHistory() {
-    SPDLOG_INFO("ConfigFileModel::getFolderHistory");
+    SPDLOG_INFO("Model::getFolderHistory");
     return file_history;
 }
 
 
 void Model::loadConfigFile(const string config_file_name_param) {
-    SPDLOG_INFO("ConfigFileModel::loadConfigFile");
+    SPDLOG_INFO("Model::loadConfigFile");
 
     config_file_name = config_file_name_param;
 
@@ -206,7 +205,7 @@ void Model::loadConfigFile(const string config_file_name_param) {
 }
 
 void Model::saveConfigFile() {
-    SPDLOG_INFO("ConfigFileModel::saveConfigFile");
+    SPDLOG_INFO("Model::saveConfigFile");
 
     std::ofstream file(config_file_name);
 
@@ -214,7 +213,7 @@ void Model::saveConfigFile() {
 }
 
 void Model::updateLastDirectories() {
-    SPDLOG_INFO("ConfigFileModel::updateLastDirectories");
+    SPDLOG_INFO("Model::updateLastDirectories");
 
     json_data_from_file["directory_history"] = file_history;
 }
