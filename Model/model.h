@@ -5,17 +5,14 @@
 #ifndef MEDIAFILERENAMER_MODEL_H
 #define MEDIAFILERENAMER_MODEL_H
 
-#include <ctime>
 #include <vector>
-
-#include "../model_interface.h"
 
 using namespace std;
 
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
+#include "../model_interface.h"
+#include "model_configfile.h"
 
-// Test
+
 
 class FileEntry : public FileEntryInterface {
 
@@ -66,17 +63,11 @@ public:
 };
 
 
-class Model : public ModelInterface {
+class Model : public ModelInterface, ModelConfigfile {
+
+private:
     string mediaFileRenamerVersion;
-
     vector<FileEntry> fileEntries;
-
-    json json_data_from_file;
-
-    string current_working_directory;
-    string config_file_name;
-    vector<std::string> file_history;
-    vector<std::string> file_types_processed;
 
 public:
     Model();
@@ -126,19 +117,7 @@ public:
 
     void setMediaFileRenamerVersion(const std::string_view) override;
 
-
-    // These methods all related to modelling the config file
-
-    void loadConfigFile(const string config_file_name_param);
-    void saveConfigFile();
-
-    void appendFileHistory(string new_directory_parameter);
     vector<string> getFolderHistory() override;
-
-    vector<std::string> getFileTypesProcessed();
-    void reloadFileTypesProcessed();
-
-    void updateLastDirectories();
 };
 
 
