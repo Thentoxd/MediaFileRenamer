@@ -64,6 +64,10 @@ add_executable(MediaFileRenamer main.cpp
         media_file_renamer_exceptions.h
         Model/model_configfile.cpp
         Model/model_configfile.h
+        Model/model_remaming_queue.cpp
+        Model/model_remaming_queue.h
+        Model/model_renaming_engine_date.cpp
+        Model/model_renaming_engine_date.h
 )
 
 target_link_libraries(MediaFileRenamer

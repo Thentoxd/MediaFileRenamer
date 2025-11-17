@@ -28,6 +28,9 @@ void Model::initialise(ModelConfigfile * parameter_ModelConfigfile) {
 
     p_ModelConfigfile -> loadConfigFile("config.json");
     this -> setCurrentWorkingDirectory(p_ModelConfigfile -> getCurrentWorkingDirectory());
+
+    renaming_queue = new ModelRemamingQueue();
+    renaming_queue -> init(0);
 }
 
 void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {

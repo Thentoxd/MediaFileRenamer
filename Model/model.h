@@ -11,7 +11,7 @@ using namespace std;
 
 #include "../model_interface.h"
 #include "model_configfile.h"
-
+#include "model_remaming_queue.h"
 
 
 class FileEntry : public FileEntryInterface {
@@ -70,6 +70,8 @@ private:
     vector<FileEntry> fileEntries;
 
     ModelConfigfile * p_ModelConfigfile;
+
+    ModelRemamingQueue * renaming_queue;
 
 public:
     Model();
