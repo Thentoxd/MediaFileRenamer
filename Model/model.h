@@ -63,16 +63,18 @@ public:
 };
 
 
-class Model : public ModelInterface, ModelConfigfile {
+class Model : public ModelInterface {
 
 private:
     string mediaFileRenamerVersion;
     vector<FileEntry> fileEntries;
 
+    ModelConfigfile * p_ModelConfigfile;
+
 public:
     Model();
 
-    void initialise();
+    void initialise(ModelConfigfile * parameter_ModelConfigfile);
     void renameEXIFFile(FileEntry* newFile);
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
     string getCurrentWorkingDirectory() override;
@@ -118,6 +120,7 @@ public:
     void setMediaFileRenamerVersion(const std::string_view) override;
 
     vector<string> getFolderHistory() override;
+
 };
 
 

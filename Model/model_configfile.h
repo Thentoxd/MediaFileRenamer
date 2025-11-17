@@ -33,6 +33,10 @@ class ModelConfigfile {
 
     void updateLastDirectories();
 
+    vector<string> getFolderHistory();
+
+    string getCurrentWorkingDirectory();
+
 };
 
 #endif //MEDIAFILERENAMER_MODEL_CONFIGFILE_H
