@@ -118,7 +118,6 @@ void Model::renameEXIFFile(FileEntry* newFile) {
     newFile->setFileName(newFile->getNewFileName());
 }
 
-
 string Model::getCurrentWorkingDirectory() {
     SPDLOG_INFO("Model::getCurrentWorkingDirectory");
     return(p_ModelConfigfile -> getCurrentWorkingDirectory());
@@ -157,7 +156,10 @@ vector<string> Model::getFolderHistory() {
 
 void Model::executeRenamingChain(int row) {
     SPDLOG_INFO("Model::executeRenamingChain");
+    FileEntry* entry = getFileEntry(row);
     // renaming_queue -> executeQueue(pair<string, string> input_parameter)
+
+    renaming_queue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal()));
 }
 
 

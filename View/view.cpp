@@ -87,13 +87,18 @@ void mediaFileRenamerMainView::updateFolderComboBox() {
 }
 
 void mediaFileRenamerMainView::onSelectedRowsChange() {
-    QSet<int> unique_rows;
+    QSet<int> row_values;
+    QSet<FileEntryInterface*> row_entries;
     for(auto& x : tableWidget->selectedItems()) {
-        unique_rows.insert(x->row());
+        row_values.insert(x->row());
     }
 
-    for(auto& item : unique_rows) {
-        SPDLOG_DEBUG("Row selected: {}", (item + 1));
+    for(int it : row_values) {
+        row_entries.insert(p_model->getFileEntry(it));
+    }
+
+    for(int item : row_values) {
+        p_model -> executeRenamingChain(item);
     }
 }
 
