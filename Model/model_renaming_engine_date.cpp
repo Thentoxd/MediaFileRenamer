@@ -11,5 +11,58 @@ ModelRenamingEngineDate::ModelRenamingEngineDate() {
 
 pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input_parameter) {
     SPDLOG_INFO("ModelRemamingQueue::ModelRemamingQueue");
+    // current file name, current date taken original
+    string currentFileName = input_parameter.first;
+
+    string year = "";
+    int index = 0;
+    for(int i = 0; i < currentFileName.length() - 4; i++) {
+        bool four_digits = true;
+        for(int j = 0; j < 4; j++) {
+            four_digits &= isdigit(currentFileName[i + j]);
+        }
+
+        if(four_digits) {
+            for(int j = 0; j < 4; j++) {
+                year += currentFileName[i + j];
+            }
+            index = i;
+            break;
+        }
+    }
+
+    string month = "";
+    for(int i = index + 4; i < currentFileName.length() - 2; i++) {
+        bool two_digits = true;
+        for(int j = 0; j < 2; j++) {
+            two_digits &= isdigit(currentFileName[i + j]);
+        }
+
+        if(two_digits) {
+            for(int j = 0; j < 2; j++) {
+                month += currentFileName[i + j];
+            }
+            index = i;
+            break;
+        }
+    }
+
+    string date = "";
+    for(int i = index + 2; i < currentFileName.length() - 2; i++) {
+        bool two_digits = true;
+        for(int j = 0; j < 2; j++) {
+            two_digits &= isdigit(currentFileName[i + j]);
+        }
+
+        if(two_digits) {
+            for(int j = 0; j < 2; j++) {
+                date += currentFileName[i + j];
+            }
+            break;
+        }
+    }
+
+    SPDLOG_ERROR("{}-{}-{}", year, month, date);
+
     return pair<string, string>(input_parameter.first, input_parameter.second);
 }
