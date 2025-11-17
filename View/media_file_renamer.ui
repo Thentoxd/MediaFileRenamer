@@ -98,6 +98,13 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
+             <widget class="QRadioButton" name="tryExtractDate_button">
+              <property name="text">
+               <string>Try to extract date from existing filename</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
                <widget class="QLabel" name="label">
@@ -207,14 +214,14 @@
              </layout>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton">
+             <widget class="QRadioButton" name="useDateTaken_button">
               <property name="text">
                <string>Use Date Taken (Original)</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_2">
+             <widget class="QRadioButton" name="setDateTaken_button">
               <property name="text">
                <string>Set Date Taken (Original)</string>
               </property>
@@ -281,24 +288,11 @@
               <x>10</x>
               <y>20</y>
               <width>174</width>
-              <height>54</height>
+              <height>86</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="maximumSize">
-                <size>
-                 <width>60</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Padding</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
+             <item row="2" column="1">
               <widget class="QSpinBox" name="spinBox">
                <property name="minimumSize">
                 <size>
@@ -314,46 +308,38 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
+             <item row="0" column="0">
               <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Start</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QSpinBox" name="spinBox_2"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_4">
                <property name="maximumSize">
                 <size>
-                 <width>100</width>
+                 <width>60</width>
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="baseSize">
-                <size>
-                 <width>60</width>
-                 <height>0</height>
-                </size>
-               </property>
                <property name="text">
-                <string>Seperator</string>
+                <string>Padding</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>End</string>
                </property>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QLineEdit" name="lineEdit_6">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>50</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>50</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-              </widget>
+              <widget class="QSpinBox" name="spinBox_3"/>
              </item>
             </layout>
            </widget>
