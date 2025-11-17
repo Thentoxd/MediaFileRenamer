@@ -87,7 +87,14 @@ void mediaFileRenamerMainView::updateFolderComboBox() {
 }
 
 void mediaFileRenamerMainView::onSelectedRowsChange() {
+    QSet<int> unique_rows;
+    for(auto& x : tableWidget->selectedItems()) {
+        unique_rows.insert(x->row());
+    }
 
+    for(auto& item : unique_rows) {
+        SPDLOG_DEBUG("Row selected: {}", (item + 1));
+    }
 }
 
 void mediaFileRenamerMainView::updateTable() {
