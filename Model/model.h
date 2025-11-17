@@ -5,17 +5,14 @@
 #ifndef MEDIAFILERENAMER_MODEL_H
 #define MEDIAFILERENAMER_MODEL_H
 
-#include <ctime>
 #include <vector>
-
-#include "../model_interface.h"
 
 using namespace std;
 
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
+#include "../model_interface.h"
+#include "model_configfile.h"
+#include "model_remaming_queue.h"
 
-// Test
 
 class FileEntry : public FileEntryInterface {
 
@@ -67,21 +64,19 @@ public:
 
 
 class Model : public ModelInterface {
-    string mediaFileRenamerVersion;
 
+private:
+    string mediaFileRenamerVersion;
     vector<FileEntry> fileEntries;
 
-    json json_data_from_file;
+    ModelConfigfile * p_ModelConfigfile;
 
-    string current_working_directory;
-    string config_file_name;
-    vector<std::string> file_history;
-    vector<std::string> file_types_processed;
+    ModelRemamingQueue * renaming_queue;
 
 public:
     Model();
 
-    void initialise();
+    void initialise(ModelConfigfile * parameter_ModelConfigfile);
     void renameEXIFFile(FileEntry* newFile);
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
     string getCurrentWorkingDirectory() override;
@@ -126,19 +121,9 @@ public:
 
     void setMediaFileRenamerVersion(const std::string_view) override;
 
-
-    // These methods all related to modelling the config file
-
-    void loadConfigFile(const string config_file_name_param);
-    void saveConfigFile();
-
-    void appendFileHistory(string new_directory_parameter);
     vector<string> getFolderHistory() override;
 
-    vector<std::string> getFileTypesProcessed();
-    void reloadFileTypesProcessed();
-
-    void updateLastDirectories();
+    void executeRenamingChain(int row) override;
 };
 
 

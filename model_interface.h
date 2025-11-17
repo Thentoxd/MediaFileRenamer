@@ -26,6 +26,8 @@ public:
     virtual void setNewDateTaken(string newDateTaken) = 0;
 };
 
+
+
 class ModelInterface {
 public:
     // virtual ~ModelInterface();
@@ -40,8 +42,10 @@ public:
     virtual void setFileTypesToParse(const vector<string> fileTypesToParse) = 0;
     virtual void setMediaFileRenamerVersion(const std::string_view version) = 0;
 
+    // This function is handled by an aggregate class in the Model
     virtual vector<string> getFolderHistory() = 0;
-    //...
+
+    virtual void executeRenamingChain(int row) = 0;
 };
 
 #endif //MEDIAFILERENAMER_MODEL_INTERFACE_H

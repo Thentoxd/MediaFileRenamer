@@ -8,7 +8,7 @@
 #include <vector>
 
 #include <filesystem>
-#include <fstream>
+
 
 #include "exiv2/exiv2.hpp"
 
@@ -18,19 +18,24 @@ using namespace std;
 
 
 Model::Model() {
-    SPDLOG_INFO("Model Contructor");
+    SPDLOG_INFO("Model Constuctor");
 }
 
-void Model::initialise() {
+void Model::initialise(ModelConfigfile * parameter_ModelConfigfile) {
     SPDLOG_INFO("Model::initialise");
 
-    this -> loadConfigFile("config.json");
-    this -> setCurrentWorkingDirectory(current_working_directory);
+    p_ModelConfigfile = parameter_ModelConfigfile;
+
+    p_ModelConfigfile -> loadConfigFile("config.json");
+    this -> setCurrentWorkingDirectory(p_ModelConfigfile -> getCurrentWorkingDirectory());
+
+    renaming_queue = new ModelRemamingQueue();
+    renaming_queue -> init(0);
 }
 
 void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
     SPDLOG_INFO("Model::setCurrentWorkingDirectory");
-    current_working_directory = newCurrentWorkingDirectory;
+    string current_working_directory = newCurrentWorkingDirectory;
 
     this -> clear();
     /*
@@ -54,6 +59,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
                 if (dot_position != string::npos) {
                     string extension = outfilename_str.substr(dot_position + 1);
 
+                    vector<std::string> file_types_processed = p_ModelConfigfile -> getFileTypesProcessed();
                     for(const string& each_file_type : file_types_processed)
                         if (extension == each_file_type) {
                             allowed_file_type = true;
@@ -64,7 +70,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
                 }
 
                 if (allowed_file_type) {
-                    string media_file_to_read = getCurrentWorkingDirectory() + "/" + outfilename_str;
+                    string media_file_to_read = newCurrentWorkingDirectory + "/" + outfilename_str;
                     string dateTakenOriginal;
 
                     try {
@@ -101,21 +107,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
         }
     }
 
-    bool seen_this_directory_before = false;
-    for(const string& each_directory : file_history)
-        if (newCurrentWorkingDirectory == each_directory) {
-            seen_this_directory_before = true;
-        }
-    if (!seen_this_directory_before) {
-        file_history.insert(file_history.begin(),newCurrentWorkingDirectory);
-        if (file_history.size() > 10) {
-            file_history.erase(file_history.begin());
-        }
-        SPDLOG_INFO("ConfigFileModel::setCurrentWorkingDirectory: Stored a new working directory {}", newCurrentWorkingDirectory);
-
-        this -> updateLastDirectories();
-        this -> saveConfigFile();
-    }
+    p_ModelConfigfile -> appendFileHistory(current_working_directory);
 
     SPDLOG_INFO("Model::setCurrentWorkingDirectory. New model built");
 }
@@ -129,7 +121,7 @@ void Model::renameEXIFFile(FileEntry* newFile) {
 
 string Model::getCurrentWorkingDirectory() {
     SPDLOG_INFO("Model::getCurrentWorkingDirectory");
-    return(current_working_directory);
+    return(p_ModelConfigfile -> getCurrentWorkingDirectory());
 }
 
 
@@ -146,7 +138,8 @@ void Model::clear(){
 
 void Model::setFileTypesToParse(const vector<string> fileTypesToParseParameter) {
     SPDLOG_INFO("Model::setFileTypesToParse");
-    this -> file_types_processed = fileTypesToParseParameter;
+    assert(0);
+    // this -> file_types_processed = fileTypesToParseParameter;
 }
 
 
@@ -156,64 +149,16 @@ void Model::setMediaFileRenamerVersion(const std::string_view versionParameter) 
 }
 
 
-vector<std::string> Model::getFolderHistory() {
+vector<string> Model::getFolderHistory() {
     SPDLOG_INFO("Model::getFolderHistory");
-    return file_history;
+    return p_ModelConfigfile -> getFolderHistory();
 }
 
 
-void Model::loadConfigFile(const string config_file_name_param) {
-    SPDLOG_INFO("Model::loadConfigFile");
-
-    config_file_name = config_file_name_param;
-
-    ifstream f(config_file_name_param);
-    json_data_from_file = json::parse(f);
-
-    SPDLOG_INFO("Loaded config file");
-
-    string install_directory_from_config_file = json_data_from_file["install_directory"];
-    if (install_directory_from_config_file.empty()) {
-        SPDLOG_ERROR("No install directory specified in the ");
-
-        // Get the current working directory and set the install_directory to that
-        current_working_directory = std::filesystem::current_path().string();
-        std::replace( current_working_directory.begin(), current_working_directory.end(), '\\', '/' );
-        SPDLOG_INFO("Setting install directory to {}", current_working_directory);
-
-        json_data_from_file["install_directory"] = current_working_directory;
-
-        this->saveConfigFile();
-
-        SPDLOG_INFO("Updated config file {}", config_file_name);
-    }
-
-    SPDLOG_INFO("Install directory loaded from config file: {}", install_directory_from_config_file);
-
-    file_history = json_data_from_file["directory_history"].get<std::vector<string>>();
-    SPDLOG_INFO("Loaded file history from config file");
-
-    if (!file_history[0].empty()) {
-        current_working_directory = file_history[0];
-    }
-    else {
-        current_working_directory = install_directory_from_config_file;
-    }
-
-    file_types_processed = json_data_from_file["filetypes_parsed"].get<std::vector<string>>();
-    SPDLOG_INFO("Loaded filetypes_parsed from config file");
+void Model::executeRenamingChain(int row) {
+    SPDLOG_INFO("Model::executeRenamingChain");
+    // renaming_queue -> executeQueue(pair<string, string> input_parameter)
 }
 
-void Model::saveConfigFile() {
-    SPDLOG_INFO("Model::saveConfigFile");
 
-    std::ofstream file(config_file_name);
 
-    file << std::setw(4) << json_data_from_file << std::endl;
-}
-
-void Model::updateLastDirectories() {
-    SPDLOG_INFO("Model::updateLastDirectories");
-
-    json_data_from_file["directory_history"] = file_history;
-}

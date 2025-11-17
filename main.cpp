@@ -75,7 +75,9 @@ int main(int argc, char *argv[]) {
 
         auto p_model = new Model();
 
-        p_model->initialise();
+        auto p_configFileModel = new ModelConfigfile();
+
+        p_model->initialise(p_configFileModel);
 
         auto * p_QApplication = new QApplication(argc, argv);
         auto p_view = new mediaFileRenamerMainView(p_model);
