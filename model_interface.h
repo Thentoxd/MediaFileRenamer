@@ -43,7 +43,9 @@ public:
     virtual void setMediaFileRenamerVersion(const std::string_view version) = 0;
 
     // This function is handled by an aggregate class in the Model
-    virtual  vector<string> getFolderHistory() = 0;
+    virtual vector<string> getFolderHistory() = 0;
+
+    virtual void executeRenamingChain(int row) = 0;
 };
 
 #endif //MEDIAFILERENAMER_MODEL_INTERFACE_H

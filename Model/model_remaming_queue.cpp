@@ -30,5 +30,4 @@ void ModelRemamingQueue::executeQueue(pair<string, string> input_parameter) {
     SPDLOG_INFO("ModelRemamingQueue::executeQueue");
     for(ModelRenamingEngineDate * each_engine : renaming_engine)
         each_engine -> execute(input_parameter);
-
 }

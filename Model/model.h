@@ -123,6 +123,7 @@ public:
 
     vector<string> getFolderHistory() override;
 
+    void executeRenamingChain(int row) override;
 };
 
 

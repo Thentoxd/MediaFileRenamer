@@ -18,7 +18,7 @@ using namespace std;
 
 
 Model::Model() {
-    SPDLOG_INFO("Model Contructor");
+    SPDLOG_INFO("Model Constuctor");
 }
 
 void Model::initialise(ModelConfigfile * parameter_ModelConfigfile) {
@@ -148,9 +148,16 @@ void Model::setMediaFileRenamerVersion(const std::string_view versionParameter) 
     this -> mediaFileRenamerVersion = versionParameter;
 }
 
+
 vector<string> Model::getFolderHistory() {
     SPDLOG_INFO("Model::getFolderHistory");
     return p_ModelConfigfile -> getFolderHistory();
+}
+
+
+void Model::executeRenamingChain(int row) {
+    SPDLOG_INFO("Model::executeRenamingChain");
+    // renaming_queue -> executeQueue(pair<string, string> input_parameter)
 }
 
 
