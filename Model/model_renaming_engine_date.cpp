@@ -6,7 +6,15 @@
 #include "../main.h"
 
 ModelRenamingEngineDate::ModelRenamingEngineDate() {
-    SPDLOG_INFO("ModelRemamingQueue::ModelRemamingQueue");
+    SPDLOG_INFO("ModelRenamingEngineDate::ModelRenamingEngineDate");
+}
+
+ModelRenamingEngineDate::~ModelRenamingEngineDate() {
+    SPDLOG_INFO("ModelRenamingEngineDate::~ModelRenamingEngineDate");
+}
+
+void ModelRenamingEngineDate::init(int mode) {
+    SPDLOG_INFO("ModelRenamingEngineDate::init");
 }
 
 pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input_parameter) {
@@ -65,4 +73,8 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
     SPDLOG_DEBUG("{}-{}-{}", year, month, date);
 
     return pair<string, string>(input_parameter.first, input_parameter.second);
+}
+
+void ModelRenamingEngineDate::clear() {
+    SPDLOG_INFO("ModelRenamingEngineDate::clear");
 }

@@ -15,23 +15,25 @@
 // In a later advanced mode, the end user can custom create a chain
 
 #include "model_renaming_engine_date.h"
+#include "model_renaming_engine_counter.h"
+#include "model_renaming_engine_textbody.h"
 
 class ModelRemamingQueue {
 private:
 
     int mode; // This is a first default chain. A date-seperator-text-seperator-number" filename
 
-    vector<ModelRenamingEngineDate *> renaming_engine;
+    vector<ModelRenamingEngine *> renaming_engine;
 
 public:
 
     ModelRemamingQueue();
     ~ModelRemamingQueue();
 
-    void init(int mode);
+    void init(int mode, ModelRenamingEngineDate * p_ModelRenamingEngineDate, ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody, ModelRenamingEngineCounter * p_ModelRenamingEngineCounter);
     void clear();
 
-    void executeQueue(pair<string, string> input_parameter);
+    pair<string, string> executeQueue(pair<string, string> input_parameter);
 
 };
 

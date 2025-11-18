@@ -30,7 +30,10 @@ void Model::initialise(ModelConfigfile * parameter_ModelConfigfile) {
     this -> setCurrentWorkingDirectory(p_ModelConfigfile -> getCurrentWorkingDirectory());
 
     renaming_queue = new ModelRemamingQueue();
-    renaming_queue -> init(0);
+    p_ModelRenamingEngineDate = new ModelRenamingEngineDate();
+    p_ModelRenamingEngineTextBody = new ModelRenamingEngineTextBody();
+    p_ModelRenamingEngineCounter = new ModelRenamingEngineCounter();
+    renaming_queue -> init(0, p_ModelRenamingEngineDate, p_ModelRenamingEngineTextBody, p_ModelRenamingEngineCounter);
 }
 
 void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
@@ -154,12 +157,12 @@ vector<string> Model::getFolderHistory() {
 }
 
 
-void Model::executeRenamingChain(int row) {
+pair<string, string> Model::executeRenamingChain(int row) {
     SPDLOG_INFO("Model::executeRenamingChain");
     FileEntry* entry = getFileEntry(row);
     // renaming_queue -> executeQueue(pair<string, string> input_parameter)
 
-    renaming_queue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal()));
+    return(renaming_queue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal())));
 }
 
 

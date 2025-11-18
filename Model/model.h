@@ -12,6 +12,8 @@ using namespace std;
 #include "../model_interface.h"
 #include "model_configfile.h"
 #include "model_remaming_queue.h"
+#include "model_renaming_engine_counter.h"
+#include "model_renaming_engine_textbody.h"
 
 
 class FileEntry : public FileEntryInterface {
@@ -73,6 +75,10 @@ private:
 
     ModelRemamingQueue * renaming_queue;
 
+    ModelRenamingEngineDate * p_ModelRenamingEngineDate;
+    ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody;
+    ModelRenamingEngineCounter * p_ModelRenamingEngineCounter;
+
 public:
     Model();
 
@@ -123,7 +129,7 @@ public:
 
     vector<string> getFolderHistory() override;
 
-    void executeRenamingChain(int row) override;
+    pair<string, string> executeRenamingChain(int row) override;
 };
 
 

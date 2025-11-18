@@ -68,6 +68,11 @@ add_executable(MediaFileRenamer main.cpp
         Model/model_remaming_queue.h
         Model/model_renaming_engine_date.cpp
         Model/model_renaming_engine_date.h
+        Model/model_renaming_engine_textbody.cpp
+        Model/model_renaming_engine_textbody.h
+        Model/model_renaming_engine_counter.cpp
+        Model/model_renaming_engine_counter.h
+        Model/model_renaming_engine.h
 )
 
 target_link_libraries(MediaFileRenamer

@@ -8,10 +8,12 @@
 
 using namespace std;
 
+#include "model_renaming_engine.h"
+
 // This is the date renaming engine
 // Inserts a date into the incoming filename to generate an outgoing filename (and/or new EXIF Date Taken (Original)
 
-class ModelRenamingEngineDate {
+class ModelRenamingEngineDate : public ModelRenamingEngine {
 
 private:
     bool tryToExtractDateFromInputFilename = false;
@@ -30,9 +32,9 @@ public:
     ModelRenamingEngineDate();
     ~ModelRenamingEngineDate();
 
-    void init(int mode);
-
-    pair<string, string> execute(pair<string, string> input_parameter);
+    void init(int mode) override;
+    void clear() override;
+    pair<string, string> execute(pair<string, string> input_parameter) override;
 };
 
 #endif //MEDIAFILERENAMER_MODEL_RENAMING_ENGINE_DATE_H
