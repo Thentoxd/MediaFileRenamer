@@ -40,8 +40,10 @@ void mediaFileRenamerMainView::create_window() {
     tableWidget->setHorizontalHeaderLabels(m_TableHeader);
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    QObject::connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
-    QObject::connect(this -> folder_comboBox, &QComboBox::currentIndexChanged, this, &mediaFileRenamerMainView::selectFolderComboBox);
+    connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
+    connect(this -> folder_comboBox, &QComboBox::currentIndexChanged, this, &mediaFileRenamerMainView::selectFolderComboBox);
+    connect(this -> useDateTaken_button, &QPushButton::clicked, this, &mediaFileRenamerMainView::setUseDateTakenButtonClicked);
+    connect(this -> setDateTaken_button, &QPushButton::clicked, this, &mediaFileRenamerMainView::setDateTakenOriginalButtonClicked);
 }
 
 void mediaFileRenamerMainView::selectFolderButtonClicked() {
@@ -64,6 +66,14 @@ void mediaFileRenamerMainView::selectFolderButtonClicked() {
         SPDLOG_INFO("Number of files in the model: {}", entryCount);
         this -> updateFolderComboBox();
     }
+}
+
+void mediaFileRenamerMainView::setUseDateTakenButtonClicked() {
+    SPDLOG_DEBUG("Use Date Taken (Original)");
+}
+
+void mediaFileRenamerMainView::setDateTakenOriginalButtonClicked() {
+    SPDLOG_DEBUG("Set Date Taken (Original)");
 }
 
 void mediaFileRenamerMainView::selectFolderComboBox(int index) {

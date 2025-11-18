@@ -31,6 +31,8 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
     public slots:
         void selectFolderButtonClicked();
         void onUpdateSelectedButton();
+        void setUseDateTakenButtonClicked();
+        void setDateTakenOriginalButtonClicked();
 };
 
 

@@ -69,7 +69,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="folder_comboBox"/>
+            <widget class="QComboBox" name="folderComboBox"/>
            </item>
           </layout>
          </item>
@@ -98,7 +98,7 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <widget class="QRadioButton" name="tryExtractDate_button">
+             <widget class="QRadioButton" name="tryExtractDateButton">
               <property name="text">
                <string>Try to extract date from existing filename</string>
               </property>
@@ -226,7 +226,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="dateFormat_lineEdit">
+               <widget class="QLineEdit" name="dateFormat">
                 <property name="text">
                  <string>YYYY-MM-DD</string>
                 </property>
@@ -235,14 +235,14 @@
              </layout>
             </item>
             <item>
-             <widget class="QRadioButton" name="useDateTaken_button">
+             <widget class="QRadioButton" name="useDateTakenButton">
               <property name="text">
                <string>Use Date Taken (Original)</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="setDateTaken_button">
+             <widget class="QRadioButton" name="setDateTakenButton">
               <property name="text">
                <string>Set Date Taken (Original)</string>
               </property>
@@ -268,7 +268,7 @@
            <property name="title">
             <string>Filename Body</string>
            </property>
-           <widget class="QLineEdit" name="lineEdit_5">
+           <widget class="QLineEdit" name="filenamebody_lineEdit">
             <property name="geometry">
              <rect>
               <x>10</x>
@@ -284,7 +284,7 @@
              </size>
             </property>
            </widget>
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="fixedTextButton">
             <property name="geometry">
              <rect>
               <x>10</x>
@@ -330,7 +330,7 @@
             </property>
             <layout class="QGridLayout" name="gridLayout">
              <item row="1" column="1">
-              <widget class="QSpinBox" name="spinBox">
+              <widget class="QSpinBox" name="numSuffixPadSpinBox">
                <property name="minimumSize">
                 <size>
                  <width>50</width>
@@ -366,14 +366,14 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QSpinBox" name="spinBox_2"/>
+              <widget class="QSpinBox" name="numSuffixStartSpinBox"/>
              </item>
             </layout>
            </widget>
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer">
+          <spacer name="horizontalSpacerLeft">
            <property name="orientation">
             <enum>Qt::Orientation::Horizontal</enum>
            </property>
@@ -386,14 +386,14 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="resetToDefaultsButton">
            <property name="text">
             <string>Reset to Defaults</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="renameFilesButton">
            <property name="minimumSize">
             <size>
              <width>100</width>
@@ -414,7 +414,7 @@
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_2">
+          <spacer name="horizontalSpacerRight">
            <property name="orientation">
             <enum>Qt::Orientation::Horizontal</enum>
            </property>
