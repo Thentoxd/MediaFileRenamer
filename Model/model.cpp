@@ -21,7 +21,13 @@ Model::Model() {
     SPDLOG_INFO("Model Constuctor");
 }
 
-void Model::initialise(ModelConfigfile * parameter_ModelConfigfile) {
+void Model::initialise(ModelConfigfile * parameter_ModelConfigfile, ModelRemamingQueue * parameter_ModelRemamingQueue, ModelRenamingEngineDate * parameter_ModelRenamingEngineDate, ModelRenamingEngineTextBody * parameter_ModelRenamingEngineTextBody, ModelRenamingEngineCounter * parameter_ModelRenamingEngineCounter) {
+
+    p_ModelRemamingQueue = parameter_ModelRemamingQueue;
+    p_ModelRenamingEngineDate = parameter_ModelRenamingEngineDate;
+    p_ModelRenamingEngineTextBody = parameter_ModelRenamingEngineTextBody;
+    p_ModelRenamingEngineCounter = parameter_ModelRenamingEngineCounter;
+
     SPDLOG_INFO("Model::initialise");
 
     p_ModelConfigfile = parameter_ModelConfigfile;
@@ -29,11 +35,7 @@ void Model::initialise(ModelConfigfile * parameter_ModelConfigfile) {
     p_ModelConfigfile -> loadConfigFile("config.json");
     this -> setCurrentWorkingDirectory(p_ModelConfigfile -> getCurrentWorkingDirectory());
 
-    renaming_queue = new ModelRemamingQueue();
-    p_ModelRenamingEngineDate = new ModelRenamingEngineDate();
-    p_ModelRenamingEngineTextBody = new ModelRenamingEngineTextBody();
-    p_ModelRenamingEngineCounter = new ModelRenamingEngineCounter();
-    renaming_queue -> init(0, p_ModelRenamingEngineDate, p_ModelRenamingEngineTextBody, p_ModelRenamingEngineCounter);
+    p_ModelRemamingQueue -> init(0, p_ModelRenamingEngineDate, p_ModelRenamingEngineTextBody, p_ModelRenamingEngineCounter);
 }
 
 void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
@@ -162,7 +164,7 @@ pair<string, string> Model::executeRenamingChain(int row) {
     FileEntry* entry = getFileEntry(row);
     // renaming_queue -> executeQueue(pair<string, string> input_parameter)
 
-    return(renaming_queue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal())));
+    return(p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal())));
 }
 
 

@@ -73,8 +73,7 @@ private:
 
     ModelConfigfile * p_ModelConfigfile;
 
-    ModelRemamingQueue * renaming_queue;
-
+    ModelRemamingQueue * p_ModelRemamingQueue;
     ModelRenamingEngineDate * p_ModelRenamingEngineDate;
     ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody;
     ModelRenamingEngineCounter * p_ModelRenamingEngineCounter;
@@ -82,7 +81,7 @@ private:
 public:
     Model();
 
-    void initialise(ModelConfigfile * parameter_ModelConfigfile);
+    void initialise(ModelConfigfile * parameter_ModelConfigfile, ModelRemamingQueue * parameter_ModelRemamingQueue, ModelRenamingEngineDate * parameter_ModelRenamingEngineDate, ModelRenamingEngineTextBody * parameter_ModelRenamingEngineTextBody, ModelRenamingEngineCounter * parameter_ModelRenamingEngineCounter);
     void renameEXIFFile(FileEntry* newFile);
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
     string getCurrentWorkingDirectory() override;

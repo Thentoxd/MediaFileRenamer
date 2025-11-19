@@ -77,10 +77,15 @@ int main(int argc, char *argv[]) {
 
         auto p_configFileModel = new ModelConfigfile();
 
-        p_model->initialise(p_configFileModel);
+        ModelRemamingQueue * renaming_queue = new ModelRemamingQueue();
+        ModelRenamingEngineDate * p_ModelRenamingEngineDate = new ModelRenamingEngineDate();
+        ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody = new ModelRenamingEngineTextBody();
+        ModelRenamingEngineCounter * p_ModelRenamingEngineCounter = new ModelRenamingEngineCounter();
+
+        p_model->initialise(p_configFileModel, renaming_queue, p_ModelRenamingEngineDate, p_ModelRenamingEngineTextBody, p_ModelRenamingEngineCounter);
 
         auto * p_QApplication = new QApplication(argc, argv);
-        auto p_view = new mediaFileRenamerMainView(p_model);
+        auto p_view = new mediaFileRenamerMainView(p_model, p_configFileModel, renaming_queue, p_ModelRenamingEngineDate, p_ModelRenamingEngineTextBody, p_ModelRenamingEngineCounter);
         p_view -> create_window();
         QApplication::exec();
     }
