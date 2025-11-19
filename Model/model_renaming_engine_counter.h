@@ -18,13 +18,15 @@ using namespace std;
 class ModelRenamingEngineCounter : public ModelRenamingEngine {
 
 private:
-    int counter;
+    int counter = 1;
+    int padding = 1;
 
 public:
     ModelRenamingEngineCounter();
     ~ModelRenamingEngineCounter();
 
     void setCounter(int value);
+    void setPadding(int value);
 
     void clear() override;
     void init(int mode) override;

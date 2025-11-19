@@ -24,6 +24,17 @@ void ModelRenamingEngineCounter::clear() {
 
 pair<string, string> ModelRenamingEngineCounter::execute(pair<string, string> input_parameter) {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::execute");
-
     return input_parameter;
+}
+
+void ModelRenamingEngineCounter::setCounter(int value) {
+    SPDLOG_DEBUG("ModelRenamingEngineCounter::setCounter");
+    SPDLOG_DEBUG("Setting the numbering counter to {}", value);
+    counter = value;
+}
+
+void ModelRenamingEngineCounter::setPadding(int value) {
+    SPDLOG_DEBUG("ModelRenamingEngineCounter::setPadding");
+    SPDLOG_DEBUG("Setting the padding counter to {}", value);
+    padding = value;
 }
