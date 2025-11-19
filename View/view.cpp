@@ -12,14 +12,10 @@
 
 #include "../Model/model.h"
 
-mediaFileRenamerMainView::mediaFileRenamerMainView(ModelInterface * modelParam, ModelConfigfile * parameter_ModelConfigfile, ModelRemamingQueue * parameter_ModelRemamingQueue, ModelRenamingEngineDate * parameter_ModelRenamingEngineDate, ModelRenamingEngineTextBody * parameter_ModelRenamingEngineTextBody, ModelRenamingEngineCounter * parameter_ModelRenamingEngineCounter) {
+mediaFileRenamerMainView::mediaFileRenamerMainView(ModelInterface * modelParam) {
     SPDLOG_INFO("Initialising View ....");
 
     p_model = modelParam;
-    p_ModelRemamingQueue = parameter_ModelRemamingQueue;
-    p_ModelRenamingEngineDate = parameter_ModelRenamingEngineDate;
-    p_ModelRenamingEngineTextBody = parameter_ModelRenamingEngineTextBody;
-    p_ModelRenamingEngineCounter = parameter_ModelRenamingEngineCounter;
 
     this -> setupUi(this);
     this -> show();

@@ -21,16 +21,15 @@ Model::Model() {
     SPDLOG_INFO("Model Constuctor");
 }
 
-void Model::initialise(ModelConfigfile * parameter_ModelConfigfile, ModelRemamingQueue * parameter_ModelRemamingQueue, ModelRenamingEngineDate * parameter_ModelRenamingEngineDate, ModelRenamingEngineTextBody * parameter_ModelRenamingEngineTextBody, ModelRenamingEngineCounter * parameter_ModelRenamingEngineCounter) {
+void Model::initialise() {
 
-    p_ModelRemamingQueue = parameter_ModelRemamingQueue;
-    p_ModelRenamingEngineDate = parameter_ModelRenamingEngineDate;
-    p_ModelRenamingEngineTextBody = parameter_ModelRenamingEngineTextBody;
-    p_ModelRenamingEngineCounter = parameter_ModelRenamingEngineCounter;
+    p_ModelConfigfile = new ModelConfigfile();
+    p_ModelRemamingQueue = new ModelRemamingQueue;
+    p_ModelRenamingEngineDate = new ModelRenamingEngineDate;
+    p_ModelRenamingEngineTextBody = new ModelRenamingEngineTextBody;
+    p_ModelRenamingEngineCounter = new ModelRenamingEngineCounter;
 
     SPDLOG_INFO("Model::initialise");
-
-    p_ModelConfigfile = parameter_ModelConfigfile;
 
     p_ModelConfigfile -> loadConfigFile("config.json");
     this -> setCurrentWorkingDirectory(p_ModelConfigfile -> getCurrentWorkingDirectory());

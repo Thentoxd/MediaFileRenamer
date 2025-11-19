@@ -72,7 +72,6 @@ private:
     vector<FileEntry> fileEntries;
 
     ModelConfigfile * p_ModelConfigfile;
-
     ModelRemamingQueue * p_ModelRemamingQueue;
     ModelRenamingEngineDate * p_ModelRenamingEngineDate;
     ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody;
@@ -81,7 +80,7 @@ private:
 public:
     Model();
 
-    void initialise(ModelConfigfile * parameter_ModelConfigfile, ModelRemamingQueue * parameter_ModelRemamingQueue, ModelRenamingEngineDate * parameter_ModelRenamingEngineDate, ModelRenamingEngineTextBody * parameter_ModelRenamingEngineTextBody, ModelRenamingEngineCounter * parameter_ModelRenamingEngineCounter);
+    void initialise();
     void renameEXIFFile(FileEntry* newFile);
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
     string getCurrentWorkingDirectory() override;

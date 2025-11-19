@@ -21,15 +21,11 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
 
     private:
     ModelInterface * p_model;
-    ModelRemamingQueue * p_ModelRemamingQueue;
-    ModelRenamingEngineDate * p_ModelRenamingEngineDate;
-    ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody;
-    ModelRenamingEngineCounter * p_ModelRenamingEngineCounter;
 
     void updateTable();
 
     public:
-        mediaFileRenamerMainView(ModelInterface * p_model, ModelConfigfile * parameter_ModelConfigfile, ModelRemamingQueue * parameter_ModelRemamingQueue, ModelRenamingEngineDate * parameter_ModelRenamingEngineDate, ModelRenamingEngineTextBody * parameter_ModelRenamingEngineTextBody, ModelRenamingEngineCounter * parameter_ModelRenamingEngineCounter);
+        mediaFileRenamerMainView(ModelInterface * p_model);
         void create_window();
         int displayWindow();
 
