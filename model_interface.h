@@ -45,6 +45,8 @@ public:
     // This function is handled by an aggregate class in the Model
     virtual vector<string> getFolderHistory() = 0;
 
+    virtual void setRenamingEngineTextbody(string newText) = 0;
+
     virtual pair<string, string> executeRenamingChain(int row) = 0;
 };
 

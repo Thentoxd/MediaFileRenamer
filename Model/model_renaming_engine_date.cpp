@@ -72,7 +72,9 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
 
     SPDLOG_DEBUG("{}-{}-{}", year, month, date);
 
-    return pair<string, string>(input_parameter.first, input_parameter.second);
+    string return_string = year + "-" + month + "-" + date;
+
+    return pair<string, string>(return_string, input_parameter.second);
 }
 
 void ModelRenamingEngineDate::clear() {

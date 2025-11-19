@@ -127,6 +127,8 @@ public:
 
     vector<string> getFolderHistory() override;
 
+    void setRenamingEngineTextbody(string newText) override;
+
     pair<string, string> executeRenamingChain(int row) override;
 };
 

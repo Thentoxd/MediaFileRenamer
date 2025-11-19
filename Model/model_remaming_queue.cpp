@@ -32,8 +32,19 @@ void ModelRemamingQueue::clear() {
 
 pair<string, string> ModelRemamingQueue::executeQueue(pair<string, string> input_parameter) {
     SPDLOG_INFO("ModelRemamingQueue::executeQueue");
+
+    string renamed_filename = "";
+
     for(ModelRenamingEngine * each_engine : renaming_engine) {
-        each_engine -> execute(input_parameter);
+        pair<string, string> return_pair = each_engine -> execute(input_parameter);
+
+        if (return_pair.first != input_parameter.first) {
+            renamed_filename += return_pair.first;
+        }
     }
+
+    SPDLOG_INFO("Renamed filename: {}", renamed_filename);
+    // SPDLOG_INFO("Return string2: {}", return_pair.second);
+
     return input_parameter;
 }

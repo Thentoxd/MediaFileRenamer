@@ -27,6 +27,9 @@ public:
 
     void clear() override;
     void init(int mode) override;
+
+    void setTextBody(string param_textbody);
+
     pair<string, string> execute(pair<string, string> input_parameter) override;
 };
 

@@ -166,5 +166,10 @@ pair<string, string> Model::executeRenamingChain(int row) {
     return(p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal())));
 }
 
+void Model::setRenamingEngineTextbody(string newText) {
+    SPDLOG_INFO("Model::setRenamingEngineTextbody");
+    p_ModelRenamingEngineTextBody -> setTextBody(newText);
+}
+
 
 

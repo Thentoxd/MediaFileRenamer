@@ -44,6 +44,12 @@ void mediaFileRenamerMainView::create_window() {
     connect(this -> folderComboBox, &QComboBox::currentIndexChanged, this, &mediaFileRenamerMainView::selectFolderComboBox);
     connect(this -> useDateTakenButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::setUseDateTakenButtonClicked);
     connect(this -> setDateTakenButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::setDateTakenOriginalButtonClicked);
+
+
+    connect(this -> filenamebody_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setFilenameBody);
+
+    connect(this -> renameFilesButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::renameFilesButtonClicked);
+
 }
 
 void mediaFileRenamerMainView::selectFolderButtonClicked() {
@@ -147,6 +153,19 @@ void mediaFileRenamerMainView::updateTable() {
     }
     connect(tableWidget, &QTableWidget::itemClicked, this, &mediaFileRenamerMainView::onSelectedRowsChange);
 }
+
+
+void mediaFileRenamerMainView::setFilenameBody(const QString &text) {
+    SPDLOG_INFO("mediaFileRenamerMainView::setFilenameBody");
+    SPDLOG_INFO("Text entered: {}", text.toStdString());
+    p_model -> setRenamingEngineTextbody(text.toStdString());
+}
+
+void mediaFileRenamerMainView::renameFilesButtonClicked() {
+    SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
+    p_model -> executeRenamingChain(1);
+}
+
 
 int mediaFileRenamerMainView::displayWindow() {
     return p_QApplication -> exec();
