@@ -41,9 +41,9 @@ void mediaFileRenamerMainView::create_window() {
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
-    connect(this -> folder_comboBox, &QComboBox::currentIndexChanged, this, &mediaFileRenamerMainView::selectFolderComboBox);
-    connect(this -> useDateTaken_button, &QPushButton::clicked, this, &mediaFileRenamerMainView::setUseDateTakenButtonClicked);
-    connect(this -> setDateTaken_button, &QPushButton::clicked, this, &mediaFileRenamerMainView::setDateTakenOriginalButtonClicked);
+    connect(this -> folderComboBox, &QComboBox::currentIndexChanged, this, &mediaFileRenamerMainView::selectFolderComboBox);
+    connect(this -> useDateTakenButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::setUseDateTakenButtonClicked);
+    connect(this -> setDateTakenButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::setDateTakenOriginalButtonClicked);
 }
 
 void mediaFileRenamerMainView::selectFolderButtonClicked() {
@@ -90,10 +90,10 @@ void mediaFileRenamerMainView::updateFolderComboBox() {
     SPDLOG_INFO("mediaFileRenamerMainView::updateFolderComboBox");
     vector<string> folders = p_model -> getFolderHistory();
 
-    folder_comboBox -> clear();
+    folderComboBox -> clear();
 
     for(const string folder : folders)
-        folder_comboBox -> addItem(QString::fromStdString(folder));
+        folderComboBox -> addItem(QString::fromStdString(folder));
 }
 
 void mediaFileRenamerMainView::onSelectedRowsChange() {
