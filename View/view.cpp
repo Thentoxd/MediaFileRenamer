@@ -103,6 +103,7 @@ void mediaFileRenamerMainView::updateFolderComboBox() {
 }
 
 void mediaFileRenamerMainView::onSelectedRowsChange() {
+    SPDLOG_INFO("mediaFileRenamerMainView::onSelectedRowsChange");
     QSet<int> row_values;
     QSet<FileEntryInterface*> row_entries;
     for(auto& x : tableWidget->selectedItems()) {
@@ -114,7 +115,9 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
     }
 
     for(int item : row_values) {
-        p_model -> executeRenamingChain(item);
+        pair<string, string> returnPair = p_model -> executeRenamingChain(item);
+        SPDLOG_INFO("View returned filename {}", returnPair.first);
+        SPDLOG_INFO("View returned date created Original {}", returnPair.second);
     }
 }
 

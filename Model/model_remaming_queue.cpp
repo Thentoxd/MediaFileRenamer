@@ -34,17 +34,42 @@ pair<string, string> ModelRemamingQueue::executeQueue(pair<string, string> input
     SPDLOG_INFO("ModelRemamingQueue::executeQueue");
 
     string renamed_filename = "";
+    string renamed_datecreated = "";
 
     for(ModelRenamingEngine * each_engine : renaming_engine) {
         pair<string, string> return_pair = each_engine -> execute(input_parameter);
 
         if (return_pair.first != input_parameter.first) {
             renamed_filename += return_pair.first;
+            renamed_filename += " ";
         }
+
+        if (return_pair.second != input_parameter.second) {
+            renamed_datecreated += return_pair.second;
+        }
+
+
     }
 
     SPDLOG_INFO("Renamed filename: {}", renamed_filename);
     // SPDLOG_INFO("Return string2: {}", return_pair.second);
 
-    return input_parameter;
+
+    pair<string, string> returnPair;
+
+    if (renamed_filename.empty()) {
+        returnPair.first = input_parameter.first;
+    }
+    else {
+        returnPair.first = renamed_filename;
+    }
+
+    if (renamed_datecreated.empty()) {
+        returnPair.second = input_parameter.second;
+    }
+    else {
+        returnPair.second = renamed_datecreated;
+    }
+
+    return returnPair;
 }
