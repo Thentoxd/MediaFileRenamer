@@ -47,6 +47,9 @@ public:
 
     virtual void setRenamingEngineTextbody(string newText) = 0;
 
+    virtual void setCounterStart(int newValue) = 0;
+    virtual void setCounterPadding(int newValue) = 0;
+
     virtual pair<string, string> executeRenamingChain(int row) = 0;
 };
 

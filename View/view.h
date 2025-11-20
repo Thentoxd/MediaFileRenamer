@@ -39,6 +39,10 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void setUseDateTakenButtonClicked();
         void setDateTakenOriginalButtonClicked();
         void setFilenameBody(const QString &text);
+
+        void setCounterStart(int newValue);
+        void setCounterPadding(int newValue);
+
         void renameFilesButtonClicked();
 };
 

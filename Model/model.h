@@ -129,6 +129,9 @@ public:
 
     void setRenamingEngineTextbody(string newText) override;
 
+    void setCounterStart(int newValue) override;
+    void setCounterPadding(int newValue) override;
+
     pair<string, string> executeRenamingChain(int row) override;
 };
 

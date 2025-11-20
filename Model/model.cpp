@@ -166,6 +166,18 @@ pair<string, string> Model::executeRenamingChain(int row) {
     return(p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal())));
 }
 
+void Model::setCounterStart(int newValue) {
+    SPDLOG_INFO("Model::setCounterStart");
+    p_ModelRenamingEngineCounter -> setCounter(newValue);
+}
+
+
+void Model::setCounterPadding(int newValue) {
+    SPDLOG_INFO("Model::setCounterPadding");
+    p_ModelRenamingEngineCounter -> setPadding(newValue);
+}
+
+
 void Model::setRenamingEngineTextbody(string newText) {
     SPDLOG_INFO("Model::setRenamingEngineTextbody");
     p_ModelRenamingEngineTextBody -> setTextBody(newText);

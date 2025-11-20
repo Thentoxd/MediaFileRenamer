@@ -48,6 +48,9 @@ void mediaFileRenamerMainView::create_window() {
 
     connect(this -> filenamebody_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setFilenameBody);
 
+    connect(this -> numSuffixStartSpinBox, QSpinBox::valueChanged, this, &mediaFileRenamerMainView::setCounterStart);
+    connect(this -> numSuffixPadSpinBox, QSpinBox::valueChanged, this, &mediaFileRenamerMainView::setCounterPadding);
+
     connect(this -> renameFilesButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::renameFilesButtonClicked);
 
 }
@@ -168,6 +171,19 @@ void mediaFileRenamerMainView::renameFilesButtonClicked() {
     SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
     p_model -> executeRenamingChain(1);
 }
+
+void mediaFileRenamerMainView::setCounterStart(int newValue) {
+    SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
+    SPDLOG_INFO("Setting counter start to {}", newValue);
+    p_model -> setCounterStart(newValue);
+}
+
+void mediaFileRenamerMainView::setCounterPadding(int newValue) {
+    SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
+    SPDLOG_INFO("Setting counter padding to {}", newValue);
+    p_model -> setCounterPadding(newValue);
+}
+
 
 
 int mediaFileRenamerMainView::displayWindow() {
