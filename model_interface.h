@@ -50,7 +50,7 @@ public:
     virtual void setCounterStart(int newValue) = 0;
     virtual void setCounterPadding(int newValue) = 0;
 
-    virtual pair<string, string> executeRenamingChain(int row) = 0;
+    virtual vector<pair<string, string>> executeRenamingChain(vector<int> rows) = 0;
 };
 
 #endif //MEDIAFILERENAMER_MODEL_INTERFACE_H

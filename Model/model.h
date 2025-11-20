@@ -132,7 +132,7 @@ public:
     void setCounterStart(int newValue) override;
     void setCounterPadding(int newValue) override;
 
-    pair<string, string> executeRenamingChain(int row) override;
+    vector<pair<string, string>> executeRenamingChain(vector<int> row) override;
 };
 
 

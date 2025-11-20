@@ -16,7 +16,6 @@ ModelRenamingEngineTextBody::~ModelRenamingEngineTextBody() {
 
 void ModelRenamingEngineTextBody::clear() {
     SPDLOG_DEBUG("ModelRenamingEngineTextBody::clear()");
-    textbody = "";
 }
 
 void ModelRenamingEngineTextBody::init(int mode) {

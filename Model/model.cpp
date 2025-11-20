@@ -158,12 +158,21 @@ vector<string> Model::getFolderHistory() {
 }
 
 
-pair<string, string> Model::executeRenamingChain(int row) {
+vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows) {
     SPDLOG_INFO("Model::executeRenamingChain");
-    FileEntry* entry = getFileEntry(row);
-    // renaming_queue -> executeQueue(pair<string, string> input_parameter)
 
-    return(p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal())));
+    vector<pair<string, string>> returnPairList;
+
+    p_ModelRemamingQueue -> clear();
+
+    for (auto rowNumber : rows)
+    {
+        SPDLOG_INFO("Executing the chain on row {}", rowNumber);
+        FileEntry* entry = getFileEntry(rowNumber);
+        returnPairList.insert(returnPairList.begin(), p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal())));
+    }
+
+    return(returnPairList);
 }
 
 void Model::setCounterStart(int newValue) {

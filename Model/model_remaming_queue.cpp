@@ -28,6 +28,10 @@ void ModelRemamingQueue::init(int mode, ModelRenamingEngineDate * p_ModelRenamin
 void ModelRemamingQueue::clear() {
     SPDLOG_INFO("ModelRemamingQueue::clear");
 
+    for (auto eachEngine : renaming_engine)
+    {
+        eachEngine -> clear();
+    }
 }
 
 pair<string, string> ModelRemamingQueue::executeQueue(pair<string, string> input_parameter) {

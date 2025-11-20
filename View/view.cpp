@@ -107,20 +107,35 @@ void mediaFileRenamerMainView::updateFolderComboBox() {
 
 void mediaFileRenamerMainView::onSelectedRowsChange() {
     SPDLOG_INFO("mediaFileRenamerMainView::onSelectedRowsChange");
-    QSet<int> row_values;
-    QSet<FileEntryInterface*> row_entries;
-    for(auto& x : tableWidget->selectedItems()) {
-        row_values.insert(x->row());
+    vector<int> row_values;
+
+    QItemSelectionModel *select = tableWidget->selectionModel();
+    auto my_QList = select->selectedRows(); // return selected row(s)
+
+    foreach(auto &item, my_QList)
+    {
+        row_values.insert(row_values.begin(), item.row());
     }
 
-    for(int it : row_values) {
-        row_entries.insert(p_model->getFileEntry(it));
-    }
+    vector<pair<string, string>> returnPairList = p_model -> executeRenamingChain(row_values);
 
-    for(int item : row_values) {
-        pair<string, string> returnPair = p_model -> executeRenamingChain(item);
-        SPDLOG_INFO("View returned filename {}", returnPair.first);
-        SPDLOG_INFO("View returned date created Original {}", returnPair.second);
+    int counter = 0;
+    for (auto returnPair : returnPairList)
+    {
+        SPDLOG_INFO("View number {} returned filename {}", counter, returnPair.first);
+        SPDLOG_INFO("View number {} returned date created Original {}", counter, returnPair.second);
+
+        QTableWidgetItem *item = new QTableWidgetItem;
+        item->setText(QString::fromStdString((returnPair.first)));
+        item -> setForeground(QBrush(QColor(255, 0, 0)));
+        tableWidget->setItem(row_values[counter], 1, item);
+
+        QTableWidgetItem *item2 = new QTableWidgetItem;
+        item2->setText(QString::fromStdString((returnPair.second)));
+        item2 -> setForeground(QBrush(QColor(255, 0, 0)));
+        tableWidget->setItem(row_values[counter], 3, item2);
+
+        counter++;
     }
 }
 
@@ -169,7 +184,7 @@ void mediaFileRenamerMainView::setFilenameBody(const QString &text) {
 
 void mediaFileRenamerMainView::renameFilesButtonClicked() {
     SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
-    p_model -> executeRenamingChain(1);
+    // p_model -> executeRenamingChain(1);
 }
 
 void mediaFileRenamerMainView::setCounterStart(int newValue) {
