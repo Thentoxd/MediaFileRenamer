@@ -16,15 +16,29 @@ ModelRenamingEngineCounter::~ModelRenamingEngineCounter() {
 
 void ModelRenamingEngineCounter::init(int mode) {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::init");
+    counter = 1;
+    padding = 1;
+    SPDLOG_DEBUG("Set counter and paddingto 1");
 }
 
 void ModelRenamingEngineCounter::clear() {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::clear");
+    counter = 1;
+    padding = 1;
+    SPDLOG_DEBUG("Set counter and paddingto 1");
 }
 
 pair<string, string> ModelRenamingEngineCounter::execute(pair<string, string> input_parameter) {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::execute");
-    return input_parameter;
+
+    pair<string, string> return_value;
+
+    return_value.first = std::to_string(counter);
+    return_value.second = input_parameter.second;
+
+    counter++;
+
+    return return_value;
 }
 
 void ModelRenamingEngineCounter::setCounter(int value) {
