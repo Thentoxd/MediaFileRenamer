@@ -160,16 +160,40 @@ void mediaFileRenamerMainView::updateTable() {
         FileEntryInterface *entry = p_model->getFileEntry(row);
         auto item1 = new QTableWidgetItem(), item2 = new QTableWidgetItem(), item3 = new QTableWidgetItem(), item4 = new QTableWidgetItem();
 
-        item1->setText(QString::fromStdString(entry->getCurrentFileName()));
+        string oldFilename = entry->getCurrentFileName();
+        item1->setText(QString::fromStdString(oldFilename));
         tableWidget->setItem(row,0,item1);
 
-        item2->setText(QString::fromStdString(entry->getNewFileName()));
+        string newFilename = entry->getNewFileName();
+
+        if (oldFilename == newFilename) {
+            newFilename = "(unchanged)";
+        }
+
+        item2->setText(QString::fromStdString(newFilename));
+
+        QFont font = item2->font();
+        font.setItalic(true);
+        item2->setFont(font);
+
         tableWidget->setItem(row,1,item2);
 
-        item3->setText(QString::fromStdString(entry->getCurrentDateTakenOriginal()));
+        string currentDateTakenOriginal = entry->getCurrentDateTakenOriginal();
+        item3->setText(QString::fromStdString(currentDateTakenOriginal));
         tableWidget->setItem(row,2,item3);
 
-        item4->setText(QString::fromStdString(entry->getNewDateTakenOriginal()));
+        string newDateTakenOriginal = entry->getNewDateTakenOriginal();
+
+        if (currentDateTakenOriginal == newDateTakenOriginal) {
+            if (!currentDateTakenOriginal.empty())
+                newDateTakenOriginal = "(unchanged)";
+        }
+
+        QFont font2 = item4->font();
+        font2.setItalic(true);
+        item4->setFont(font2);
+
+        item4->setText(QString::fromStdString(newDateTakenOriginal));
         tableWidget->setItem(row,3,item4);
     }
     connect(tableWidget, &QTableWidget::itemClicked, this, &mediaFileRenamerMainView::onSelectedRowsChange);
