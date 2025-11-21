@@ -151,10 +151,28 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
         SPDLOG_INFO("View number {} returned filename {}", counter, returnPair.first);
         SPDLOG_INFO("View number {} returned date created Original {}", counter, returnPair.second);
 
+        // If the new filename or new Create Date (Original) matches the old values
+        // show the test (unchanged)
+
+        // First, let's get the current filename and Create Date (Original) being displayed
+
+        auto currentFilename = (tableWidget->item(row_values[counter], 0) -> text()).toStdString();
+
         QTableWidgetItem *item = new QTableWidgetItem;
+
+        if (currentFilename == returnPair.first) {
+            returnPair.first = "(unchanged)";
+        }
+
         item->setText(QString::fromStdString((returnPair.first)));
         item -> setForeground(QBrush(QColor(255, 0, 0)));
         tableWidget->setItem(row_values[counter], 1, item);
+
+        auto currentCreateDate = (tableWidget->item(row_values[counter], 2) -> text()).toStdString();
+
+        if (currentCreateDate == returnPair.second) {
+            returnPair.second = "(unchanged)";
+        }
 
         QTableWidgetItem *item2 = new QTableWidgetItem;
         item2->setText(QString::fromStdString((returnPair.second)));

@@ -1,6 +1,7 @@
 #include <filesystem>
-
 #include <string>
+
+#include <QFile>
 
 #include "main.h"
 #include "View/view.h"
@@ -77,8 +78,16 @@ int main(int argc, char *argv[]) {
 
         p_model->initialise();
 
+
         auto * p_QApplication = new QApplication(argc, argv);
         auto p_view = new mediaFileRenamerMainView(p_model);
+
+        QFile file("stylesheet.qss");
+        file.open(QFile::ReadOnly);
+        QString styleSheet = QLatin1String(file.readAll());
+
+        p_QApplication->setStyleSheet(styleSheet);
+
         p_view -> create_window();
         QApplication::exec();
     }

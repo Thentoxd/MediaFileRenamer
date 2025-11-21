@@ -1,0 +1,30 @@
+QTableView {
+    color: black;
+    gridline-color: black;
+    border-color: rgb(242, 128, 133);
+    font: 12px;
+    selection-color: red;
+    selection-background-color: white;
+}
+QHeaderView::section {
+    background-color: white;
+    color: black;
+    height: 35px;
+    width : 30px;
+    font: 14px;
+}
+QTableView::item:focus{
+    color: red;
+}
+QScrollBar:vertical {
+    background: rgb(188, 224, 235);
+}
+ QScrollBar::handle:vertical {
+    background: rgb(71, 153, 176);
+ }
+QScrollBar:horizontal {
+    background: rgb(188, 224, 235);
+}
+ QScrollBar::handle:horizontal {
+    background: rgb(71, 153, 176);
+ }

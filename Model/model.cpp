@@ -169,7 +169,7 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows) {
     {
         SPDLOG_INFO("Executing the chain on row {}", rowNumber);
         FileEntry* entry = getFileEntry(rowNumber);
-        returnPairList.insert(returnPairList.begin(), p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal())));
+        returnPairList.push_back( p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal())));
     }
 
     return(returnPairList);
