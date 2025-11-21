@@ -117,6 +117,8 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
         row_values.insert(row_values.begin(), item.row());
     }
 
+    ranges::sort(row_values);
+
     vector<pair<string, string>> returnPairList = p_model -> executeRenamingChain(row_values);
 
     int counter = 0;
