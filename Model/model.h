@@ -54,6 +54,10 @@ public:
         this->newFileName = newFileName;
     }
 
+    void setNewFileNameToCurrentFileName() {
+        this->newFileName = currentFileName;
+    }
+
     void setDateTaken(string dateTaken) override {
         currentDateTakenOriginal = dateTaken;
         newDateTakenOriginal = dateTaken;
@@ -86,6 +90,7 @@ public:
     string getCurrentWorkingDirectory() override;
     void reload() override ;
     void clear() override ;
+    void resetToDefaultButtonClicked();
 
     FileEntry * getFileEntry(int row) override {
         FileEntry * p_entry = &fileEntries[row];

@@ -22,6 +22,7 @@ public:
     virtual string getNewDateTakenOriginal() = 0;
     virtual void setFileName(string fileName) = 0;
     virtual void setNewFileName(string newFileName) = 0;
+    virtual void setNewFileNameToCurrentFileName() = 0;
     virtual void setDateTaken(string dateTaken) = 0;
     virtual void setNewDateTaken(string newDateTaken) = 0;
 };
