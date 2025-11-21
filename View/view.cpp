@@ -127,8 +127,18 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
 
         if(!found) {
             QTableWidgetItem *item = new QTableWidgetItem;
+            QFont font = item->font();
+            font.setItalic(true);
+            item->setFont(font);
             item->setText("(unchanged)");
             tableWidget->setItem(i, 1, item);
+
+            QTableWidgetItem *item2 = new QTableWidgetItem;
+            QFont font2 = item2->font();
+            font.setItalic(true);
+            item2->setFont(font);
+            item2->setText("(unchanged)");
+            tableWidget->setItem(i, 3, item2);
         }
     }
 
