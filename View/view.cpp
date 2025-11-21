@@ -48,7 +48,9 @@ void mediaFileRenamerMainView::create_window() {
     connect(this -> numSuffixStartSpinBox, QSpinBox::valueChanged, this, &mediaFileRenamerMainView::setCounterStart);
     connect(this -> numSuffixPadSpinBox, QSpinBox::valueChanged, this, &mediaFileRenamerMainView::setCounterPadding);
     connect(this -> renameFilesButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::renameFilesButtonClicked);
+    connect(this -> resetToDefaultsButton, &QPushButton::clicked,  this, &mediaFileRenamerMainView::resetToDefaultButtonClicked);
 
+    connect(tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &mediaFileRenamerMainView::onSelectedRowsChange);
 }
 
 void mediaFileRenamerMainView::selectFolderButtonClicked() {
@@ -108,12 +110,28 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
     QItemSelectionModel *select = tableWidget->selectionModel();
     auto my_QList = select->selectedRows(); // return selected row(s)
 
-    foreach(auto &item, my_QList)
-    {
-        row_values.insert(row_values.begin(), item.row());
+    for(auto& item : my_QList) {
+        row_values.push_back(item.row());
     }
 
     ranges::sort(row_values);
+
+    for(int i = 0; i < tableWidget->rowCount(); i++) {
+        bool found = false;
+        for(int j = 0; j < row_values.size(); j++) {
+            if(row_values[j] == i) {
+                found = true;
+                break;
+            }
+        }
+
+        if(!found) {
+            QTableWidgetItem *item = new QTableWidgetItem;
+            item->setText("(unchanged)");
+            tableWidget->setItem(i, 1, item);
+        }
+    }
+
 
     vector<pair<string, string>> returnPairList = p_model -> executeRenamingChain(row_values);
 
@@ -138,8 +156,6 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
 }
 
 void mediaFileRenamerMainView::updateTable() {
-    disconnect(tableWidget, &QTableWidget::itemClicked, this, &mediaFileRenamerMainView::onSelectedRowsChange);
-
     // Make a call onto the model to get the table data
     // Model returns an iterable object. Each iteration returns a Line Interface which
     // has the following virtual methods implemented ..
@@ -194,7 +210,11 @@ void mediaFileRenamerMainView::updateTable() {
         item4->setText(QString::fromStdString(newDateTakenOriginal));
         tableWidget->setItem(row,3,item4);
     }
-    connect(tableWidget, &QTableWidget::itemClicked, this, &mediaFileRenamerMainView::onSelectedRowsChange);
+}
+
+void mediaFileRenamerMainView::resetToDefaultButtonClicked() {
+    SPDLOG_INFO("mediaFileRenamerMainView::resetToDefaultButtonClicked");
+    p_model -> reload();
 }
 
 
@@ -220,8 +240,6 @@ void mediaFileRenamerMainView::setCounterPadding(int newValue) {
     SPDLOG_INFO("Setting counter padding to {}", newValue);
     p_model -> setCounterPadding(newValue);
 }
-
-
 
 int mediaFileRenamerMainView::displayWindow() {
     return p_QApplication -> exec();
