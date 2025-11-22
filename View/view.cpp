@@ -77,6 +77,15 @@ void mediaFileRenamerMainView::selectFolderButtonClicked() {
 
 void mediaFileRenamerMainView::setUseDateTakenButtonClicked() {
     SPDLOG_DEBUG("Use Date Taken (Original)");
+
+    // Need to activate the Year, Month and Day widgets
+    year_label->setEnabled(true);
+    month_label->setEnabled(true);
+    day_label->setEnabled(true);
+
+    year_lineEdit ->setEnabled(true);
+    month_lineEdit ->setEnabled(true);
+    day_lineEdit ->setEnabled(true);
 }
 
 void mediaFileRenamerMainView::setDateTakenOriginalButtonClicked() {
