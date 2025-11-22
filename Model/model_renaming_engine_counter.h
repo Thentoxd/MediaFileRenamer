@@ -19,6 +19,7 @@ class ModelRenamingEngineCounter : public ModelRenamingEngine {
 
 private:
     int counter = 1;
+    int counterStart = 1;
     int padding = 1;
 
 public:

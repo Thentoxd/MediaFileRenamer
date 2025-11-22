@@ -23,7 +23,7 @@ void ModelRenamingEngineCounter::init(int mode) {
 
 void ModelRenamingEngineCounter::clear() {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::clear");
-    counter = 1;
+    counter = counterStart;
     padding = 1;
     SPDLOG_DEBUG("Set counter and paddingto 1");
 }
@@ -45,6 +45,7 @@ void ModelRenamingEngineCounter::setCounter(int value) {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::setCounter");
     SPDLOG_DEBUG("Setting the numbering counter to {}", value);
     counter = value;
+    counterStart = value;
 }
 
 void ModelRenamingEngineCounter::setPadding(int value) {

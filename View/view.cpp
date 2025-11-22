@@ -142,7 +142,7 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
         }
     }
 
-
+    p_model ->clearRenamingChain();
     vector<pair<string, string>> returnPairList = p_model -> executeRenamingChain(row_values);
 
     int counter = 0;

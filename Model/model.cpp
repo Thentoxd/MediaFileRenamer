@@ -158,12 +158,15 @@ vector<string> Model::getFolderHistory() {
 }
 
 
+void Model::clearRenamingChain() {
+    p_ModelRemamingQueue -> clear();
+}
+
+
 vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows) {
     SPDLOG_INFO("Model::executeRenamingChain");
 
     vector<pair<string, string>> returnPairList;
-
-    p_ModelRemamingQueue -> clear();
 
     for (auto rowNumber : rows)
     {
