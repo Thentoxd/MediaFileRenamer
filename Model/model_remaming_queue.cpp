@@ -55,7 +55,10 @@ pair<string, string> ModelRemamingQueue::executeQueue(pair<string, string> input
 
     }
 
-    SPDLOG_INFO("Renamed filename: {}", renamed_filename);
+    // Strip last seperator off
+    renamed_filename.erase(renamed_filename.find_last_not_of(" ") + 1);
+
+    //SPDLOG_INFO("Renamed filename: {}", renamed_filename);
     // SPDLOG_INFO("Return string2: {}", return_pair.second);
 
 
