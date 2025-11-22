@@ -169,7 +169,16 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows) {
     {
         SPDLOG_INFO("Executing the chain on row {}", rowNumber);
         FileEntry* entry = getFileEntry(rowNumber);
-        returnPairList.push_back( p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal())));
+
+        // Need to store the file extension
+        string currentFilename = entry->getCurrentFileName();
+        string currentFileExtension = currentFilename.substr(currentFilename.find("."));
+
+        pair<string, string> returnPair = p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal()));
+
+        returnPair.first =  returnPair.first + currentFileExtension;
+
+        returnPairList.push_back(returnPair);
     }
 
     return(returnPairList);
