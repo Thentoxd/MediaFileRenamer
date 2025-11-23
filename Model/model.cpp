@@ -162,10 +162,8 @@ void Model::clearRenamingChain() {
     p_ModelRemamingQueue -> clear();
 }
 
-
-vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows) {
+vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool renameFiles) {
     SPDLOG_INFO("Model::executeRenamingChain");
-
     vector<pair<string, string>> returnPairList;
 
     for (auto rowNumber : rows)
@@ -179,12 +177,17 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows) {
 
         pair<string, string> returnPair = p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal()));
 
-        returnPair.first =  returnPair.first + currentFileExtension;
+        returnPair.first += currentFileExtension;
 
         returnPairList.push_back(returnPair);
+
+        if(renameFiles) {
+            SPDLOG_INFO("Renaming file {} to {}", getCurrentWorkingDirectory() + "/" + currentFilename, getCurrentWorkingDirectory() + "/" + returnPair.first);
+            filesystem::rename(getCurrentWorkingDirectory() + "/" + currentFilename, getCurrentWorkingDirectory() + "/" + returnPair.first);
+        }
     }
 
-    return(returnPairList);
+    return returnPairList;
 }
 
 void Model::setCounterStart(int newValue) {

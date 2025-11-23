@@ -55,7 +55,7 @@ public:
     virtual void setCounterPadding(int newValue) = 0;
 
     virtual void clearRenamingChain() = 0;
-    virtual vector<pair<string, string>> executeRenamingChain(vector<int> rows) = 0;
+    virtual vector<pair<string, string>> executeRenamingChain(vector<int> rows, bool renameFiles) = 0;
 };
 
 #endif //MEDIAFILERENAMER_MODEL_INTERFACE_H

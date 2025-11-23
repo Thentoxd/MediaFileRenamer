@@ -117,14 +117,7 @@ void mediaFileRenamerMainView::updateFolderComboBox() {
 
 void mediaFileRenamerMainView::onSelectedRowsChange() {
     SPDLOG_INFO("mediaFileRenamerMainView::onSelectedRowsChange");
-    vector<int> row_values;
-
-    QItemSelectionModel *select = tableWidget->selectionModel();
-    auto my_QList = select->selectedRows(); // return selected row(s)
-
-    for(auto& item : my_QList) {
-        row_values.push_back(item.row());
-    }
+    vector<int> row_values = getUniqueRows();
 
     ranges::sort(row_values);
 
@@ -155,7 +148,7 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
     }
 
     p_model ->clearRenamingChain();
-    vector<pair<string, string>> returnPairList = p_model -> executeRenamingChain(row_values);
+    vector<pair<string, string>> returnPairList = p_model -> executeRenamingChain(row_values, false);
 
     int counter = 0;
     for (auto returnPair : returnPairList)
@@ -264,22 +257,35 @@ void mediaFileRenamerMainView::setFilenameBody(const QString &text) {
     p_model -> setRenamingEngineTextbody(text.toStdString());
 }
 
+vector<int> mediaFileRenamerMainView::getUniqueRows() {
+    vector<int> row_values;
+
+    QItemSelectionModel *select = tableWidget->selectionModel();
+    auto my_QList = select->selectedRows(); // return selected row(s)
+
+    for(auto& item : my_QList) {
+        row_values.push_back(item.row());
+    }
+
+    return row_values;
+}
+
 
 void mediaFileRenamerMainView::renameFilesButtonClicked() {
     SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
-    // p_model -> executeRenamingChain(1);
+    p_model->executeRenamingChain(getUniqueRows(), true);
 }
 
 
 void mediaFileRenamerMainView::setCounterStart(int newValue) {
-    SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
+    SPDLOG_INFO("mediaFileRenamerMainView::setCounterStart");
     SPDLOG_INFO("Setting counter start to {}", newValue);
     p_model -> setCounterStart(newValue);
 }
 
 
 void mediaFileRenamerMainView::setCounterPadding(int newValue) {
-    SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
+    SPDLOG_INFO("mediaFileRenamerMainView::setCounterPadding");
     SPDLOG_INFO("Setting counter padding to {}", newValue);
     p_model -> setCounterPadding(newValue);
 }
