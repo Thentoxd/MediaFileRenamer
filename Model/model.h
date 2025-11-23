@@ -73,6 +73,7 @@ class Model : public ModelInterface {
 
 private:
     string mediaFileRenamerVersion;
+    string currentWorkingDirectory;
     vector<FileEntry> fileEntries;
 
     ModelConfigfile * p_ModelConfigfile;
@@ -87,7 +88,6 @@ public:
     void initialise();
     void renameEXIFFile(FileEntry* newFile);
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
-    string getCurrentWorkingDirectory() override;
     void reload() override ;
     void clear() override ;
     void resetToDefaultButtonClicked();
@@ -124,6 +124,14 @@ public:
 
     int getEntryCount() {
         return fileEntries.size();
+    }
+
+    void updateCurrentWorkingDirectory(string newDirectory) {
+        currentWorkingDirectory = newDirectory;
+    }
+
+    string getCurrentWorkingDirectory() {
+        return currentWorkingDirectory;
     }
 
     void setFileTypesToParse(const vector<string> fileTypesToParse) override;

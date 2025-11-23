@@ -39,6 +39,7 @@ void Model::initialise() {
 
 void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
     SPDLOG_INFO("Model::setCurrentWorkingDirectory");
+    updateCurrentWorkingDirectory(newCurrentWorkingDirectory);
     string current_working_directory = newCurrentWorkingDirectory;
 
     this -> clear();
@@ -121,12 +122,6 @@ void Model::renameEXIFFile(FileEntry* newFile) {
     rename((getCurrentWorkingDirectory() + newFile->getCurrentFileName()).c_str(), newFile->getNewFileName().c_str());
     newFile->setFileName(newFile->getNewFileName());
 }
-
-string Model::getCurrentWorkingDirectory() {
-    SPDLOG_INFO("Model::getCurrentWorkingDirectory");
-    return(p_ModelConfigfile -> getCurrentWorkingDirectory());
-}
-
 
 void Model::reload() {
     SPDLOG_INFO("Model::reload");
