@@ -24,7 +24,7 @@ void ModelRenamingEngineCounter::init(int mode) {
 void ModelRenamingEngineCounter::clear() {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::clear");
     counter = counterStart;
-    padding = 1;
+    padding = paddingStart;
     SPDLOG_DEBUG("Set counter and paddingto 1");
 }
 
@@ -33,7 +33,14 @@ pair<string, string> ModelRenamingEngineCounter::execute(pair<string, string> in
 
     pair<string, string> return_value;
 
-    return_value.first = std::to_string(counter);
+    string counterString = std::to_string(counter);
+
+    int paddingSize = padding - counterString.length();
+    if (paddingSize>0) {
+        counterString.insert(0, paddingSize, '0');
+    }
+
+    return_value.first = counterString;
     return_value.second = input_parameter.second;
 
     counter++;
@@ -52,4 +59,5 @@ void ModelRenamingEngineCounter::setPadding(int value) {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::setPadding");
     SPDLOG_DEBUG("Setting the padding counter to {}", value);
     padding = value;
+    paddingStart = value;
 }

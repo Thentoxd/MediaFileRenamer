@@ -21,6 +21,7 @@ private:
     int counter = 1;
     int counterStart = 1;
     int padding = 1;
+    int paddingStart = 1;
 
 public:
     ModelRenamingEngineCounter();
