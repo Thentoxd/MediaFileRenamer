@@ -140,6 +140,7 @@ public:
     void setRenamingEngineDateSetYear(string newText) override;
     void setRenamingEngineDateSetMonth(string newText) override;
     void setRenamingEngineDateSetDay(string newText) override;
+    void setRenamingEngineDateSetOriginalDateTaken(bool newValue) override;
 
     void clearRenamingChain() override;
     vector<pair<string, string>> executeRenamingChain(vector<int> row, bool renameFiles) override;

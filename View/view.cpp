@@ -69,10 +69,12 @@ void mediaFileRenamerMainView::create_window() {
     connect(this -> resetToDefaultsButton, &QPushButton::clicked,  this, &mediaFileRenamerMainView::resetToDefaultButtonClicked);
     connect(tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &mediaFileRenamerMainView::onSelectedRowsChange);
 
+    connect(this -> tryExtractDateButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::setDateTryExtractDate);
     connect(this -> year_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setYear);
     connect(this -> month_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setMonth);
     connect(this -> day_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setDay);
 }
+
 
 void mediaFileRenamerMainView::selectFolderButtonClicked() {
     SPDLOG_DEBUG("mediaFileRenamerMainView::selectFolderButtonClicked");
@@ -96,22 +98,36 @@ void mediaFileRenamerMainView::selectFolderButtonClicked() {
     }
 }
 
+
+void mediaFileRenamerMainView::updateDateChangeYearMonthDay(bool newValue) {
+    year_label->setEnabled(newValue);
+    month_label->setEnabled(newValue);
+    day_label->setEnabled(newValue);
+
+    year_lineEdit ->setEnabled(newValue);
+    month_lineEdit ->setEnabled(newValue);
+    day_lineEdit ->setEnabled(newValue);
+}
+
+
 void mediaFileRenamerMainView::setUseDateTakenButtonClicked() {
     SPDLOG_DEBUG("Use Date Taken (Original)");
 
-    // Need to activate the Year, Month and Day widgets
-    year_label->setEnabled(true);
-    month_label->setEnabled(true);
-    day_label->setEnabled(true);
+    p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
 
-    year_lineEdit ->setEnabled(true);
-    month_lineEdit ->setEnabled(true);
-    day_lineEdit ->setEnabled(true);
+    // Need to activate the Year, Month and Day widgets
+    this -> updateDateChangeYearMonthDay(true);
 }
+
 
 void mediaFileRenamerMainView::setDateTakenOriginalButtonClicked() {
     SPDLOG_DEBUG("Set Date Taken (Original)");
+    p_model -> setRenamingEngineDateSetOriginalDateTaken(true);
+
+    // Need to activate the Year, Month and Day widgets
+    this -> updateDateChangeYearMonthDay(true);
 }
+
 
 void mediaFileRenamerMainView::selectFolderComboBox(int index) {
     SPDLOG_INFO("mediaFileRenamerMainView::selectFolderComboBox");
@@ -123,6 +139,7 @@ void mediaFileRenamerMainView::selectFolderComboBox(int index) {
     }
 }
 
+
 void mediaFileRenamerMainView::updateFolderComboBox() {
     SPDLOG_INFO("mediaFileRenamerMainView::updateFolderComboBox");
     vector<string> folders = p_model -> getFolderHistory();
@@ -132,6 +149,7 @@ void mediaFileRenamerMainView::updateFolderComboBox() {
     for(const string folder : folders)
         folderComboBox -> addItem(QString::fromStdString(folder));
 }
+
 
 void mediaFileRenamerMainView::onSelectedRowsChange() {
     SPDLOG_INFO("mediaFileRenamerMainView::onSelectedRowsChange");
@@ -330,6 +348,13 @@ void mediaFileRenamerMainView::setDay(const QString &text) {
     SPDLOG_INFO("Text entered: {}", text.toStdString());
     p_model -> setRenamingEngineDateSetDay(text.toStdString());
 }
+
+
+void mediaFileRenamerMainView::setDateTryExtractDate() {
+    SPDLOG_INFO("mediaFileRenamerMainView::setDateTryExtractDate");
+    this -> updateDateChangeYearMonthDay(false);
+}
+
 
 int mediaFileRenamerMainView::displayWindow() {
     return p_QApplication -> exec();

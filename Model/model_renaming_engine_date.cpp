@@ -9,13 +9,16 @@ ModelRenamingEngineDate::ModelRenamingEngineDate() {
     SPDLOG_INFO("ModelRenamingEngineDate::ModelRenamingEngineDate");
 }
 
+
 ModelRenamingEngineDate::~ModelRenamingEngineDate() {
     SPDLOG_INFO("ModelRenamingEngineDate::~ModelRenamingEngineDate");
 }
 
+
 void ModelRenamingEngineDate::init(int mode) {
     SPDLOG_INFO("ModelRenamingEngineDate::init");
 }
+
 
 pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input_parameter) {
     SPDLOG_INFO("ModelRemamingQueue::ModelRemamingQueue");
@@ -94,6 +97,13 @@ void ModelRenamingEngineDate::setRenamingEngineDateSetDay(string newValue) {
     day = newValue;
 }
 
+
 void ModelRenamingEngineDate::clear() {
     SPDLOG_INFO("ModelRenamingEngineDate::clear");
+}
+
+
+void ModelRenamingEngineDate::setRenamingEngineDateSetOriginalDateTaken(bool newValue) {
+    SPDLOG_INFO("setRenamingEngineDateSetOriginalDateTaken");
+    setDataTaken = newValue;
 }

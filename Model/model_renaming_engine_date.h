@@ -28,6 +28,8 @@ private:
     string month;
     string day;
 
+    bool setDataTaken = false;
+
     char separator = ' ';
 
     string dateFormat = "YYYY-MM-DD";
@@ -43,6 +45,8 @@ public:
     void setRenamingEngineDateSetYear(string newValue);
     void setRenamingEngineDateSetMonth(string newValue);
     void setRenamingEngineDateSetDay(string newValue);
+
+    void setRenamingEngineDateSetOriginalDateTaken(bool newValue);
 };
 
 #endif //MEDIAFILERENAMER_MODEL_RENAMING_ENGINE_DATE_H

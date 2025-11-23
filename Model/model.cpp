@@ -209,20 +209,26 @@ void Model::setRenamingEngineTextbody(string newText) {
 
 
 void Model::setRenamingEngineDateSetYear(string newText) {
-    SPDLOG_INFO("setRenamingEngineDateSetYear");
+    SPDLOG_INFO("Model::setRenamingEngineDateSetYear");
     p_ModelRenamingEngineDate -> setRenamingEngineDateSetYear(newText);
 }
 
 
 void Model::setRenamingEngineDateSetMonth(string newText) {
-    SPDLOG_INFO("setRenamingEngineDateSetMonth");
+    SPDLOG_INFO("Model::setRenamingEngineDateSetMonth");
     p_ModelRenamingEngineDate -> setRenamingEngineDateSetMonth(newText);
 }
 
 
 void Model::setRenamingEngineDateSetDay(string newText) {
-    SPDLOG_INFO("setRenamingEngineDateSetDay");
+    SPDLOG_INFO("Model::setRenamingEngineDateSetDay");
     p_ModelRenamingEngineDate -> setRenamingEngineDateSetDay(newText);
+}
+
+
+void Model::setRenamingEngineDateSetOriginalDateTaken(bool newValue) {
+    SPDLOG_INFO("Model::setRenamingEngineDateSetOriginalDateTaken");
+    p_ModelRenamingEngineDate -> setRenamingEngineDateSetOriginalDateTaken(newValue);
 }
 
 

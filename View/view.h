@@ -23,6 +23,7 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
     ModelInterface * p_model;
 
     void updateTable();
+    void updateDateChangeYearMonthDay(bool newValue);
 
     public:
         mediaFileRenamerMainView(ModelInterface * p_model);
@@ -47,6 +48,7 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void renameFilesButtonClicked();
         void resetToDefaultButtonClicked();
 
+        void setDateTryExtractDate();
         void setYear(const QString &text);
         void setMonth(const QString &text);
         void setDay(const QString &text);
