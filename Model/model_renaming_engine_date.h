@@ -24,6 +24,10 @@ private:
     string outputFilename = "";
     string outputDateCreatedOriginal = "";
 
+    string year;
+    string month;
+    string day;
+
     char separator = ' ';
 
     string dateFormat = "YYYY-MM-DD";
@@ -35,6 +39,10 @@ public:
     void init(int mode) override;
     void clear() override;
     pair<string, string> execute(pair<string, string> input_parameter) override;
+
+    void setRenamingEngineDateSetYear(string newValue);
+    void setRenamingEngineDateSetMonth(string newValue);
+    void setRenamingEngineDateSetDay(string newValue);
 };
 
 #endif //MEDIAFILERENAMER_MODEL_RENAMING_ENGINE_DATE_H

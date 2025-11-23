@@ -47,6 +47,9 @@ public:
     virtual vector<string> getFolderHistory() = 0;
 
     virtual void setRenamingEngineTextbody(string newText) = 0;
+    virtual void setRenamingEngineDateSetYear(string newText) = 0;
+    virtual void setRenamingEngineDateSetMonth(string newText) = 0;
+    virtual void setRenamingEngineDateSetDay(string newText) = 0;
 
     virtual void setCounterStart(int newValue) = 0;
     virtual void setCounterPadding(int newValue) = 0;

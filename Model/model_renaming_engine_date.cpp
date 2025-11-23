@@ -77,6 +77,23 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
     return pair<string, string>(return_string, input_parameter.second);
 }
 
+void ModelRenamingEngineDate::setRenamingEngineDateSetYear(string newValue) {
+    SPDLOG_INFO("ModelRenamingEngineDate::setRenamingEngineDateSetYear. Set year to {}", newValue);
+    year = newValue;
+}
+
+
+void ModelRenamingEngineDate::setRenamingEngineDateSetMonth(string newValue) {
+    SPDLOG_INFO("ModelRenamingEngineDate::setRenamingEngineDateSetMonth. Set month to {}", newValue);
+    month = newValue;
+}
+
+
+void ModelRenamingEngineDate::setRenamingEngineDateSetDay(string newValue) {
+    SPDLOG_INFO("ModelRenamingEngineDate::setRenamingEngineDateSetDay. Set day to {}", newValue);
+    day = newValue;
+}
+
 void ModelRenamingEngineDate::clear() {
     SPDLOG_INFO("ModelRenamingEngineDate::clear");
 }

@@ -137,6 +137,10 @@ public:
     void setCounterStart(int newValue) override;
     void setCounterPadding(int newValue) override;
 
+    void setRenamingEngineDateSetYear(string newText) override;
+    void setRenamingEngineDateSetMonth(string newText) override;
+    void setRenamingEngineDateSetDay(string newText) override;
+
     void clearRenamingChain() override;
     vector<pair<string, string>> executeRenamingChain(vector<int> row) override;
 };

@@ -205,4 +205,22 @@ void Model::setRenamingEngineTextbody(string newText) {
 }
 
 
+void Model::setRenamingEngineDateSetYear(string newText) {
+    SPDLOG_INFO("setRenamingEngineDateSetYear");
+    p_ModelRenamingEngineDate -> setRenamingEngineDateSetYear(newText);
+}
+
+
+void Model::setRenamingEngineDateSetMonth(string newText) {
+    SPDLOG_INFO("setRenamingEngineDateSetMonth");
+    p_ModelRenamingEngineDate -> setRenamingEngineDateSetMonth(newText);
+}
+
+
+void Model::setRenamingEngineDateSetDay(string newText) {
+    SPDLOG_INFO("setRenamingEngineDateSetDay");
+    p_ModelRenamingEngineDate -> setRenamingEngineDateSetDay(newText);
+}
+
+
 

@@ -49,8 +49,11 @@ void mediaFileRenamerMainView::create_window() {
     connect(this -> numSuffixPadSpinBox, QSpinBox::valueChanged, this, &mediaFileRenamerMainView::setCounterPadding);
     connect(this -> renameFilesButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::renameFilesButtonClicked);
     connect(this -> resetToDefaultsButton, &QPushButton::clicked,  this, &mediaFileRenamerMainView::resetToDefaultButtonClicked);
-
     connect(tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &mediaFileRenamerMainView::onSelectedRowsChange);
+
+    connect(this -> year_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setYear);
+    connect(this -> month_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setMonth);
+    connect(this -> day_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setDay);
 }
 
 void mediaFileRenamerMainView::selectFolderButtonClicked() {
@@ -261,10 +264,12 @@ void mediaFileRenamerMainView::setFilenameBody(const QString &text) {
     p_model -> setRenamingEngineTextbody(text.toStdString());
 }
 
+
 void mediaFileRenamerMainView::renameFilesButtonClicked() {
     SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
     // p_model -> executeRenamingChain(1);
 }
+
 
 void mediaFileRenamerMainView::setCounterStart(int newValue) {
     SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
@@ -272,10 +277,32 @@ void mediaFileRenamerMainView::setCounterStart(int newValue) {
     p_model -> setCounterStart(newValue);
 }
 
+
 void mediaFileRenamerMainView::setCounterPadding(int newValue) {
     SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
     SPDLOG_INFO("Setting counter padding to {}", newValue);
     p_model -> setCounterPadding(newValue);
+}
+
+
+void mediaFileRenamerMainView::setYear(const QString &text) {
+    SPDLOG_INFO("mediaFileRenamerMainView::setYear");
+    SPDLOG_INFO("Text entered: {}", text.toStdString());
+    p_model -> setRenamingEngineDateSetYear(text.toStdString());
+}
+
+
+void mediaFileRenamerMainView::setMonth(const QString &text) {
+    SPDLOG_INFO("mediaFileRenamerMainView::setMonth");
+    SPDLOG_INFO("Text entered: {}", text.toStdString());
+    p_model -> setRenamingEngineDateSetMonth(text.toStdString());
+}
+
+
+void mediaFileRenamerMainView::setDay(const QString &text) {
+    SPDLOG_INFO("mediaFileRenamerMainView::setDay");
+    SPDLOG_INFO("Text entered: {}", text.toStdString());
+    p_model -> setRenamingEngineDateSetDay(text.toStdString());
 }
 
 int mediaFileRenamerMainView::displayWindow() {
