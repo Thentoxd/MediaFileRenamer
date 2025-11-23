@@ -21,6 +21,24 @@ mediaFileRenamerMainView::mediaFileRenamerMainView(ModelInterface * modelParam) 
     this -> show();
 }
 
+void mediaFileRenamerMainView::reload_window() {
+    QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
+
+    tableWidget->setColumnCount(4);
+
+    this -> updateTable();
+    this -> updateFolderComboBox();
+
+    // Disable editing directly
+    tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    QStringList m_TableHeader;
+    m_TableHeader<<"Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
+    tableWidget->setHorizontalHeaderLabels(m_TableHeader);
+    tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+}
+
 void mediaFileRenamerMainView::create_window() {
     SPDLOG_INFO("Creating main window ....");
 
@@ -273,7 +291,9 @@ vector<int> mediaFileRenamerMainView::getUniqueRows() {
 
 void mediaFileRenamerMainView::renameFilesButtonClicked() {
     SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
+    p_model->clearRenamingChain();
     p_model->executeRenamingChain(getUniqueRows(), true);
+    reload_window();
 }
 
 

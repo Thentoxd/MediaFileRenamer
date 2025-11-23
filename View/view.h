@@ -27,6 +27,7 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
     public:
         mediaFileRenamerMainView(ModelInterface * p_model);
         void create_window();
+        void reload_window();
         int displayWindow();
 
         void updateFolderComboBox();
