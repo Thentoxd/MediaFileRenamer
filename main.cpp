@@ -2,6 +2,7 @@
 #include <string>
 
 #include <QFile>
+#include <QImageReader>
 
 #include "main.h"
 #include "View/view.h"
@@ -80,6 +81,9 @@ int main(int argc, char *argv[]) {
 
 
         auto * p_QApplication = new QApplication(argc, argv);
+
+        QImageReader::setAllocationLimit(512);
+
         auto p_view = new mediaFileRenamerMainView(p_model);
 
         QFile file("stylesheet.qss");
