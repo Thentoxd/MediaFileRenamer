@@ -56,6 +56,8 @@ public:
     virtual void setCounterStart(int newValue) = 0;
     virtual void setCounterPadding(int newValue) = 0;
 
+    virtual void exitApplication() = 0;
+
     virtual void clearRenamingChain() = 0;
     virtual vector<pair<string, string>> executeRenamingChain(vector<int> rows, bool renameFiles) = 0;
 };

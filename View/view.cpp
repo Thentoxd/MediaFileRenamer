@@ -3,6 +3,7 @@
 //
 
 #include <QFileDialog>
+#include <QPixmap>
 
 #include "../main.h"
 #include "view.h"
@@ -73,6 +74,10 @@ void mediaFileRenamerMainView::create_window() {
     connect(this -> year_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setYear);
     connect(this -> month_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setMonth);
     connect(this -> day_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setDay);
+
+    // Menu signal
+    // connect actionExit QAction::triggered   (bool checked = false)
+    connect(this -> actionExit, &QAction::triggered, this, &mediaFileRenamerMainView::menuExit);
 }
 
 
@@ -239,9 +244,11 @@ void mediaFileRenamerMainView::updateTable() {
     tableWidget->setRowCount(0); // This will delete all the data in the current table
     tableWidget->setRowCount(entryCount);
 
+    string currentWorkingDir = p_model -> getCurrentWorkingDirectory();
+
     for (int row = 0; row < entryCount; row++) {
         FileEntryInterface *entry = p_model->getFileEntry(row);
-        auto item1 = new QTableWidgetItem(), item2 = new QTableWidgetItem(), item3 = new QTableWidgetItem(), item4 = new QTableWidgetItem();
+        auto item1 = new QTableWidgetItem(), item2 = new QTableWidgetItem(), item3 = new QTableWidgetItem(), item4 = new QTableWidgetItem(), item5 = new QTableWidgetItem();
 
         string oldFilename = entry->getCurrentFileName();
         item1->setText(QString::fromStdString(oldFilename));
@@ -278,7 +285,22 @@ void mediaFileRenamerMainView::updateTable() {
 
         item4->setText(QString::fromStdString(newDateTakenOriginal));
         tableWidget->setItem(row,3,item4);
+
+        // string fileName = currentWorkingDir.append("/");
+        // fileName.append(oldFilename);
+        //
+        // QPixmap image;
+        // image.load(QString::fromStdString(fileName));
+        //
+        // if(image.width()>512 || image.height()>512){
+        //     image = image.scaled(100,100,Qt::KeepAspectRatio);
+        // }
+        //
+        // item5 -> setData(Qt::DecorationRole, QPixmap(image));
+        // tableWidget->setItem(row,4,item5);
     }
+    tableWidget ->resizeColumnsToContents();
+    tableWidget ->resizeRowsToContents();
 }
 
 void mediaFileRenamerMainView::resetToDefaultButtonClicked() {
@@ -353,6 +375,12 @@ void mediaFileRenamerMainView::setDay(const QString &text) {
 void mediaFileRenamerMainView::setDateTryExtractDate() {
     SPDLOG_INFO("mediaFileRenamerMainView::setDateTryExtractDate");
     this -> updateDateChangeYearMonthDay(false);
+}
+
+
+void mediaFileRenamerMainView::menuExit(bool newValue) {
+    SPDLOG_INFO("mediaFileRenamerMainView::menuExit");
+    p_model -> exitApplication();
 }
 
 

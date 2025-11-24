@@ -52,6 +52,8 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void setYear(const QString &text);
         void setMonth(const QString &text);
         void setDay(const QString &text);
+
+        void menuExit(bool newValue);
 };
 
 

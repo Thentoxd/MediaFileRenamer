@@ -150,6 +150,8 @@ public:
     void setRenamingEngineDateSetDay(string newText) override;
     void setRenamingEngineDateSetOriginalDateTaken(bool newValue) override;
 
+    void exitApplication() override;
+
     void clearRenamingChain() override;
     vector<pair<string, string>> executeRenamingChain(vector<int> row, bool renameFiles) override;
 };

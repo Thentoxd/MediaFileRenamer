@@ -226,5 +226,11 @@ void Model::setRenamingEngineDateSetOriginalDateTaken(bool newValue) {
     p_ModelRenamingEngineDate -> setRenamingEngineDateSetOriginalDateTaken(newValue);
 }
 
+void Model::exitApplication() {
+    SPDLOG_INFO("Model::exitApplication");
+
+    // Can we throw an exit exception here?
+}
+
 
 
