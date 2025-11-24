@@ -296,8 +296,8 @@ void mediaFileRenamerMainView::updateTable() {
 
         string newDateTakenOriginal = entry->getNewDateTakenOriginal();
     }
-    tableWidget ->resizeColumnsToContents();
-    tableWidget ->resizeRowsToContents();
+    // tableWidget ->resizeColumnsToContents();
+    // tableWidget ->resizeRowsToContents();
 }
 
 void mediaFileRenamerMainView::resetToDefaultButtonClicked() {
