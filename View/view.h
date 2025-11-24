@@ -21,6 +21,7 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
 
     private:
     ModelInterface * p_model;
+    bool loadPreviewsFlag = false;
 
     void updateTable();
     void updateDateChangeYearMonthDay(bool newValue);
@@ -54,6 +55,7 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void setDay(const QString &text);
 
         void menuExit(bool newValue);
+        void loadPreviews(Qt::CheckState state);
 };
 
 

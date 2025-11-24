@@ -75,6 +75,8 @@ void mediaFileRenamerMainView::create_window() {
     connect(this -> month_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setMonth);
     connect(this -> day_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setDay);
 
+    connect(this -> loadPreviews_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::loadPreviews);
+
     // Menu signal
     // connect actionExit QAction::triggered   (bool checked = false)
     connect(this -> actionExit, &QAction::triggered, this, &mediaFileRenamerMainView::menuExit);
@@ -247,12 +249,31 @@ void mediaFileRenamerMainView::updateTable() {
     string currentWorkingDir = p_model -> getCurrentWorkingDirectory();
 
     for (int row = 0; row < entryCount; row++) {
+        int columnCount = 0;
         FileEntryInterface *entry = p_model->getFileEntry(row);
         auto item1 = new QTableWidgetItem(), item2 = new QTableWidgetItem(), item3 = new QTableWidgetItem(), item4 = new QTableWidgetItem(), item5 = new QTableWidgetItem();
 
         string oldFilename = entry->getCurrentFileName();
+
+        if (loadPreviewsFlag == true) {
+            string fileName = currentWorkingDir.append("/");
+            fileName.append(oldFilename);
+
+            QPixmap image;
+            image.load(QString::fromStdString(fileName));
+
+            if(image.width()>512 || image.height()>512){
+                image = image.scaled(100,100,Qt::KeepAspectRatio);
+            }
+
+            item5 -> setData(Qt::DecorationRole, QPixmap(image));
+            tableWidget->setItem(row,columnCount,item5);
+            columnCount++;
+        }
+
         item1->setText(QString::fromStdString(oldFilename));
-        tableWidget->setItem(row,0,item1);
+        tableWidget->setItem(row,columnCount,item1);
+        columnCount++;
 
         string newFilename = entry->getNewFileName();
 
@@ -265,38 +286,15 @@ void mediaFileRenamerMainView::updateTable() {
         QFont font = item2->font();
         font.setItalic(true);
         item2->setFont(font);
-        tableWidget->setItem(row,1,item2);
+        tableWidget->setItem(row,columnCount,item2);
+        columnCount++;
 
         string currentDateTakenOriginal = entry->getCurrentDateTakenOriginal();
         item3->setText(QString::fromStdString(currentDateTakenOriginal));
-        tableWidget->setItem(row,2,item3);
+        tableWidget->setItem(row,columnCount,item3);
+        columnCount++;
 
         string newDateTakenOriginal = entry->getNewDateTakenOriginal();
-
-        if (currentDateTakenOriginal == newDateTakenOriginal) {
-            if (!currentDateTakenOriginal.empty())
-                newDateTakenOriginal = "(unchanged)";
-        }
-
-        QFont font2 = item4->font();
-        font2.setItalic(true);
-        item4->setFont(font2);
-
-        item4->setText(QString::fromStdString(newDateTakenOriginal));
-        tableWidget->setItem(row,3,item4);
-
-        // string fileName = currentWorkingDir.append("/");
-        // fileName.append(oldFilename);
-        //
-        // QPixmap image;
-        // image.load(QString::fromStdString(fileName));
-        //
-        // if(image.width()>512 || image.height()>512){
-        //     image = image.scaled(100,100,Qt::KeepAspectRatio);
-        // }
-        //
-        // item5 -> setData(Qt::DecorationRole, QPixmap(image));
-        // tableWidget->setItem(row,4,item5);
     }
     tableWidget ->resizeColumnsToContents();
     tableWidget ->resizeRowsToContents();
@@ -381,6 +379,20 @@ void mediaFileRenamerMainView::setDateTryExtractDate() {
 void mediaFileRenamerMainView::menuExit(bool newValue) {
     SPDLOG_INFO("mediaFileRenamerMainView::menuExit");
     p_model -> exitApplication();
+}
+
+void mediaFileRenamerMainView::loadPreviews(Qt::CheckState state) {
+    SPDLOG_INFO("mediaFileRenamerMainView::loadPreviews");
+    if (state == Qt::Checked) {
+        loadPreviewsFlag = true;
+        tableWidget->setColumnCount(5);
+    }
+    else {
+        loadPreviewsFlag = false;
+        tableWidget->setColumnCount(4);
+    }
+    this -> updateTable();
+    // loadPreviews
 }
 
 
