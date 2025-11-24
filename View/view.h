@@ -34,7 +34,7 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void updateFolderComboBox();
         void selectFolderComboBox(int index);
         void onSelectedRowsChange();
-        vector<int> getUniqueRows();
+        vector<int> getSelectedUniqueRows();
 
     public slots:
         void selectFolderButtonClicked();

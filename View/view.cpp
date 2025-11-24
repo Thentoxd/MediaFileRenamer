@@ -158,7 +158,7 @@ void mediaFileRenamerMainView::updateFolderComboBox() {
 
 void mediaFileRenamerMainView::onSelectedRowsChange() {
     SPDLOG_INFO("mediaFileRenamerMainView::onSelectedRowsChange");
-    vector<int> row_values = getUniqueRows();
+    vector<int> row_values = getSelectedUniqueRows();
 
     ranges::sort(row_values);
 
@@ -265,7 +265,6 @@ void mediaFileRenamerMainView::updateTable() {
         QFont font = item2->font();
         font.setItalic(true);
         item2->setFont(font);
-
         tableWidget->setItem(row,1,item2);
 
         string currentDateTakenOriginal = entry->getCurrentDateTakenOriginal();
@@ -305,7 +304,7 @@ void mediaFileRenamerMainView::updateTable() {
 
 void mediaFileRenamerMainView::resetToDefaultButtonClicked() {
     SPDLOG_INFO("mediaFileRenamerMainView::resetToDefaultButtonClicked");
-    p_model -> reload();
+    reload_window();
 }
 
 
@@ -313,9 +312,10 @@ void mediaFileRenamerMainView::setFilenameBody(const QString &text) {
     SPDLOG_INFO("mediaFileRenamerMainView::setFilenameBody");
     SPDLOG_INFO("Text entered: {}", text.toStdString());
     p_model -> setRenamingEngineTextbody(text.toStdString());
+    updateTable();
 }
 
-vector<int> mediaFileRenamerMainView::getUniqueRows() {
+vector<int> mediaFileRenamerMainView::getSelectedUniqueRows() {
     vector<int> row_values;
 
     QItemSelectionModel *select = tableWidget->selectionModel();
@@ -332,7 +332,7 @@ vector<int> mediaFileRenamerMainView::getUniqueRows() {
 void mediaFileRenamerMainView::renameFilesButtonClicked() {
     SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
     p_model->clearRenamingChain();
-    p_model->executeRenamingChain(getUniqueRows(), true);
+    p_model->executeRenamingChain(getSelectedUniqueRows(), true);
     reload_window();
 }
 
