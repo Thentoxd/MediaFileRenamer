@@ -63,8 +63,8 @@ int main(int argc, char *argv[]) {
 
         SPDLOG_INFO("Current Working Directory: {}", current_working_directory.string());
 
-        current_working_directory = current_working_directory.parent_path();
-        SPDLOG_INFO("Moving up one level Directory: {}", current_working_directory.string());
+        // current_working_directory = current_working_directory.parent_path();
+        // SPDLOG_INFO("Moving up one level Directory: {}", current_working_directory.string());
 
 
         // const tao::config::value config = tao::config::from_file( "foo.cfg" );

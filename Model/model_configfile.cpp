@@ -42,9 +42,6 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
     if (!file_history[0].empty()) {
         current_working_directory = file_history[0];
     }
-    else {
-        current_working_directory = install_directory_from_config_file;
-    }
 
     file_types_processed = json_data_from_file["filetypes_parsed"].get<std::vector<string>>();
     SPDLOG_INFO("Loaded filetypes_parsed from config file");
