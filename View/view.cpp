@@ -53,6 +53,7 @@ void mediaFileRenamerMainView::create_window() {
     // Disable editing directly
     tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    folderComboBox->setEditable(true);
 
     QStringList m_TableHeader;
     m_TableHeader<<"Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
