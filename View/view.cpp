@@ -42,7 +42,6 @@ void mediaFileRenamerMainView::reload_window() {
 
 void mediaFileRenamerMainView::create_window() {
     SPDLOG_INFO("Creating main window ....");
-
     QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
 
     tableWidget->setColumnCount(4);
