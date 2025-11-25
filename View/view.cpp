@@ -42,7 +42,6 @@ void mediaFileRenamerMainView::reload_window() {
 
 void mediaFileRenamerMainView::create_window() {
     SPDLOG_INFO("Creating main window ....");
-
     QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
 
     tableWidget->setColumnCount(4);
@@ -53,6 +52,7 @@ void mediaFileRenamerMainView::create_window() {
     // Disable editing directly
     tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    folderComboBox->setEditable(true);
 
     QStringList m_TableHeader;
     m_TableHeader<<"Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
@@ -310,7 +310,8 @@ void mediaFileRenamerMainView::setFilenameBody(const QString &text) {
     SPDLOG_INFO("mediaFileRenamerMainView::setFilenameBody");
     SPDLOG_INFO("Text entered: {}", text.toStdString());
     p_model -> setRenamingEngineTextbody(text.toStdString());
-    updateTable();
+    reload_window();
+    onSelectedRowsChange();
 }
 
 vector<int> mediaFileRenamerMainView::getSelectedUniqueRows() {
