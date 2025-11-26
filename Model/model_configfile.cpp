@@ -39,8 +39,17 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
     file_history = json_data_from_file["directory_history"].get<std::vector<string>>();
     SPDLOG_INFO("Loaded file history from config file");
 
-    if (!file_history[0].empty()) {
-        current_working_directory = file_history[0];
+    if (file_history.empty()) {
+        current_working_directory = install_directory_from_config_file;
+        vector<string> dir_history;
+        dir_history.push_back(current_working_directory);
+        json_data_from_file["directory_history"] = dir_history;
+        this->saveConfigFile();
+    }
+    else {
+        if (!file_history[0].empty()) {
+            current_working_directory = file_history[0];
+        }
     }
 
     file_types_processed = json_data_from_file["filetypes_parsed"].get<std::vector<string>>();
@@ -73,13 +82,19 @@ string ModelConfigfile::getCurrentWorkingDirectory() {
 
 void ModelConfigfile::appendFileHistory(string new_directory_parameter) {
 
+    if (new_directory_parameter.empty()) {
+        SPDLOG_ERROR("Ignoring empty directory");
+        return;
+    }
+
     bool seen_this_directory_before = false;
     for(const string& each_directory : file_history)
         if (new_directory_parameter == each_directory) {
             seen_this_directory_before = true;
         }
     if (!seen_this_directory_before) {
-        file_history.insert(file_history.begin(),new_directory_parameter);
+        // file_history.insert(file_history.begin(),new_directory_parameter);
+        file_history.push_back(new_directory_parameter);
         if (file_history.size() > 10) {
             file_history.erase(file_history.begin());
         }

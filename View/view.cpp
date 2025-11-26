@@ -141,7 +141,17 @@ void mediaFileRenamerMainView::selectFolderComboBox(int index) {
     SPDLOG_INFO("folder combo box index changed to {}", index);
     if (index != -1) {
         vector<string> folders = p_model -> getFolderHistory();
-        p_model -> setCurrentWorkingDirectory(folders[index]);
+
+        // Have we entered a new dirrectory?
+        if (index > folders.size() - 1) {
+            string newFolder = (folderComboBox -> currentText()).toStdString();
+            SPDLOG_INFO("New folder entered: {}", newFolder);
+            p_model -> setCurrentWorkingDirectory(newFolder);
+        }
+        else {
+            p_model -> setCurrentWorkingDirectory(folders[index]);
+        }
+
         this -> updateTable();
     }
 }
