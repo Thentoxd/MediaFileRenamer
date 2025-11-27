@@ -22,6 +22,7 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
     private:
     ModelInterface * p_model;
     bool loadPreviewsFlag = false;
+    int columnOffset = 0;
 
     void updateTable();
     void updateDateChangeYearMonthDay(bool newValue);
@@ -56,6 +57,7 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
 
         void menuExit(bool newValue);
         void loadPreviews(Qt::CheckState state);
+        void redoTableColumnNames();
 };
 
 

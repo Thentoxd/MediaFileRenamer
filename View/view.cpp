@@ -34,10 +34,7 @@ void mediaFileRenamerMainView::reload_window() {
     tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
 
-    QStringList m_TableHeader;
-    m_TableHeader<<"Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
-    tableWidget->setHorizontalHeaderLabels(m_TableHeader);
-    tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    this -> redoTableColumnNames();
 }
 
 void mediaFileRenamerMainView::create_window() {
@@ -54,10 +51,7 @@ void mediaFileRenamerMainView::create_window() {
     tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     folderComboBox->setEditable(true);
 
-    QStringList m_TableHeader;
-    m_TableHeader<<"Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
-    tableWidget->setHorizontalHeaderLabels(m_TableHeader);
-    tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    this -> redoTableColumnNames();
 
     connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
     connect(this -> folderComboBox, &QComboBox::currentIndexChanged, this, &mediaFileRenamerMainView::selectFolderComboBox);
@@ -189,14 +183,14 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
             font.setItalic(true);
             item->setFont(font);
             item->setText("(unchanged)");
-            tableWidget->setItem(i, 1, item);
+            tableWidget->setItem(i, 1 + columnOffset, item);
 
             QTableWidgetItem *item2 = new QTableWidgetItem;
             QFont font2 = item2->font();
             font.setItalic(true);
             item2->setFont(font);
             item2->setText("(unchanged)");
-            tableWidget->setItem(i, 3, item2);
+            tableWidget->setItem(i, 3 + columnOffset, item2);
         }
     }
 
@@ -214,7 +208,7 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
 
         // First, let's get the current filename and Create Date (Original) being displayed
 
-        auto currentFilename = (tableWidget->item(row_values[counter], 0) -> text()).toStdString();
+        auto currentFilename = (tableWidget->item(row_values[counter], 0 + columnOffset) -> text()).toStdString();
 
         QTableWidgetItem *item = new QTableWidgetItem;
 
@@ -224,7 +218,7 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
 
         item->setText(QString::fromStdString((returnPair.first)));
         item -> setForeground(QBrush(QColor(255, 0, 0)));
-        tableWidget->setItem(row_values[counter], 1, item);
+        tableWidget->setItem(row_values[counter], 1 + columnOffset, item);
 
         auto currentCreateDate = (tableWidget->item(row_values[counter], 2) -> text()).toStdString();
 
@@ -235,7 +229,7 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
         QTableWidgetItem *item2 = new QTableWidgetItem;
         item2->setText(QString::fromStdString((returnPair.second)));
         item2 -> setForeground(QBrush(QColor(255, 0, 0)));
-        tableWidget->setItem(row_values[counter], 3, item2);
+        tableWidget->setItem(row_values[counter], 3 + columnOffset, item2);
 
         counter++;
     }
@@ -276,8 +270,13 @@ void mediaFileRenamerMainView::updateTable() {
                 image = image.scaled(100,100,Qt::KeepAspectRatio);
             }
 
-            item5 -> setData(Qt::DecorationRole, QPixmap(image));
-            tableWidget->setItem(row,columnCount,item5);
+            QLabel *lblTest = new QLabel;
+            lblTest->setPixmap(image);
+            lblTest->setAlignment(Qt::AlignCenter);
+
+            // item5 -> setData(Qt::DecorationRole, QPixmap(image));
+            tableWidget->setCellWidget(row,columnCount, lblTest);
+            // tableWidget->setItem(row,columnCount,item5);
             columnCount++;
         }
 
@@ -305,9 +304,12 @@ void mediaFileRenamerMainView::updateTable() {
         columnCount++;
 
         string newDateTakenOriginal = entry->getNewDateTakenOriginal();
+
+        if (loadPreviewsFlag == true) {
+            tableWidget-> setRowHeight(row, 100);
+        }
     }
-    // tableWidget ->resizeColumnsToContents();
-    // tableWidget ->resizeRowsToContents();
+
 }
 
 void mediaFileRenamerMainView::resetToDefaultButtonClicked() {
@@ -323,6 +325,7 @@ void mediaFileRenamerMainView::setFilenameBody(const QString &text) {
     reload_window();
     onSelectedRowsChange();
 }
+
 
 vector<int> mediaFileRenamerMainView::getSelectedUniqueRows() {
     vector<int> row_values;
@@ -392,18 +395,51 @@ void mediaFileRenamerMainView::menuExit(bool newValue) {
     p_model -> exitApplication();
 }
 
+
 void mediaFileRenamerMainView::loadPreviews(Qt::CheckState state) {
     SPDLOG_INFO("mediaFileRenamerMainView::loadPreviews");
     if (state == Qt::Checked) {
         loadPreviewsFlag = true;
         tableWidget->setColumnCount(5);
+        // Need to reset Column Names
     }
     else {
         loadPreviewsFlag = false;
         tableWidget->setColumnCount(4);
     }
+    this -> redoTableColumnNames();
     this -> updateTable();
-    // loadPreviews
+}
+
+
+void mediaFileRenamerMainView::redoTableColumnNames() {
+    SPDLOG_INFO("mediaFileRenamerMainView::redoTableColumnNames");
+
+    QStringList m_TableHeader;
+    if (loadPreviewsFlag == true) {
+        m_TableHeader<< "Preview" << "Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
+        columnOffset = 1;
+    }
+    else {
+
+        m_TableHeader<<"Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
+        columnOffset = 0;
+    }
+    tableWidget->setHorizontalHeaderLabels(m_TableHeader);
+
+    if (loadPreviewsFlag == true) {
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(0, QHeaderView::ResizeToContents);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(1, QHeaderView::Stretch);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(2, QHeaderView::Stretch);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(3, QHeaderView::Stretch);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(4, QHeaderView::Stretch);
+    }
+    else {
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(0, QHeaderView::Stretch);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(1, QHeaderView::Stretch);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(2, QHeaderView::Stretch);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(3, QHeaderView::Stretch);
+    }
 }
 
 
