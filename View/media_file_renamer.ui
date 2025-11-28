@@ -139,7 +139,7 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <widget class="QRadioButton" name="tryExtractDateButton">
+             <widget class="QCheckBox" name="attempt_findDate_checkBox">
               <property name="text">
                <string>Try to extract date from existing filename</string>
               </property>
@@ -276,14 +276,14 @@
              </layout>
             </item>
             <item>
-             <widget class="QRadioButton" name="useDateTakenButton">
+             <widget class="QCheckBox" name="use_DateTaken_checkBox">
               <property name="text">
                <string>If set use Date Taken (Original)</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="setDateTakenButton">
+             <widget class="QCheckBox" name="set_DateTaken_checkBox">
               <property name="text">
                <string>Set Date Taken (Original)</string>
               </property>

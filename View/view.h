@@ -40,9 +40,9 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
 
     public slots:
         void selectFolderButtonClicked();
-        void onUpdateSelectedButton();
-        void setUseDateTakenButtonClicked();
-        void setDateTakenOriginalButtonClicked();
+        // void onUpdateSelectedButton();
+        void setUseDateTakenButtonClicked(Qt::CheckState newState);
+        void setDateTakenOriginalButtonClicked(Qt::CheckState newState);
         void setFilenameBody(const QString &text);
 
         void setCounterStart(int newValue);
@@ -50,7 +50,7 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void renameFilesButtonClicked();
         void resetToDefaultButtonClicked();
 
-        void setDateTryExtractDate();
+        void setDateTryExtractDate(Qt::CheckState newState);
         void setYear(const QString &text);
         void setMonth(const QString &text);
         void setDay(const QString &text);
