@@ -71,6 +71,14 @@ void mediaFileRenamerMainView::create_window() {
 
     connect(this -> loadPreviews_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::loadPreviews);
 
+    connect(this -> seperatorA_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorAEntered);
+    connect(this -> seperatorB_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorBEntered);
+
+
+
+
+
+
     // Menu signal
     // connect actionExit QAction::triggered   (bool checked = false)
     connect(this -> actionExit, &QAction::triggered, this, &mediaFileRenamerMainView::menuExit);
@@ -463,6 +471,24 @@ void mediaFileRenamerMainView::redoTableColumnNames() {
         tableWidget -> horizontalHeader() -> setSectionResizeMode(2, QHeaderView::Stretch);
         tableWidget -> horizontalHeader() -> setSectionResizeMode(3, QHeaderView::Stretch);
     }
+}
+
+
+void mediaFileRenamerMainView::seperatorAEntered() {
+    SPDLOG_INFO("mediaFileRenamerMainView::seperatorAEntered");
+    QString separator = seperatorA_lineEdit -> text();
+    string seperatorA = separator.toStdString();
+    SPDLOG_INFO("String entered: {}", seperatorA);
+    p_model -> setSeperatorA(seperatorA);
+}
+
+
+void mediaFileRenamerMainView::seperatorBEntered() {
+    SPDLOG_INFO("mediaFileRenamerMainView::seperatorBEntered");
+    QString separator = seperatorB_lineEdit -> text();
+    string seperatorB = separator.toStdString();
+    SPDLOG_INFO("String entered: {}", seperatorB);
+    p_model -> setSeperatorB(seperatorB);
 }
 
 

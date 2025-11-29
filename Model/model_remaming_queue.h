@@ -33,7 +33,7 @@ public:
     void init(int mode, ModelRenamingEngineDate * p_ModelRenamingEngineDate, ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody, ModelRenamingEngineCounter * p_ModelRenamingEngineCounter);
     void clear();
 
-    pair<string, string> executeQueue(pair<string, string> input_parameter);
+    pair<string, string> executeQueue(const pair<string, string>& input_parameter, vector<string> separators);
 
 };
 

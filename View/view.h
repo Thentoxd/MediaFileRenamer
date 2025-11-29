@@ -58,6 +58,9 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void menuExit(bool newValue);
         void loadPreviews(Qt::CheckState state);
         void redoTableColumnNames();
+
+        void seperatorAEntered();
+    void seperatorBEntered();
 };
 
 

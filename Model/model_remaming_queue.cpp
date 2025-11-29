@@ -34,29 +34,32 @@ void ModelRemamingQueue::clear() {
     }
 }
 
-pair<string, string> ModelRemamingQueue::executeQueue(pair<string, string> input_parameter) {
+
+pair<string, string> ModelRemamingQueue::executeQueue(const pair<string, string>& input_parameter, vector<string> separators) {
     SPDLOG_INFO("ModelRemamingQueue::executeQueue");
 
     string renamed_filename = "";
     string renamed_datecreated = "";
 
+    auto it = separators.begin();
     for(ModelRenamingEngine * each_engine : renaming_engine) {
         pair<string, string> return_pair = each_engine -> execute(input_parameter);
 
         if (return_pair.first != input_parameter.first) {
             renamed_filename += return_pair.first;
-            renamed_filename += " ";
+            if (it != separators.end()) {
+                renamed_filename += *it;
+            }
         }
 
         if (return_pair.second != input_parameter.second) {
             renamed_datecreated += return_pair.second;
         }
-
-
+        it++;
     }
 
     // Strip last seperator off
-    renamed_filename.erase(renamed_filename.find_last_not_of(" ") + 1);
+    //renamed_filename.erase(renamed_filename.find_last_not_of(" ") + 1);
 
     //SPDLOG_INFO("Renamed filename: {}", renamed_filename);
     // SPDLOG_INFO("Return string2: {}", return_pair.second);

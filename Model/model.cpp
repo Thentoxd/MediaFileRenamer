@@ -161,6 +161,11 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
     SPDLOG_INFO("Model::executeRenamingChain");
     vector<pair<string, string>> returnPairList;
 
+    vector<string> separators;
+
+    separators.push_back(separatorB);
+    separators.push_back(separatorA);
+
     for (auto rowNumber : rows)
     {
         SPDLOG_INFO("Executing the chain on row {}", rowNumber);
@@ -170,7 +175,7 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
         string currentFilename = entry->getCurrentFileName();
         string currentFileExtension = currentFilename.substr(currentFilename.find("."));
 
-        pair<string, string> returnPair = p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal()));
+        pair<string, string> returnPair = p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal()), separators);
 
         returnPair.first += currentFileExtension;
 
@@ -225,6 +230,18 @@ void Model::setRenamingEngineDateSetOriginalDateTaken(bool newValue) {
     SPDLOG_INFO("Model::setRenamingEngineDateSetOriginalDateTaken");
     p_ModelRenamingEngineDate -> setRenamingEngineDateSetOriginalDateTaken(newValue);
 }
+
+void Model::setSeperatorA(string newValue) {
+    SPDLOG_INFO("Model::setSeperatorA. Set separatorA to {}", newValue);
+    separatorA = newValue;
+}
+
+
+void Model::setSeperatorB(string newValue) {
+    SPDLOG_INFO("Model::setSeperatorB. Set separatorB to {}", newValue);
+    separatorB = newValue;
+}
+
 
 void Model::exitApplication() {
     SPDLOG_INFO("Model::exitApplication");

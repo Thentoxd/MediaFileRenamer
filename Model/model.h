@@ -76,6 +76,9 @@ private:
     string currentWorkingDirectory;
     vector<FileEntry> fileEntries;
 
+    string separatorA = " ";
+    string separatorB = " ";
+
     ModelConfigfile * p_ModelConfigfile;
     ModelRemamingQueue * p_ModelRemamingQueue;
     ModelRenamingEngineDate * p_ModelRenamingEngineDate;
@@ -149,6 +152,9 @@ public:
     void setRenamingEngineDateSetMonth(string newText) override;
     void setRenamingEngineDateSetDay(string newText) override;
     void setRenamingEngineDateSetOriginalDateTaken(bool newValue) override;
+
+    void setSeperatorA(string newValue) override;
+    void setSeperatorB(string newValue) override;
 
     void exitApplication() override;
 

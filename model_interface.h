@@ -56,6 +56,9 @@ public:
     virtual void setCounterStart(int newValue) = 0;
     virtual void setCounterPadding(int newValue) = 0;
 
+    virtual void setSeperatorA(string newValue) = 0;
+    virtual void setSeperatorB(string newValue) = 0;
+
     virtual void exitApplication() = 0;
 
     virtual void clearRenamingChain() = 0;
