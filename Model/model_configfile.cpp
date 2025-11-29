@@ -93,8 +93,8 @@ void ModelConfigfile::appendFileHistory(string new_directory_parameter) {
             seen_this_directory_before = true;
         }
     if (!seen_this_directory_before) {
-        // file_history.insert(file_history.begin(),new_directory_parameter);
-        file_history.push_back(new_directory_parameter);
+        file_history.insert(file_history.begin(),new_directory_parameter);
+        // file_history.push_back(new_directory_parameter);
         if (file_history.size() > 10) {
             file_history.erase(file_history.begin());
         }
