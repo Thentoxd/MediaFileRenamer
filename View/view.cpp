@@ -25,7 +25,7 @@ mediaFileRenamerMainView::mediaFileRenamerMainView(ModelInterface * modelParam) 
 void mediaFileRenamerMainView::reload_window() {
     QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
 
-    tableWidget->setColumnCount(4);
+    tableWidget->setColumnCount(4 + columnOffset);
 
     this -> updateTable();
     this -> updateFolderComboBox();
@@ -245,7 +245,7 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
         item -> setForeground(QBrush(QColor(255, 0, 0)));
         tableWidget->setItem(row_values[counter], 1 + columnOffset, item);
 
-        auto currentCreateDate = (tableWidget->item(row_values[counter], 2) -> text()).toStdString();
+        auto currentCreateDate = (tableWidget->item(row_values[counter], 2 + columnOffset) -> text()).toStdString();
 
         if (currentCreateDate == returnPair.second) {
             returnPair.second = "(unchanged)";
@@ -330,6 +330,20 @@ void mediaFileRenamerMainView::updateTable() {
 
         string newDateTakenOriginal = entry->getNewDateTakenOriginal();
 
+        if (newDateTakenOriginal == currentDateTakenOriginal) {
+            if (!newDateTakenOriginal.empty()) {
+                newDateTakenOriginal = "(unchanged)";
+            }
+        }
+
+        item4->setText(QString::fromStdString(newDateTakenOriginal));
+
+        QFont font2 = item4->font();
+        font2.setItalic(true);
+        item4->setFont(font2);
+        tableWidget->setItem(row,columnCount,item4);
+        columnCount++;
+
         if (loadPreviewsFlag == true) {
             tableWidget-> setRowHeight(row, 100);
         }
@@ -347,8 +361,8 @@ void mediaFileRenamerMainView::setFilenameBody(const QString &text) {
     SPDLOG_INFO("mediaFileRenamerMainView::setFilenameBody");
     SPDLOG_INFO("Text entered: {}", text.toStdString());
     p_model -> setRenamingEngineTextbody(text.toStdString());
-    reload_window();
-    onSelectedRowsChange();
+    //reload_window();
+    //onSelectedRowsChange();
 }
 
 
