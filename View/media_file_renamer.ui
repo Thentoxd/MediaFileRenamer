@@ -348,7 +348,7 @@
             </size>
            </property>
            <property name="title">
-            <string>Seperator</string>
+            <string>Separator</string>
            </property>
            <widget class="QLineEdit" name="seperatorA_lineEdit">
             <property name="geometry">
@@ -428,7 +428,7 @@
             </size>
            </property>
            <property name="title">
-            <string>Seperator</string>
+            <string>Separator</string>
            </property>
            <widget class="QLineEdit" name="seperatorB_lineEdit">
             <property name="geometry">
