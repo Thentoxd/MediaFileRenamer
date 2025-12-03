@@ -53,13 +53,15 @@ void mediaFileRenamerMainView::create_window() {
 
     this -> redoTableColumnNames();
 
+
+
     connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
     connect(this -> folderComboBox, &QComboBox::currentIndexChanged, this, &mediaFileRenamerMainView::selectFolderComboBox);
     connect(this -> use_DateTaken_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setUseDateTakenButtonClicked);
     connect(this -> set_DateTaken_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setDateTakenOriginalButtonClicked);
     connect(this -> filenamebody_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setFilenameBody);
-    connect(this -> numSuffixStartSpinBox, QSpinBox::valueChanged, this, &mediaFileRenamerMainView::setCounterStart);
-    connect(this -> numSuffixPadSpinBox, QSpinBox::valueChanged, this, &mediaFileRenamerMainView::setCounterPadding);
+    connect(this -> numSuffixStartSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &mediaFileRenamerMainView::setCounterStart);
+    connect(this -> numSuffixPadSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &mediaFileRenamerMainView::setCounterPadding);
     connect(this -> renameFilesButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::renameFilesButtonClicked);
     connect(this -> resetToDefaultsButton, &QPushButton::clicked,  this, &mediaFileRenamerMainView::resetToDefaultButtonClicked);
     connect(tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &mediaFileRenamerMainView::onSelectedRowsChange);

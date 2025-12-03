@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
         file.open(QFile::ReadOnly);
         QString styleSheet = QLatin1String(file.readAll());
 
-        p_QApplication->setStyleSheet(styleSheet);
+        // p_QApplication->setStyleSheet(styleSheet);
 
         p_view -> create_window();
         QApplication::exec();
