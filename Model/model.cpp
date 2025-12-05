@@ -33,6 +33,7 @@ void Model::initialise() {
 
     p_ModelConfigfile -> loadConfigFile("config.json");
     this -> setCurrentWorkingDirectory(p_ModelConfigfile -> getCurrentWorkingDirectory());
+    auto date_formats_parsed = p_ModelConfigfile -> getDateFormatsParsed();
 
     p_ModelRemamingQueue -> init(0, p_ModelRenamingEngineDate, p_ModelRenamingEngineTextBody, p_ModelRenamingEngineCounter);
 }

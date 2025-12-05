@@ -52,9 +52,20 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
         }
     }
 
+
+    date_formats_parsed = json_data_from_file["date_formats_parsed"].get<vector<string>>();
+    SPDLOG_INFO("Loaded file history from config file");
+    if (date_formats_parsed.empty()) {
+        date_formats_parsed.push_back("YYYY-MM-DD");
+        date_formats_parsed.push_back("YYYYMMDD");
+        json_data_from_file["date_formats_parsed"] = date_formats_parsed;
+        this->saveConfigFile();
+    }
+
     file_types_processed = json_data_from_file["filetypes_parsed"].get<std::vector<string>>();
     SPDLOG_INFO("Loaded filetypes_parsed from config file");
 }
+
 
 void ModelConfigfile::saveConfigFile() {
     SPDLOG_INFO("ModelConfigfile::saveConfigFile");
@@ -64,21 +75,25 @@ void ModelConfigfile::saveConfigFile() {
     file << std::setw(4) << json_data_from_file << std::endl;
 }
 
+
 void ModelConfigfile::updateLastDirectories() {
     SPDLOG_INFO("ModelConfigfile::updateLastDirectories");
 
     json_data_from_file["directory_history"] = file_history;
 }
 
+
 vector<std::string> ModelConfigfile::getFolderHistory() {
     SPDLOG_INFO("Model::getFolderHistory");
     return file_history;
 }
 
+
 string ModelConfigfile::getCurrentWorkingDirectory() {
     SPDLOG_INFO("Model::getCurrentWorkingDirectory");
     return current_working_directory;
 }
+
 
 void ModelConfigfile::appendFileHistory(string new_directory_parameter) {
 
@@ -105,7 +120,13 @@ void ModelConfigfile::appendFileHistory(string new_directory_parameter) {
     }
 }
 
+
 vector<std::string> ModelConfigfile::getFileTypesProcessed() {
     SPDLOG_INFO("Model::getFileTypesProcessed");
     return file_types_processed;
+}
+
+vector<std::string> ModelConfigfile::getDateFormatsParsed() {
+    SPDLOG_INFO("Model::getDateFormatParsed");
+    return date_formats_parsed;
 }

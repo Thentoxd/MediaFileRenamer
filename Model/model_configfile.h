@@ -18,8 +18,9 @@ class ModelConfigfile {
 
     string current_working_directory;
     string config_file_name;
-    vector<std::string> file_history;
-    vector<std::string> file_types_processed;
+    vector<string> file_history;
+    vector<string> file_types_processed;
+    vector<string> date_formats_parsed;
 
     public:
 
@@ -29,6 +30,8 @@ class ModelConfigfile {
     void appendFileHistory(string new_directory_parameter);
 
     vector<std::string> getFileTypesProcessed();
+    vector<std::string> getDateFormatsParsed();
+
     void reloadFileTypesProcessed();
 
     void updateLastDirectories();
