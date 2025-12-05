@@ -18,8 +18,9 @@ using namespace std;
 
 
 Model::Model() {
-    SPDLOG_INFO("Model Constuctor");
+    SPDLOG_INFO("Model Constructor");
 }
+
 
 void Model::initialise() {
 
@@ -37,6 +38,7 @@ void Model::initialise() {
 
     p_ModelRemamingQueue -> init(0, p_ModelRenamingEngineDate, p_ModelRenamingEngineTextBody, p_ModelRenamingEngineCounter);
 }
+
 
 void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
     SPDLOG_INFO("Model::setCurrentWorkingDirectory");
@@ -124,6 +126,7 @@ void Model::renameEXIFFile(FileEntry* newFile) {
     newFile->setFileName(newFile->getNewFileName());
 }
 
+
 void Model::reload() {
     SPDLOG_INFO("Model::reload");
 }
@@ -158,6 +161,7 @@ void Model::clearRenamingChain() {
     p_ModelRemamingQueue -> clear();
 }
 
+
 vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool renameFiles) {
     SPDLOG_INFO("Model::executeRenamingChain");
     vector<pair<string, string>> returnPairList;
@@ -190,6 +194,7 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
 
     return returnPairList;
 }
+
 
 void Model::setCounterStart(int newValue) {
     SPDLOG_INFO("Model::setCounterStart");
