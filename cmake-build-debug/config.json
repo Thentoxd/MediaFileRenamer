@@ -7,5 +7,9 @@
         "JPG",
         "png"
     ],
-    "install_directory": ""
+    "install_directory": "",
+    "date_formats_parsed": [
+        "YYYY-MM-DD",
+        "YYYYMMDD"
+    ]
 }
