@@ -27,7 +27,7 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
         file_types_processed.push_back("jpg");
         file_types_processed.push_back("JPG");
         file_types_processed.push_back("png");
-        json_data_from_file["file_types_processed"] = file_types_processed;
+        json_data_from_file["filetypes_parsed"] = file_types_processed;
 
         this->saveConfigFile();
         return;
