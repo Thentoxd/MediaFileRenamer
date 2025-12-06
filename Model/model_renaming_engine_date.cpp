@@ -75,7 +75,7 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
                     year.push_back(found_equivalent[i]);
                 } else if(it[i] == 'M') {
                     month.push_back(found_equivalent[i]);
-                } else {
+                } else if(it[i] == 'D') {
                     date.push_back(found_equivalent[i]);
                 }
             }
