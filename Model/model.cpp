@@ -30,6 +30,8 @@ void Model::initialise() {
     p_ModelRenamingEngineTextBody = new ModelRenamingEngineTextBody;
     p_ModelRenamingEngineCounter = new ModelRenamingEngineCounter;
 
+    p_ModelRenamingEngineDate->setFormats(p_ModelConfigfile->getDateFormatsParsed());
+
     SPDLOG_INFO("Model::initialise");
 
     p_ModelConfigfile -> loadConfigFile("config.json");
@@ -119,7 +121,6 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
 
     SPDLOG_INFO("Model::setCurrentWorkingDirectory. New model built");
 }
-
 
 void Model::renameEXIFFile(FileEntry* newFile) {
     rename((getCurrentWorkingDirectory() + newFile->getCurrentFileName()).c_str(), newFile->getNewFileName().c_str());

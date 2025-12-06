@@ -5,6 +5,7 @@
 #ifndef MEDIAFILERENAMER_MODEL_RENAMING_ENGINE_DATE_H
 #define MEDIAFILERENAMER_MODEL_RENAMING_ENGINE_DATE_H
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -34,6 +35,8 @@ private:
 
     string dateFormat = "YYYY-MM-DD";
 
+    vector<string> formats;
+
 public:
     ModelRenamingEngineDate();
     ~ModelRenamingEngineDate();
@@ -45,8 +48,11 @@ public:
     void setRenamingEngineDateSetYear(string newValue);
     void setRenamingEngineDateSetMonth(string newValue);
     void setRenamingEngineDateSetDay(string newValue);
+    void setFormats(vector<string> formats);
 
     void setRenamingEngineDateSetOriginalDateTaken(bool newValue);
+
+    string patternToRegex(const string& pattern);
 };
 
 #endif //MEDIAFILERENAMER_MODEL_RENAMING_ENGINE_DATE_H

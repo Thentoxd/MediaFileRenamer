@@ -3,6 +3,9 @@
 //
 
 #include "model_renaming_engine_date.h"
+
+#include <regex>
+
 #include "../main.h"
 
 ModelRenamingEngineDate::ModelRenamingEngineDate() {
@@ -19,56 +22,64 @@ void ModelRenamingEngineDate::init(int mode) {
     SPDLOG_INFO("ModelRenamingEngineDate::init");
 }
 
+string ModelRenamingEngineDate::patternToRegex(const string& pattern) {
+    string regex;
+    size_t n = pattern.size();
+    for (size_t i = 0; i < n; ++i) {
+        char c = pattern[i];
+        int count = 1;
+
+        while (i + 1 < n && pattern[i + 1] == c) {
+            count++;
+            i++;
+        }
+
+        if (c == 'Y' || c == 'M' || c == 'D') {
+            regex += "\\d{" + to_string(count) + "}";
+        }
+        else {
+            if (c == '.' || c == '^' || c == '$' || c == '*' || c == '+' ||
+                c == '?' || c == '{' || c == '}' || c == '[' || c == ']' ||
+                c == '\\' || c == '|' || c == '(' || c == ')') {
+                regex += "\\";
+                }
+            regex += c;
+        }
+    }
+
+    return regex;
+}
 
 pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input_parameter) {
     SPDLOG_INFO("ModelRemamingQueue::ModelRemamingQueue");
     // current file name, current date taken original
     string currentFileName = input_parameter.first;
+    string date = "", month = "", year = "";
 
-    string year = "";
-    int index = 0;
-    for(int i = 0; i < currentFileName.length() - 4; i++) {
-        bool four_digits = true;
-        for(int j = 0; j < 4; j++) {
-            four_digits &= isdigit(currentFileName[i + j]);
-        }
+    for(string& it : formats) {
+        bool found = false;
+        string found_equivalent = "";
+        regex regex_format(patternToRegex(it));
+        smatch match;
 
-        if(four_digits) {
-            for(int j = 0; j < 4; j++) {
-                year += currentFileName[i + j];
-            }
-            index = i;
+        std::string::const_iterator searchStart(currentFileName.cbegin());
+        while(regex_search(searchStart, currentFileName.cend(), match, regex_format)) {
+            found = true;
+            found_equivalent = match[0];
             break;
         }
-    }
 
-    string month = "";
-    for(int i = index + 4; i < currentFileName.length() - 2; i++) {
-        bool two_digits = true;
-        for(int j = 0; j < 2; j++) {
-            two_digits &= isdigit(currentFileName[i + j]);
-        }
-
-        if(two_digits) {
-            for(int j = 0; j < 2; j++) {
-                month += currentFileName[i + j];
+        if(found) {
+            for(int i = 0; i < it.size(); i++) {
+                if(it[i] == 'Y') {
+                    year.push_back(found_equivalent[i]);
+                } else if(it[i] == 'M') {
+                    month.push_back(found_equivalent[i]);
+                } else {
+                    date.push_back(found_equivalent[i]);
+                }
             }
-            index = i;
-            break;
-        }
-    }
 
-    string date = "";
-    for(int i = index + 2; i < currentFileName.length() - 2; i++) {
-        bool two_digits = true;
-        for(int j = 0; j < 2; j++) {
-            two_digits &= isdigit(currentFileName[i + j]);
-        }
-
-        if(two_digits) {
-            for(int j = 0; j < 2; j++) {
-                date += currentFileName[i + j];
-            }
             break;
         }
     }
@@ -76,9 +87,15 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
     SPDLOG_DEBUG("{}-{}-{}", year, month, date);
 
     string return_string = year + "-" + month + "-" + date;
-
-    return pair<string, string>(return_string, input_parameter.second);
+    return make_pair(return_string, input_parameter.second);
 }
+
+void ModelRenamingEngineDate::setFormats(vector<string> formats) {
+    for(string& it : formats) {
+        this->formats.push_back(it);
+    }
+}
+
 
 void ModelRenamingEngineDate::setRenamingEngineDateSetYear(string newValue) {
     SPDLOG_INFO("ModelRenamingEngineDate::setRenamingEngineDateSetYear. Set year to {}", newValue);
