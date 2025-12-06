@@ -12,18 +12,33 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
     SPDLOG_INFO("ModelConfigfile::loadConfigFile");
 
     config_file_name = config_file_name_param;
+    current_working_directory = std::filesystem::current_path().string();
 
-    ifstream f(config_file_name_param);
-    json_data_from_file = json::parse(f);
+    if (!std::filesystem::exists("config_file_name_param")) {
+        SPDLOG_CRITICAL("No config file found - building one from scratch ");
+        json_data_from_file["install_directory"] = current_working_directory;
+        file_history.push_back(current_working_directory);
+        json_data_from_file["directory_history"] = file_history;
 
-    SPDLOG_INFO("Loaded config file");
+        date_formats_parsed.push_back("YYYY-MM-DD");
+        date_formats_parsed.push_back("YYYYMMDD");
+        json_data_from_file["date_formats_parsed"] = date_formats_parsed;
+        this->saveConfigFile();
+        return;
+    }
+    else {
+        ifstream f(config_file_name_param);
+        json_data_from_file = json::parse(f);
+        SPDLOG_INFO("Loaded config file");
+    }
+
 
     string install_directory_from_config_file = json_data_from_file["install_directory"];
     if (install_directory_from_config_file.empty()) {
         SPDLOG_ERROR("No install directory specified in the ");
 
         // Get the current working directory and set the install_directory to that
-        current_working_directory = std::filesystem::current_path().string();
+
         std::replace( current_working_directory.begin(), current_working_directory.end(), '\\', '/' );
         SPDLOG_INFO("Setting install directory to {}", current_working_directory);
 
