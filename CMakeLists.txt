@@ -28,13 +28,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(CLI11)
 
-FetchContent_Declare(
-        tinyxml2
-        GIT_REPOSITORY https://github.com/leethomason/tinyxml2.git
-        GIT_TAG        11.0.0
-)
-FetchContent_MakeAvailable(tinyxml2)
-
 FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
 FetchContent_MakeAvailable(json)
 
@@ -81,7 +74,6 @@ target_link_libraries(MediaFileRenamer
         Qt::Widgets
         spdlog
         CLI11
-        tinyxml2
         nlohmann_json::nlohmann_json
         exiv2lib
 )

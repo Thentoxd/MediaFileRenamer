@@ -14,7 +14,7 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
     config_file_name = config_file_name_param;
     current_working_directory = std::filesystem::current_path().string();
 
-    if (!std::filesystem::exists("config_file_name_param")) {
+    if (!std::filesystem::exists(config_file_name_param)) {
         SPDLOG_CRITICAL("No config file found - building one from scratch ");
         json_data_from_file["install_directory"] = current_working_directory;
         file_history.push_back(current_working_directory);
@@ -23,6 +23,12 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
         date_formats_parsed.push_back("YYYY-MM-DD");
         date_formats_parsed.push_back("YYYYMMDD");
         json_data_from_file["date_formats_parsed"] = date_formats_parsed;
+
+        file_types_processed.push_back("jpg");
+        file_types_processed.push_back("JPG");
+        file_types_processed.push_back("png");
+        json_data_from_file["file_types_processed"] = file_types_processed;
+
         this->saveConfigFile();
         return;
     }
