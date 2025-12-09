@@ -77,7 +77,7 @@ void mediaFileRenamerMainView::create_window() {
     connect(this -> seperatorB_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorBEntered);
 
 
-
+    connect(this->dateFormat, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::setDateFormat);
 
 
 
@@ -222,7 +222,7 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
     }
 
     p_model ->clearRenamingChain();
-    vector<pair<string, string>> returnPairList = p_model -> executeRenamingChain(row_values, false);
+    vector<pair<string, string>> returnPairList = p_model -> executeRenamingChain(row_values, false, false);
 
     int counter = 0;
     for (auto returnPair : returnPairList)
@@ -385,7 +385,7 @@ vector<int> mediaFileRenamerMainView::getSelectedUniqueRows() {
 void mediaFileRenamerMainView::renameFilesButtonClicked() {
     SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
     p_model->clearRenamingChain();
-    p_model->executeRenamingChain(getSelectedUniqueRows(), true);
+    p_model->executeRenamingChain(getSelectedUniqueRows(), true, true);
     reload_window();
 }
 
@@ -401,6 +401,11 @@ void mediaFileRenamerMainView::setCounterPadding(int newValue) {
     SPDLOG_INFO("mediaFileRenamerMainView::setCounterPadding");
     SPDLOG_INFO("Setting counter padding to {}", newValue);
     p_model -> setCounterPadding(newValue);
+}
+
+void mediaFileRenamerMainView::setDateFormat(const QString &text) {
+    SPDLOG_INFO("mediaFileRenamerMainView::setDateFormat");
+    SPDLOG_INFO("Date Format: {}", text.toStdString());
 }
 
 

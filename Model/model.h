@@ -74,6 +74,7 @@ class Model : public ModelInterface {
 private:
     string mediaFileRenamerVersion;
     string currentWorkingDirectory;
+    string dateFormat = "YYYY-MM-DD";
     vector<FileEntry> fileEntries;
 
     string separatorA = " ";
@@ -90,6 +91,7 @@ public:
 
     void initialise();
     void renameEXIFFile(FileEntry* newFile);
+    void changeEXIFDateTakenOriginal(FileEntry* file);
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
     void reload() override ;
     void clear() override ;
@@ -148,6 +150,9 @@ public:
     void setCounterStart(int newValue) override;
     void setCounterPadding(int newValue) override;
 
+
+    void setDateFormat(string format);
+    string getDateFormat();
     void setRenamingEngineDateSetYear(string newText) override;
     void setRenamingEngineDateSetMonth(string newText) override;
     void setRenamingEngineDateSetDay(string newText) override;
@@ -159,7 +164,7 @@ public:
     void exitApplication() override;
 
     void clearRenamingChain() override;
-    vector<pair<string, string>> executeRenamingChain(vector<int> row, bool renameFiles) override;
+    vector<pair<string, string>> executeRenamingChain(vector<int> row, bool renameFiles, bool renameDateTakenOriginal) override;
 };
 
 

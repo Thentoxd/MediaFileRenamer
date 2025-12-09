@@ -54,7 +54,7 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
     SPDLOG_INFO("ModelRemamingQueue::ModelRemamingQueue");
     // current file name, current date taken original
     string currentFileName = input_parameter.first;
-    string date = "", month = "", year = "";
+    string day = "", month = "", year = "";
 
     for(string& it : formats) {
         bool found = false;
@@ -76,7 +76,7 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
                 } else if(it[i] == 'M') {
                     month.push_back(found_equivalent[i]);
                 } else if(it[i] == 'D') {
-                    date.push_back(found_equivalent[i]);
+                    day.push_back(found_equivalent[i]);
                 }
             }
 
@@ -84,9 +84,18 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
         }
     }
 
-    SPDLOG_DEBUG("{}-{}-{}", year, month, date);
 
-    string return_string = year + "-" + month + "-" + date;
+    if(!this->year.empty()) {
+        year = this->year;
+    } else if(!this->month.empty()) {
+        month = this->month;
+    } else if(!this->day.empty()) {
+        day = this->day;
+    }
+
+    SPDLOG_DEBUG("{}-{}-{}", year, month, day);
+
+    string return_string = year + "-" + month + "-" + day;
     return make_pair(return_string, input_parameter.second);
 }
 
