@@ -93,21 +93,30 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
         day = this->day;
     }
 
-    int day_int = stoi(day);
-    int month_int = stoi(month);
+    int day_int = 0, month_int = 0;
+
+    if(!day.empty()) {
+        day_int = stoi(day);
+    }
+
+    if(!month.empty()) {
+        month_int = stoi(month);
+    }
+
+    string return_string = year + "-" + month + "-" + day;
 
     if(day_int > 31 || day_int < 1) {
         SPDLOG_ERROR("Rejected inputted day");
         day = "00";
+        return_string = "";
     }
     if(month_int > 12 || month_int < 1) {
         SPDLOG_ERROR("Rejected inputted month");
         month = "00";
+        return_string = "";
     }
 
     SPDLOG_DEBUG("{}-{}-{}", year, month, day);
-
-    string return_string = year + "-" + month + "-" + day;
 
     string newDateTakenOriginal = input_parameter.second;
     // Do we need to set the Create Date Taken (Original)?
