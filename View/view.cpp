@@ -363,8 +363,7 @@ void mediaFileRenamerMainView::setFilenameBody(const QString &text) {
     SPDLOG_INFO("mediaFileRenamerMainView::setFilenameBody");
     SPDLOG_INFO("Text entered: {}", text.toStdString());
     p_model -> setRenamingEngineTextbody(text.toStdString());
-    //reload_window();
-    //onSelectedRowsChange();
+    onSelectedRowsChange();
 }
 
 
