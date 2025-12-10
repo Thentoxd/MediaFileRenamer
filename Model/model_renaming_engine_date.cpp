@@ -96,7 +96,20 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
     SPDLOG_DEBUG("{}-{}-{}", year, month, day);
 
     string return_string = year + "-" + month + "-" + day;
-    return make_pair(return_string, input_parameter.second);
+
+    string newDateTakenOriginal = input_parameter.second;
+    // Do we need to set the Create Date Taken (Original)?
+    if (setDataTaken ==true) {
+        SPDLOG_DEBUG("Need to set the Create Date Taken (Original)");
+        string currentDateTakenOriginal = input_parameter.second;
+
+        SPDLOG_DEBUG("Current Create Date Taken (Original): {}", currentDateTakenOriginal);
+        if (currentDateTakenOriginal.empty()) {
+            newDateTakenOriginal = year + ":" + month + ":" + day + " 12:00:00";
+        }
+    }
+
+    return make_pair(return_string, newDateTakenOriginal);
 }
 
 void ModelRenamingEngineDate::setFormats(vector<string> formats) {
