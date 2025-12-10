@@ -202,8 +202,8 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
 
     vector<string> separators;
 
-    separators.push_back(separatorB);
     separators.push_back(separatorA);
+    separators.push_back(separatorB);
 
     for (auto rowNumber : rows)
     {
@@ -277,6 +277,7 @@ void Model::setRenamingEngineDateSetOriginalDateTaken(bool newValue) {
     SPDLOG_INFO("Model::setRenamingEngineDateSetOriginalDateTaken");
     p_ModelRenamingEngineDate -> setRenamingEngineDateSetOriginalDateTaken(newValue);
 }
+
 
 void Model::setSeperatorA(string newValue) {
     SPDLOG_INFO("Model::setSeperatorA. Set separatorA to {}", newValue);

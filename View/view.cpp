@@ -227,8 +227,8 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
     int counter = 0;
     for (auto returnPair : returnPairList)
     {
-        SPDLOG_INFO("View number {} returned filename {}", counter, returnPair.first);
-        SPDLOG_INFO("View number {} returned date created Original {}", counter, returnPair.second);
+        SPDLOG_INFO("Execute on row {} returned filename {}", row_values[counter]+1, returnPair.first);
+        SPDLOG_INFO("Execute on row {} returned date created Original {}", row_values[counter]+1, returnPair.second);
 
         // If the new filename or new Create Date (Original) matches the old values
         // show the test (unchanged)
