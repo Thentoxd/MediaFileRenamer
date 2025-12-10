@@ -8,6 +8,7 @@
 #include <vector>
 
 #include <filesystem>
+#include <qstring.h>
 
 
 #include "exiv2/exiv2.hpp"
@@ -129,6 +130,36 @@ void Model::renameEXIFFile(FileEntry* newFile) {
     newFile->setFileName(newFile->getNewFileName());
 }
 
+void Model::changeEXIFDateTakenOriginal(FileEntry* file) {
+    try {
+        //TODO
+        int year = 0, month = 0, day = 0;
+        int formatPointer = 0;
+
+        string fullFilePath = getCurrentWorkingDirectory() + "/" + file->getCurrentFileName();
+        string newDate = format("{:04d}:{:02d}:{:02d}", year, month, day);
+
+        Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(fullFilePath);
+        Exiv2::ExifData &exifData = image->exifData();
+
+        exifData["Exif.Photo.DateTimeOriginal"] = newDate;
+
+        image->writeMetadata();
+
+        SPDLOG_INFO("Renamed {}'s date time original to {}", file->getCurrentFileName(), newDate);
+    } catch(Exiv2::Error& e) {
+        SPDLOG_ERROR("Couldn't rename {}'s EXIF Current Date Taken Original");
+    }
+}
+
+void Model::setDateFormat(string format) {
+    dateFormat = format;
+}
+
+string Model::getDateFormat() {
+    return dateFormat;
+}
+
 
 void Model::reload() {
     SPDLOG_INFO("Model::reload");
@@ -165,7 +196,7 @@ void Model::clearRenamingChain() {
 }
 
 
-vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool renameFiles) {
+vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool renameFiles, bool renameDateTakenOriginal) {
     SPDLOG_INFO("Model::executeRenamingChain");
     vector<pair<string, string>> returnPairList;
 
@@ -185,13 +216,20 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
 
         pair<string, string> returnPair = p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal()), separators);
 
+        SPDLOG_INFO("RETURNED VALUE: {}", returnPair.first);
+
         returnPair.first += currentFileExtension;
 
         returnPairList.push_back(returnPair);
 
         if(renameFiles) {
             SPDLOG_INFO("Renaming file {} to {}", getCurrentWorkingDirectory() + "/" + currentFilename, getCurrentWorkingDirectory() + "/" + returnPair.first);
-            filesystem::rename(getCurrentWorkingDirectory() + "/" + currentFilename, getCurrentWorkingDirectory() + "/" + returnPair.first);
+            renameEXIFFile(entry);
+        }
+
+        if(renameDateTakenOriginal) {
+            // TODO
+            //changeEXIFDateTakenOriginal(entry, );
         }
     }
 

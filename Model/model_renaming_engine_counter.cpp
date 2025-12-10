@@ -18,14 +18,14 @@ void ModelRenamingEngineCounter::init(int mode) {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::init");
     counter = 1;
     padding = 1;
-    SPDLOG_DEBUG("Set counter and paddingto 1");
+    SPDLOG_DEBUG("Set counter and padding to 1");
 }
 
 void ModelRenamingEngineCounter::clear() {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::clear");
     counter = counterStart;
     padding = paddingStart;
-    SPDLOG_DEBUG("Set counter and paddingto 1");
+    SPDLOG_DEBUG("Set counter and padding to 1");
 }
 
 pair<string, string> ModelRenamingEngineCounter::execute(pair<string, string> input_parameter) {
