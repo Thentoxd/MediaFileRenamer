@@ -126,7 +126,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
 }
 
 void Model::renameEXIFFile(FileEntry* newFile) {
-    rename((getCurrentWorkingDirectory() + newFile->getCurrentFileName()).c_str(), newFile->getNewFileName().c_str());
+    rename((getCurrentWorkingDirectory() + "/" + newFile->getCurrentFileName()).c_str(), (getCurrentWorkingDirectory() + "/" + newFile->getNewFileName()).c_str());
     newFile->setFileName(newFile->getNewFileName());
 }
 
@@ -224,7 +224,7 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
 
         if(renameFiles) {
             SPDLOG_INFO("Renaming file {} to {}", getCurrentWorkingDirectory() + "/" + currentFilename, getCurrentWorkingDirectory() + "/" + returnPair.first);
-            renameEXIFFile(entry);
+            rename((getCurrentWorkingDirectory() + "/" + currentFilename).c_str(), (getCurrentWorkingDirectory() + "/" + returnPair.first).c_str());
         }
 
         if(renameDateTakenOriginal) {

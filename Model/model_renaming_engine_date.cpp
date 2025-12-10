@@ -93,6 +93,15 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
         day = this->day;
     }
 
+    if(day > "31" || day < "1") {
+        SPDLOG_ERROR("Rejected inputted day");
+        day = "00";
+    }
+    if(month > "12" || month < "1") {
+        SPDLOG_ERROR("Rejected inputted month");
+        month = "00";
+    }
+
     SPDLOG_DEBUG("{}-{}-{}", year, month, day);
 
     string return_string = year + "-" + month + "-" + day;
