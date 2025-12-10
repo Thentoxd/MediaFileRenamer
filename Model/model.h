@@ -156,7 +156,10 @@ public:
     void setRenamingEngineDateSetYear(string newText) override;
     void setRenamingEngineDateSetMonth(string newText) override;
     void setRenamingEngineDateSetDay(string newText) override;
+
+    void setRenamingEngineDateTryExtractDate(bool newValue) override;
     void setRenamingEngineDateSetOriginalDateTaken(bool newValue) override;
+    void setRenamingEngineDateUseOriginalDateTaken(bool newValue) override;
 
     void setSeperatorA(string newValue) override;
     void setSeperatorB(string newValue) override;

@@ -162,8 +162,18 @@ void ModelRenamingEngineDate::clear() {
     SPDLOG_INFO("ModelRenamingEngineDate::clear");
 }
 
+void ModelRenamingEngineDate::setRenamingEngineDateTryExtractDate(bool newValue) {
+    SPDLOG_INFO("setRenamingEngineDateTryExtractDate to {}", newValue);
+    tryExtractDate = newValue;
+}
+
 
 void ModelRenamingEngineDate::setRenamingEngineDateSetOriginalDateTaken(bool newValue) {
-    SPDLOG_INFO("setRenamingEngineDateSetOriginalDateTaken");
+    SPDLOG_INFO("setRenamingEngineDateSetOriginalDateTaken to {}", newValue);
     setDataTaken = newValue;
+}
+
+void ModelRenamingEngineDate::setRenamingEngineDateUseOriginalDateTaken(bool newValue) {
+    SPDLOG_INFO("setRenamingEngineDateUseOriginalDateTaken to {}", newValue);
+    useDataTaken = newValue;
 }

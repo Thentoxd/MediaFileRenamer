@@ -29,7 +29,9 @@ private:
     string month;
     string day;
 
+    bool tryExtractDate = true;
     bool setDataTaken = false;
+    bool useDataTaken = false;
 
     char separator = ' ';
 
@@ -50,7 +52,9 @@ public:
     void setRenamingEngineDateSetDay(string newValue);
     void setFormats(vector<string> formats);
 
+    void setRenamingEngineDateTryExtractDate(bool newValue);
     void setRenamingEngineDateSetOriginalDateTaken(bool newValue);
+    void setRenamingEngineDateUseOriginalDateTaken(bool newValue);
 
     string patternToRegex(const string& pattern);
 };

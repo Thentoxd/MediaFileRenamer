@@ -273,9 +273,21 @@ void Model::setRenamingEngineDateSetDay(string newText) {
 }
 
 
+void Model::setRenamingEngineDateTryExtractDate(bool newValue) {
+    SPDLOG_INFO("Model::setRenamingEngineDateTryExtractDate");
+    p_ModelRenamingEngineDate -> setRenamingEngineDateTryExtractDate(newValue);
+}
+
+
 void Model::setRenamingEngineDateSetOriginalDateTaken(bool newValue) {
     SPDLOG_INFO("Model::setRenamingEngineDateSetOriginalDateTaken");
     p_ModelRenamingEngineDate -> setRenamingEngineDateSetOriginalDateTaken(newValue);
+}
+
+
+void Model::setRenamingEngineDateUseOriginalDateTaken(bool newValue) {
+    SPDLOG_INFO("Model::setRenamingEngineDateUseOriginalDateTaken");
+    p_ModelRenamingEngineDate -> setRenamingEngineDateUseOriginalDateTaken(newValue);
 }
 
 

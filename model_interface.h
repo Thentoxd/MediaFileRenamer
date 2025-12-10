@@ -49,7 +49,10 @@ public:
     virtual void setRenamingEngineDateSetYear(string newText) = 0;
     virtual void setRenamingEngineDateSetMonth(string newText) = 0;
     virtual void setRenamingEngineDateSetDay(string newText) = 0;
+
+    virtual void setRenamingEngineDateTryExtractDate(bool newValue) = 0;
     virtual void setRenamingEngineDateSetOriginalDateTaken(bool newValue) = 0;
+    virtual void setRenamingEngineDateUseOriginalDateTaken(bool newValue) = 0;
 
     virtual void setRenamingEngineTextbody(string newText) = 0;
 
