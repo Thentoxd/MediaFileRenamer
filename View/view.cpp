@@ -412,6 +412,7 @@ void mediaFileRenamerMainView::setYear(const QString &text) {
     SPDLOG_INFO("mediaFileRenamerMainView::setYear");
     SPDLOG_INFO("Text entered: {}", text.toStdString());
     p_model -> setRenamingEngineDateSetYear(text.toStdString());
+    onSelectedRowsChange();
 }
 
 
@@ -419,6 +420,7 @@ void mediaFileRenamerMainView::setMonth(const QString &text) {
     SPDLOG_INFO("mediaFileRenamerMainView::setMonth");
     SPDLOG_INFO("Text entered: {}", text.toStdString());
     p_model -> setRenamingEngineDateSetMonth(text.toStdString());
+    onSelectedRowsChange();
 }
 
 
@@ -426,6 +428,7 @@ void mediaFileRenamerMainView::setDay(const QString &text) {
     SPDLOG_INFO("mediaFileRenamerMainView::setDay");
     SPDLOG_INFO("Text entered: {}", text.toStdString());
     p_model -> setRenamingEngineDateSetDay(text.toStdString());
+    onSelectedRowsChange();
 }
 
 
