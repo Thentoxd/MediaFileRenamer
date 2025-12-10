@@ -120,7 +120,7 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
 
     string newDateTakenOriginal = input_parameter.second;
     // Do we need to set the Create Date Taken (Original)?
-    if (setDataTaken ==true) {
+    if (setDataTaken) {
         SPDLOG_DEBUG("Need to set the Create Date Taken (Original)");
         string currentDateTakenOriginal = input_parameter.second;
 
