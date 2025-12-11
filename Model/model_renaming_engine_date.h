@@ -31,7 +31,7 @@ private:
 
     bool tryExtractDate = true;
     bool setDataTaken = false;
-    bool useDataTaken = false;
+    bool useDateTaken = false;
 
     char separator = ' ';
 

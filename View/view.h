@@ -51,7 +51,7 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void resetToDefaultButtonClicked();
 
         void setDateFormat(const QString &text);
-        void setDateTryExtractDate(Qt::CheckState newState);
+        void setDateTryExtractDateButtonClicked(Qt::CheckState newState);
         void setYear(const QString &text);
         void setMonth(const QString &text);
         void setDay(const QString &text);

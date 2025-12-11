@@ -66,7 +66,7 @@ void mediaFileRenamerMainView::create_window() {
     connect(this -> resetToDefaultsButton, &QPushButton::clicked,  this, &mediaFileRenamerMainView::resetToDefaultButtonClicked);
     connect(tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &mediaFileRenamerMainView::onSelectedRowsChange);
 
-    connect(this -> attempt_findDate_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setDateTryExtractDate);
+    connect(this -> attempt_findDate_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setDateTryExtractDateButtonClicked);
     connect(this -> year_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setYear);
     connect(this -> month_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setMonth);
     connect(this -> day_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setDay);
@@ -120,12 +120,23 @@ void mediaFileRenamerMainView::updateDateChangeYearMonthDay(bool newValue) {
     day_lineEdit ->setEnabled(newValue);
 }
 
+void mediaFileRenamerMainView::setDateTryExtractDateButtonClicked(Qt::CheckState newState) {
+    SPDLOG_INFO("mediaFileRenamerMainView::setDateTryExtractDate");
+    if (newState == Qt::Checked) {
+        this -> updateDateChangeYearMonthDay(false);
+
+        if(use_DateTaken_checkBox->isChecked()) {
+            use_DateTaken_checkBox -> setChecked(false);
+        }
+    }
+    else {
+        this -> updateDateChangeYearMonthDay(true);
+    }
+
+}
 
 void mediaFileRenamerMainView::setUseDateTakenButtonClicked(Qt::CheckState newState) {
     SPDLOG_DEBUG("Use Date Taken (Original)");
-
-
-
     if (newState == Qt::Checked) {
         p_model -> setRenamingEngineDateSetOriginalDateTaken(true);
         attempt_findDate_checkBox->setChecked(false);
@@ -429,22 +440,6 @@ void mediaFileRenamerMainView::setDay(const QString &text) {
     SPDLOG_INFO("Text entered: {}", text.toStdString());
     p_model -> setRenamingEngineDateSetDay(text.toStdString());
     onSelectedRowsChange();
-}
-
-
-void mediaFileRenamerMainView::setDateTryExtractDate(Qt::CheckState newState) {
-    SPDLOG_INFO("mediaFileRenamerMainView::setDateTryExtractDate");
-    if (newState == Qt::Checked) {
-        this -> updateDateChangeYearMonthDay(false);
-
-        if(use_DateTaken_checkBox->isChecked()) {
-            use_DateTaken_checkBox -> setChecked(false);
-        }
-    }
-    else {
-        this -> updateDateChangeYearMonthDay(true);
-    }
-
 }
 
 

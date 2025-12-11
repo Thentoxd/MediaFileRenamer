@@ -97,9 +97,12 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
         } else if(!this->day.empty()) {
             day = this->day;
         }
-    } else if(useDataTaken) {
-        // BIG Problem, need the code above but that's code copying = BAD.
-
+    } else if(useDateTaken) {
+        if(!input_parameter.second.empty()) {
+            year = input_parameter.second.substr(0, 4);
+            month = input_parameter.second.substr(5, 2);
+            day = input_parameter.second.substr(8, 2);
+        }
     }
 
 
@@ -186,5 +189,5 @@ void ModelRenamingEngineDate::setRenamingEngineDateSetOriginalDateTaken(bool new
 
 void ModelRenamingEngineDate::setRenamingEngineDateUseOriginalDateTaken(bool newValue) {
     SPDLOG_INFO("setRenamingEngineDateUseOriginalDateTaken to {}", newValue);
-    useDataTaken = newValue;
+    useDateTaken = newValue;
 }
