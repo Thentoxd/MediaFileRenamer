@@ -509,6 +509,7 @@ void mediaFileRenamerMainView::seperatorAEntered() {
     string seperatorA = separator.toStdString();
     SPDLOG_INFO("String entered: {}", seperatorA);
     p_model -> setSeperatorA(seperatorA);
+    onSelectedRowsChange();
 }
 
 
@@ -518,6 +519,7 @@ void mediaFileRenamerMainView::seperatorBEntered() {
     string seperatorB = separator.toStdString();
     SPDLOG_INFO("String entered: {}", seperatorB);
     p_model -> setSeperatorB(seperatorB);
+    onSelectedRowsChange();
 }
 
 
