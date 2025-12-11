@@ -90,13 +90,13 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
             }
         }
 
-        if(!this->year.empty()) {
-            year = this->year;
-        } else if(!this->month.empty()) {
-            month = this->month;
-        } else if(!this->day.empty()) {
-            day = this->day;
-        }
+        // If we can't find a match, just pull from the entered year, month day if entered
+       if (year.empty() && month.empty() && day.empty()) {
+           year = this->year;
+           month = this->month;
+           day = this->day;
+       }
+
     } else if(useDateTaken) {
         if(!input_parameter.second.empty()) {
             year = input_parameter.second.substr(0, 4);
@@ -104,13 +104,11 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
             day = input_parameter.second.substr(8, 2);
         }
     }
-
-    if ((setDateTaken) && (!tryExtractDate)) {
+    else {
         year = this->year;
         month = this->month;
         day = this->day;
     }
-
 
     int day_int = 0, month_int = 0;
 
