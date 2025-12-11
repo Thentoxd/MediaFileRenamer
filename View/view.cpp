@@ -138,7 +138,7 @@ void mediaFileRenamerMainView::setDateTryExtractDateButtonClicked(Qt::CheckState
 void mediaFileRenamerMainView::setUseDateTakenButtonClicked(Qt::CheckState newState) {
     SPDLOG_DEBUG("Use Date Taken (Original)");
     if (newState == Qt::Checked) {
-        p_model -> setRenamingEngineDateSetOriginalDateTaken(true);
+        p_model -> setRenamingEngineDateUseOriginalDateTaken(true);
         attempt_findDate_checkBox->setChecked(false);
         p_model -> setRenamingEngineDateTryExtractDate(false);
 
@@ -146,7 +146,7 @@ void mediaFileRenamerMainView::setUseDateTakenButtonClicked(Qt::CheckState newSt
         p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
     }
     else {
-        p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
+        p_model -> setRenamingEngineDateUseOriginalDateTaken(false);
 
         attempt_findDate_checkBox->setChecked(true);
         p_model -> setRenamingEngineDateTryExtractDate(true);
@@ -156,7 +156,7 @@ void mediaFileRenamerMainView::setUseDateTakenButtonClicked(Qt::CheckState newSt
 
 void mediaFileRenamerMainView::setDateTakenOriginalButtonClicked(Qt::CheckState newState) {
     SPDLOG_DEBUG("Set Date Taken (Original)");
-    p_model -> setRenamingEngineDateSetOriginalDateTaken(true);
+
 
     if (newState == Qt::Checked) {
         // Need to activate the Year, Month and Day widgets
@@ -164,6 +164,13 @@ void mediaFileRenamerMainView::setDateTakenOriginalButtonClicked(Qt::CheckState 
         // attempt_findDate_checkBox -> setChecked(true);
         use_DateTaken_checkBox -> setChecked(false);
         attempt_findDate_checkBox -> setChecked(true);
+
+        p_model -> setRenamingEngineDateSetOriginalDateTaken(true);
+    }
+    else {
+        p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
+        //attempt_findDate_checkBox -> setChecked(true);
+        //p_model -> setRenamingEngineDateTryExtractDate(true);
     }
 }
 
