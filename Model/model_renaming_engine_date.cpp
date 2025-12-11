@@ -56,6 +56,11 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
     string currentFileName = input_parameter.first;
     string day = "", month = "", year = "";
 
+
+    // bool tryExtractDate = true;
+    // bool useDataTaken = false; // If set
+    // bool setDataTaken = false;
+
     for(string& it : formats) {
         bool found = false;
         string found_equivalent = "";
@@ -132,6 +137,7 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
 
     return make_pair(return_string, newDateTakenOriginal);
 }
+
 
 void ModelRenamingEngineDate::setFormats(vector<string> formats) {
     for(string& it : formats) {

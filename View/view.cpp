@@ -124,13 +124,24 @@ void mediaFileRenamerMainView::updateDateChangeYearMonthDay(bool newValue) {
 void mediaFileRenamerMainView::setUseDateTakenButtonClicked(Qt::CheckState newState) {
     SPDLOG_DEBUG("Use Date Taken (Original)");
 
-    p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
+
 
     if (newState == Qt::Checked) {
+
+        p_model -> setRenamingEngineDateSetOriginalDateTaken(true);
+
         attempt_findDate_checkBox->setChecked(false);
+        this -> updateDateChangeYearMonthDay(false);
+        p_model -> setRenamingEngineDateTryExtractDate(false);
+
+        set_DateTaken_checkBox->setChecked(false);
+        p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
     }
     else {
+        p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
+
         attempt_findDate_checkBox->setChecked(true);
+        p_model -> setRenamingEngineDateTryExtractDate(true);
     }
 }
 
