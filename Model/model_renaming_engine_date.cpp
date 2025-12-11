@@ -61,11 +61,7 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
     // bool useDataTaken = false; // If set
     // bool setDataTaken = false
 
-    if(setDateTaken) {
-        year = this->year;
-        month = this->month;
-        day = this->day;
-    } else if(tryExtractDate) {
+    if(tryExtractDate) {
         for(string& it : formats) {
             bool found = false;
             string found_equivalent = "";
@@ -109,6 +105,12 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
         }
     }
 
+    if ((setDateTaken) && (!tryExtractDate)) {
+        year = this->year;
+        month = this->month;
+        day = this->day;
+    }
+
 
     int day_int = 0, month_int = 0;
 
@@ -145,7 +147,7 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
         string currentDateTakenOriginal = input_parameter.second;
 
         SPDLOG_DEBUG("Current Create Date Taken (Original): {}", currentDateTakenOriginal);
-        if (!currentDateTakenOriginal.empty()) {
+        if (currentDateTakenOriginal.empty()) {
             newDateTakenOriginal = year + ":" + month + ":" + day + " 12:00:00";
         }
     }

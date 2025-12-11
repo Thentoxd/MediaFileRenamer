@@ -132,7 +132,7 @@ void mediaFileRenamerMainView::setDateTryExtractDateButtonClicked(Qt::CheckState
     else {
         this -> setYearMonthDayButtonsEnabled(true);
     }
-
+    onSelectedRowsChange();
 }
 
 void mediaFileRenamerMainView::setUseDateTakenButtonClicked(Qt::CheckState newState) {
@@ -151,19 +151,24 @@ void mediaFileRenamerMainView::setUseDateTakenButtonClicked(Qt::CheckState newSt
         attempt_findDate_checkBox->setChecked(true);
         p_model -> setRenamingEngineDateTryExtractDate(true);
     }
+    onSelectedRowsChange();
 }
 
 
 void mediaFileRenamerMainView::setDateTakenOriginalButtonClicked(Qt::CheckState newState) {
     SPDLOG_DEBUG("Set Date Taken (Original)");
     if (newState == Qt::Checked) {
-        this -> setYearMonthDayButtonsEnabled(false);
+        // this -> setYearMonthDayButtonsEnabled(false);
         use_DateTaken_checkBox -> setChecked(false);
-        attempt_findDate_checkBox -> setChecked(false);
+        // attempt_findDate_checkBox -> setChecked(false);
 
         p_model -> setRenamingEngineDateSetOriginalDateTaken(true);
-        p_model -> setRenamingEngineDateTryExtractDate(false);
+        // p_model -> setRenamingEngineDateTryExtractDate(false);
     }
+    else {
+        p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
+    }
+    onSelectedRowsChange();
 }
 
 
@@ -403,6 +408,7 @@ void mediaFileRenamerMainView::setCounterStart(int newValue) {
     SPDLOG_INFO("mediaFileRenamerMainView::setCounterStart");
     SPDLOG_INFO("Setting counter start to {}", newValue);
     p_model -> setCounterStart(newValue);
+    onSelectedRowsChange();
 }
 
 
@@ -410,11 +416,13 @@ void mediaFileRenamerMainView::setCounterPadding(int newValue) {
     SPDLOG_INFO("mediaFileRenamerMainView::setCounterPadding");
     SPDLOG_INFO("Setting counter padding to {}", newValue);
     p_model -> setCounterPadding(newValue);
+    onSelectedRowsChange();
 }
 
 void mediaFileRenamerMainView::setDateFormat(const QString &text) {
     SPDLOG_INFO("mediaFileRenamerMainView::setDateFormat");
     SPDLOG_INFO("Date Format: {}", text.toStdString());
+    onSelectedRowsChange();
 }
 
 
