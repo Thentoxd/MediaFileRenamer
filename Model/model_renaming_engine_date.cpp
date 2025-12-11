@@ -61,42 +61,47 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
     // bool useDataTaken = false; // If set
     // bool setDataTaken = false;
 
-    for(string& it : formats) {
-        bool found = false;
-        string found_equivalent = "";
-        regex regex_format(patternToRegex(it));
-        smatch match;
+    if(tryExtractDate) {
+        for(string& it : formats) {
+            bool found = false;
+            string found_equivalent = "";
+            regex regex_format(patternToRegex(it));
+            smatch match;
 
-        std::string::const_iterator searchStart(currentFileName.cbegin());
-        while(regex_search(searchStart, currentFileName.cend(), match, regex_format)) {
-            found = true;
-            found_equivalent = match[0];
-            break;
-        }
-
-        if(found) {
-            for(int i = 0; i < it.size(); i++) {
-                if(it[i] == 'Y') {
-                    year.push_back(found_equivalent[i]);
-                } else if(it[i] == 'M') {
-                    month.push_back(found_equivalent[i]);
-                } else if(it[i] == 'D') {
-                    day.push_back(found_equivalent[i]);
-                }
+            std::string::const_iterator searchStart(currentFileName.cbegin());
+            while(regex_search(searchStart, currentFileName.cend(), match, regex_format)) {
+                found = true;
+                found_equivalent = match[0];
+                break;
             }
 
-            break;
+            if(found) {
+                for(int i = 0; i < it.size(); i++) {
+                    if(it[i] == 'Y') {
+                        year.push_back(found_equivalent[i]);
+                    } else if(it[i] == 'M') {
+                        month.push_back(found_equivalent[i]);
+                    } else if(it[i] == 'D') {
+                        day.push_back(found_equivalent[i]);
+                    }
+                }
+
+                break;
+            }
         }
+
+        if(!this->year.empty()) {
+            year = this->year;
+        } else if(!this->month.empty()) {
+            month = this->month;
+        } else if(!this->day.empty()) {
+            day = this->day;
+        }
+    } else if(useDataTaken) {
+        // BIG Problem, need the code above but that's code copying = BAD.
+
     }
 
-
-    if(!this->year.empty()) {
-        year = this->year;
-    } else if(!this->month.empty()) {
-        month = this->month;
-    } else if(!this->day.empty()) {
-        day = this->day;
-    }
 
     int day_int = 0, month_int = 0;
 
@@ -121,7 +126,7 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
         return_string = "";
     }
 
-    SPDLOG_DEBUG("{}-{}-{}", year, month, day);
+    SPDLOG_DEBUG("{}-{}-{}", year, month, day);\
 
     string newDateTakenOriginal = input_parameter.second;
     // Do we need to set the Create Date Taken (Original)?
