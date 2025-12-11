@@ -25,7 +25,7 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
     int columnOffset = 0;
 
     void updateTable();
-    void updateDateChangeYearMonthDay(bool newValue);
+    void setYearMonthDayButtonsEnabled(bool newValue);
 
     public:
         mediaFileRenamerMainView(ModelInterface * p_model);

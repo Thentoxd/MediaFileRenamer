@@ -110,7 +110,7 @@ void mediaFileRenamerMainView::selectFolderButtonClicked() {
 }
 
 
-void mediaFileRenamerMainView::updateDateChangeYearMonthDay(bool newValue) {
+void mediaFileRenamerMainView::setYearMonthDayButtonsEnabled(bool newValue) {
     year_label->setEnabled(newValue);
     month_label->setEnabled(newValue);
     day_label->setEnabled(newValue);
@@ -123,14 +123,14 @@ void mediaFileRenamerMainView::updateDateChangeYearMonthDay(bool newValue) {
 void mediaFileRenamerMainView::setDateTryExtractDateButtonClicked(Qt::CheckState newState) {
     SPDLOG_INFO("mediaFileRenamerMainView::setDateTryExtractDate");
     if (newState == Qt::Checked) {
-        this -> updateDateChangeYearMonthDay(false);
+        this -> setYearMonthDayButtonsEnabled(false);
 
         if(use_DateTaken_checkBox->isChecked()) {
             use_DateTaken_checkBox -> setChecked(false);
         }
     }
     else {
-        this -> updateDateChangeYearMonthDay(true);
+        this -> setYearMonthDayButtonsEnabled(true);
     }
 
 }
@@ -156,21 +156,13 @@ void mediaFileRenamerMainView::setUseDateTakenButtonClicked(Qt::CheckState newSt
 
 void mediaFileRenamerMainView::setDateTakenOriginalButtonClicked(Qt::CheckState newState) {
     SPDLOG_DEBUG("Set Date Taken (Original)");
-
-
     if (newState == Qt::Checked) {
-        // Need to activate the Year, Month and Day widgets
-        this -> updateDateChangeYearMonthDay(false);
-        // attempt_findDate_checkBox -> setChecked(true);
+        this -> setYearMonthDayButtonsEnabled(false);
         use_DateTaken_checkBox -> setChecked(false);
-        attempt_findDate_checkBox -> setChecked(true);
+        attempt_findDate_checkBox -> setChecked(false);
 
         p_model -> setRenamingEngineDateSetOriginalDateTaken(true);
-    }
-    else {
-        p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
-        //attempt_findDate_checkBox -> setChecked(true);
-        //p_model -> setRenamingEngineDateTryExtractDate(true);
+        p_model -> setRenamingEngineDateTryExtractDate(false);
     }
 }
 

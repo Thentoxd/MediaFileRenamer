@@ -228,8 +228,23 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
         }
 
         if(renameDateTakenOriginal) {
-            // TODO
-            //changeEXIFDateTakenOriginal(entry, );
+            try {
+                int year = 0, month = 0, day = 0;
+
+                string fullFilePath = getCurrentWorkingDirectory() + "/" + currentFilename;
+                string newDate = format("{:04d}:{:02d}:{:02d}", year, month, day);
+
+                Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(fullFilePath);
+                Exiv2::ExifData &exifData = image->exifData();
+
+                exifData["Exif.Photo.DateTimeOriginal"] = newDate;
+
+                image->writeMetadata();
+
+                SPDLOG_INFO("Renamed {}'s date time original to {}", currentFilename, newDate);
+            } catch(Exiv2::Error& e) {
+                SPDLOG_ERROR("Couldn't rename {}'s EXIF Current Date Taken Original");
+            }
         }
     }
 

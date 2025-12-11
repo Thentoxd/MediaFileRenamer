@@ -30,7 +30,7 @@ private:
     string day;
 
     bool tryExtractDate = true;
-    bool setDataTaken = false;
+    bool setDateTaken = false;
     bool useDateTaken = false;
 
     char separator = ' ';
