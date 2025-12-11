@@ -124,24 +124,14 @@ void mediaFileRenamerMainView::updateDateChangeYearMonthDay(bool newValue) {
 void mediaFileRenamerMainView::setUseDateTakenButtonClicked(Qt::CheckState newState) {
     SPDLOG_DEBUG("Use Date Taken (Original)");
 
-    if (newState == Qt::Checked) {
-        // Need to activate the Year, Month and Day widgets
-        this -> updateDateChangeYearMonthDay(true);
-        // Deactivate the "Try to extract date" checkbox
-        attempt_findDate_checkBox -> setChecked(false);
-        set_DateTaken_checkBox -> setChecked(false);
+    p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
 
-        p_model -> setRenamingEngineDateUseOriginalDateTaken(true);
+    if (newState == Qt::Checked) {
+        attempt_findDate_checkBox->setChecked(false);
     }
     else {
-        // Need to deactivate the Year, Month and Day widgets
-        this -> updateDateChangeYearMonthDay(false);
-        // Activate the "Try to extract date" checkbox
-        attempt_findDate_checkBox -> setChecked(true);
-
-        p_model -> setRenamingEngineDateUseOriginalDateTaken(false);
+        attempt_findDate_checkBox->setChecked(true);
     }
-
 }
 
 
@@ -438,11 +428,13 @@ void mediaFileRenamerMainView::setDateTryExtractDate(Qt::CheckState newState) {
     SPDLOG_INFO("mediaFileRenamerMainView::setDateTryExtractDate");
     if (newState == Qt::Checked) {
         this -> updateDateChangeYearMonthDay(false);
-        p_model -> setRenamingEngineDateTryExtractDate(true);
+
+        if(use_DateTaken_checkBox->isChecked()) {
+            use_DateTaken_checkBox -> setChecked(false);
+        }
     }
     else {
         this -> updateDateChangeYearMonthDay(true);
-        p_model -> setRenamingEngineDateTryExtractDate(false);
     }
 
 }
