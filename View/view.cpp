@@ -73,6 +73,8 @@ void mediaFileRenamerMainView::create_window() {
 
     connect(this -> loadPreviews_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::loadPreviews);
 
+    connect(this -> useNumberingSuffix, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::useNumberingSuffixClicked);
+
     connect(this -> seperatorA_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorAEntered);
     connect(this -> seperatorB_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorBEntered);
 
@@ -418,6 +420,17 @@ void mediaFileRenamerMainView::setCounterPadding(int newValue) {
     p_model -> setCounterPadding(newValue);
     onSelectedRowsChange();
 }
+
+void mediaFileRenamerMainView::useNumberingSuffixClicked(Qt::CheckState state) {
+    SPDLOG_INFO("mediaFileRenamerMainView::useNumberingSuffixClicked");
+    bool checked = (state == Qt::Checked);
+
+    label_4->setEnabled(checked);
+    label_5->setEnabled(checked);
+    numSuffixPadSpinBox->setEnabled(checked);
+    numSuffixStartSpinBox->setEnabled(checked);
+}
+
 
 void mediaFileRenamerMainView::setDateFormat(const QString &text) {
     SPDLOG_INFO("mediaFileRenamerMainView::setDateFormat");
