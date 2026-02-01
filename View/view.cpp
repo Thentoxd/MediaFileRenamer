@@ -73,7 +73,7 @@ void mediaFileRenamerMainView::create_window() {
 
     connect(this -> loadPreviews_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::loadPreviews);
 
-    connect(this -> useNumberingSuffix, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::useNumberingSuffixClicked);
+    // connect(this -> useNumberingSuffix, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::useNumberingSuffixClicked);
 
     connect(this -> seperatorA_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorAEntered);
     connect(this -> seperatorB_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorBEntered);
@@ -130,9 +130,11 @@ void mediaFileRenamerMainView::setDateTryExtractDateButtonClicked(Qt::CheckState
         if(use_DateTaken_checkBox->isChecked()) {
             use_DateTaken_checkBox -> setChecked(false);
         }
+        p_model -> setRenamingEngineDateTryExtractDate(true);
     }
     else {
         this -> setYearMonthDayButtonsEnabled(true);
+        p_model -> setRenamingEngineDateTryExtractDate(false);
     }
     onSelectedRowsChange();
 }
