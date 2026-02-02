@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1599</width>
-    <height>735</height>
+    <width>1612</width>
+    <height>842</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -184,6 +184,9 @@
            <property name="title">
             <string>Date Prefix</string>
            </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
              <widget class="QCheckBox" name="attempt_findDate_checkBox">
@@ -341,6 +344,12 @@
          </item>
          <item>
           <widget class="QGroupBox" name="groupBox_6">
+           <property name="minimumSize">
+            <size>
+             <width>90</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
              <width>65</width>
@@ -350,11 +359,14 @@
            <property name="title">
             <string>Separator</string>
            </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
            <widget class="QLineEdit" name="seperatorA_lineEdit">
             <property name="geometry">
              <rect>
-              <x>10</x>
-              <y>70</y>
+              <x>30</x>
+              <y>60</y>
               <width>40</width>
               <height>22</height>
              </rect>
@@ -384,6 +396,9 @@
            </property>
            <property name="title">
             <string>Filename Body</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
            </property>
            <widget class="QLineEdit" name="filenamebody_lineEdit">
             <property name="geometry">
@@ -421,6 +436,12 @@
          </item>
          <item>
           <widget class="QGroupBox" name="groupBox_7">
+           <property name="minimumSize">
+            <size>
+             <width>90</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
              <width>65</width>
@@ -430,10 +451,13 @@
            <property name="title">
             <string>Separator</string>
            </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
            <widget class="QLineEdit" name="seperatorB_lineEdit">
             <property name="geometry">
              <rect>
-              <x>10</x>
+              <x>20</x>
               <y>70</y>
               <width>40</width>
               <height>22</height>
@@ -465,6 +489,9 @@
            <property name="title">
             <string>Numbering Suffix</string>
            </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
            <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
@@ -475,6 +502,33 @@
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="maximumSize">
+                <size>
+                 <width>60</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Padding</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QSpinBox" name="numSuffixStartSpinBox">
+               <property name="value">
+                <number>1</number>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Start</string>
+               </property>
+              </widget>
+             </item>
              <item row="1" column="1">
               <widget class="QSpinBox" name="numSuffixPadSpinBox">
                <property name="minimumSize">
@@ -494,53 +548,7 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="maximumSize">
-                <size>
-                 <width>60</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Padding</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_5">
-               <property name="text">
-                <string>Start</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QSpinBox" name="numSuffixStartSpinBox">
-               <property name="value">
-                <number>1</number>
-               </property>
-              </widget>
-             </item>
             </layout>
-           </widget>
-           <widget class="QCheckBox" name="useNumberingSuffix">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>130</y>
-              <width>100</width>
-              <height>20</height>
-             </rect>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Use Suffix</string>
-            </property>
            </widget>
           </widget>
          </item>
@@ -556,7 +564,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1599</width>
+     <width>1612</width>
      <height>33</height>
     </rect>
    </property>
