@@ -86,6 +86,12 @@ void mediaFileRenamerMainView::create_window() {
     // Menu signal
     // connect actionExit QAction::triggered   (bool checked = false)
     connect(this -> actionExit, &QAction::triggered, this, &mediaFileRenamerMainView::menuExit);
+
+
+    label_4->setEnabled(false);
+    label_5->setEnabled(false);
+    numSuffixPadSpinBox->setEnabled(false);
+    numSuffixStartSpinBox->setEnabled(false);
 }
 
 

@@ -23,6 +23,8 @@ private:
     int padding = 1;
     int paddingStart = 1;
 
+    bool usingCounterEngine = false;
+
 public:
     ModelRenamingEngineCounter();
     ~ModelRenamingEngineCounter();
@@ -32,6 +34,7 @@ public:
 
     void clear() override;
     void init(int mode) override;
+    void setUsingCounterEngine(bool value);
     pair<string, string> execute(pair<string, string> input_parameter) override;
 };
 

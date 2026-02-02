@@ -43,19 +43,21 @@ pair<string, string> ModelRemamingQueue::executeQueue(const pair<string, string>
 
     auto it = separators.begin();
     for(ModelRenamingEngine * each_engine : renaming_engine) {
-        pair<string, string> return_pair = each_engine -> execute(input_parameter);
+        if(each_engine->isActive()) {
+            pair<string, string> return_pair = each_engine -> execute(input_parameter);
 
-        if (return_pair.first != input_parameter.first) {
-            renamed_filename += return_pair.first;
-            if (it != separators.end()) {
-                renamed_filename += *it;
+            if (return_pair.first != input_parameter.first) {
+                renamed_filename += return_pair.first;
+                if (it != separators.end()) {
+                    renamed_filename += *it;
+                }
             }
-        }
 
-        if (return_pair.second != input_parameter.second) {
-            renamed_datecreated += return_pair.second;
+            if (return_pair.second != input_parameter.second) {
+                renamed_datecreated += return_pair.second;
+            }
+            it++;
         }
-        it++;
     }
 
     // Strip last seperator off

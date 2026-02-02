@@ -10,11 +10,22 @@
 using namespace std;
 
 class ModelRenamingEngine {
+private:
+    bool EngineActive;
+
 public:
     virtual ~ModelRenamingEngine() = default;
 
     virtual void init(int mode) = 0;
     virtual void clear() = 0;
+
+    virtual void setActive(bool state) {
+        EngineActive = state;
+    }
+
+    virtual bool isActive() {
+        return EngineActive;
+    }
 
     virtual pair<string, string> execute(pair<string, string> input_parameter) = 0;
 
