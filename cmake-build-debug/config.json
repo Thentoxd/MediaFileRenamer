@@ -5,6 +5,7 @@
     "filetypes_parsed": [
         "jpg",
         "JPG",
+        "jpeg",
         "png"
     ],
     "install_directory": "",
