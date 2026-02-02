@@ -11,7 +11,7 @@ using namespace std;
 
 class ModelRenamingEngine {
 private:
-    bool EngineActive;
+    bool EngineActive = true;
 
 public:
     virtual ~ModelRenamingEngine() = default;
