@@ -98,11 +98,13 @@ void mediaFileRenamerMainView::datePrefixGroupToggled(bool state) {
     onSelectedRowsChange();
 }
 
+
 void mediaFileRenamerMainView::fileNameBodyGroupToggled(bool state) {
     SPDLOG_INFO("mediaFileRenamerMainView::fileNameBodyGroupToggled");
     p_model->setEngineText(state);
     onSelectedRowsChange();
 }
+
 
 void mediaFileRenamerMainView::numberingSuffixGroupToggled(bool state) {
     SPDLOG_INFO("mediaFileRenamerMainView::numberingSuffixGroupToggled");
@@ -110,15 +112,38 @@ void mediaFileRenamerMainView::numberingSuffixGroupToggled(bool state) {
     onSelectedRowsChange();
 }
 
+
 void mediaFileRenamerMainView::firstSeperatorGroupToggled(bool state) {
     SPDLOG_INFO("mediaFileRenamerMainView::firstSeperatorGroupToggled");
+
+    if (state == false) {
+        p_model -> setSeperatorA("");
+    }
+    else {
+        QString separator = seperatorB_lineEdit -> text();
+        string seperatorA = separator.toStdString();
+        SPDLOG_INFO("String entered: {}", seperatorA);
+        p_model -> setSeperatorB(seperatorA);
+    }
     onSelectedRowsChange();
 }
 
+
 void mediaFileRenamerMainView::secondSeperatorGroupToggled(bool state) {
     SPDLOG_INFO("mediaFileRenamerMainView::secondSeperatorGroupToggled");
+    if (state == false) {
+        p_model -> setSeperatorB("");
+    }
+    else {
+        QString separator = seperatorB_lineEdit -> text();
+        string seperatorB = separator.toStdString();
+        SPDLOG_INFO("String entered: {}", seperatorB);
+        p_model -> setSeperatorB(seperatorB);
+    }
+    onSelectedRowsChange();
     onSelectedRowsChange();
 }
+
 
 void mediaFileRenamerMainView::selectFolderButtonClicked() {
     SPDLOG_DEBUG("mediaFileRenamerMainView::selectFolderButtonClicked");
