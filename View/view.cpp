@@ -95,24 +95,29 @@ void mediaFileRenamerMainView::create_window() {
 void mediaFileRenamerMainView::datePrefixGroupToggled(bool state) {
     SPDLOG_INFO("mediaFileRenamerMainView::datePrefixGroupToggled");
     p_model->setEngineDatePrefix(state);
+    onSelectedRowsChange();
 }
 
 void mediaFileRenamerMainView::fileNameBodyGroupToggled(bool state) {
     SPDLOG_INFO("mediaFileRenamerMainView::fileNameBodyGroupToggled");
     p_model->setEngineText(state);
+    onSelectedRowsChange();
 }
 
 void mediaFileRenamerMainView::numberingSuffixGroupToggled(bool state) {
     SPDLOG_INFO("mediaFileRenamerMainView::numberingSuffixGroupToggled");
     p_model->setEngineCounterSuffix(state);
+    onSelectedRowsChange();
 }
 
 void mediaFileRenamerMainView::firstSeperatorGroupToggled(bool state) {
-
+    SPDLOG_INFO("mediaFileRenamerMainView::firstSeperatorGroupToggled");
+    onSelectedRowsChange();
 }
 
 void mediaFileRenamerMainView::secondSeperatorGroupToggled(bool state) {
-
+    SPDLOG_INFO("mediaFileRenamerMainView::secondSeperatorGroupToggled");
+    onSelectedRowsChange();
 }
 
 void mediaFileRenamerMainView::selectFolderButtonClicked() {
