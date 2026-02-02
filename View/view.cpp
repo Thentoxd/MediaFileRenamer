@@ -77,23 +77,43 @@ void mediaFileRenamerMainView::create_window() {
 
     connect(this -> seperatorA_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorAEntered);
     connect(this -> seperatorB_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorBEntered);
-
-
     connect(this->dateFormat, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::setDateFormat);
 
+
+    connect(this -> datePrefixGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::datePrefixGroupToggled);
+    connect(this -> firstSeperatorGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::firstSeperatorGroupToggled);
+    connect(this -> fileNameBodyGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::fileNameBodyGroupToggled);
+    connect(this -> secondSeperatorGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::secondSeperatorGroupToggled);
+    connect(this -> numberingSuffixGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::numberingSuffixGroupToggled);
 
 
     // Menu signal
     // connect actionExit QAction::triggered   (bool checked = false)
     connect(this -> actionExit, &QAction::triggered, this, &mediaFileRenamerMainView::menuExit);
-
-
-    label_4->setEnabled(false);
-    label_5->setEnabled(false);
-    numSuffixPadSpinBox->setEnabled(false);
-    numSuffixStartSpinBox->setEnabled(false);
 }
 
+void mediaFileRenamerMainView::datePrefixGroupToggled(bool state) {
+    SPDLOG_INFO("mediaFileRenamerMainView::datePrefixGroupToggled");
+    p_model->setEngineDatePrefix(state);
+}
+
+void mediaFileRenamerMainView::fileNameBodyGroupToggled(bool state) {
+    SPDLOG_INFO("mediaFileRenamerMainView::fileNameBodyGroupToggled");
+    p_model->setEngineText(state);
+}
+
+void mediaFileRenamerMainView::numberingSuffixGroupToggled(bool state) {
+    SPDLOG_INFO("mediaFileRenamerMainView::numberingSuffixGroupToggled");
+    p_model->setEngineCounterSuffix(state);
+}
+
+void mediaFileRenamerMainView::firstSeperatorGroupToggled(bool state) {
+
+}
+
+void mediaFileRenamerMainView::secondSeperatorGroupToggled(bool state) {
+
+}
 
 void mediaFileRenamerMainView::selectFolderButtonClicked() {
     SPDLOG_DEBUG("mediaFileRenamerMainView::selectFolderButtonClicked");
@@ -427,16 +447,6 @@ void mediaFileRenamerMainView::setCounterPadding(int newValue) {
     SPDLOG_INFO("Setting counter padding to {}", newValue);
     p_model -> setCounterPadding(newValue);
     onSelectedRowsChange();
-}
-
-void mediaFileRenamerMainView::useNumberingSuffixClicked(Qt::CheckState state) {
-    SPDLOG_INFO("mediaFileRenamerMainView::useNumberingSuffixClicked");
-    bool checked = (state == Qt::Checked);
-
-    label_4->setEnabled(checked);
-    label_5->setEnabled(checked);
-    numSuffixPadSpinBox->setEnabled(checked);
-    numSuffixStartSpinBox->setEnabled(checked);
 }
 
 

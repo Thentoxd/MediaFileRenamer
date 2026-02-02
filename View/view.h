@@ -47,7 +47,6 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
 
         void setCounterStart(int newValue);
         void setCounterPadding(int newValue);
-        void useNumberingSuffixClicked(Qt::CheckState state);
         void renameFilesButtonClicked();
         void resetToDefaultButtonClicked();
 
@@ -56,6 +55,12 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void setYear(const QString &text);
         void setMonth(const QString &text);
         void setDay(const QString &text);
+
+        void datePrefixGroupToggled(bool state);
+        void firstSeperatorGroupToggled(bool state);
+        void fileNameBodyGroupToggled(bool state);
+        void secondSeperatorGroupToggled(bool state);
+        void numberingSuffixGroupToggled(bool state);
 
         void menuExit(bool newValue);
         void loadPreviews(Qt::CheckState state);

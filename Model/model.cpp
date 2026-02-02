@@ -125,6 +125,18 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
     SPDLOG_INFO("Model::setCurrentWorkingDirectory. New model built");
 }
 
+void Model::setEngineDatePrefix(bool state) {
+    p_ModelRenamingEngineDate->setActive(state);
+}
+
+void Model::setEngineText(bool state) {
+    p_ModelRenamingEngineTextBody->setActive(state);
+}
+
+void Model::setEngineCounterSuffix(bool state) {
+    p_ModelRenamingEngineCounter->setActive(state);
+}
+
 void Model::renameEXIFFile(FileEntry* newFile) {
     rename((getCurrentWorkingDirectory() + "/" + newFile->getCurrentFileName()).c_str(), (getCurrentWorkingDirectory() + "/" + newFile->getNewFileName()).c_str());
     newFile->setFileName(newFile->getNewFileName());

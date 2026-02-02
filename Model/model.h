@@ -93,6 +93,9 @@ public:
     void renameEXIFFile(FileEntry* newFile);
     void changeEXIFDateTakenOriginal(FileEntry* file);
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
+    void setEngineDatePrefix(bool state) override;
+    void setEngineText(bool state) override;
+    void setEngineCounterSuffix(bool state) override;
     void reload() override ;
     void clear() override ;
     void resetToDefaultButtonClicked();

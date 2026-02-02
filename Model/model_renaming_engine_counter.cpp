@@ -28,17 +28,8 @@ void ModelRenamingEngineCounter::clear() {
     SPDLOG_DEBUG("Set counter and padding to 1");
 }
 
-void ModelRenamingEngineCounter::setUsingCounterEngine(bool value) {
-    SPDLOG_DEBUG("ModelRenamingEngineCounter::setUsingCounterEngine");
-    usingCounterEngine = value;
-}
-
 pair<string, string> ModelRenamingEngineCounter::execute(pair<string, string> input_parameter) {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::execute");
-
-    if(!usingCounterEngine) {
-        return input_parameter;
-    }
 
     pair<string, string> return_value;
 

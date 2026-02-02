@@ -174,7 +174,7 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <widget class="QGroupBox" name="groupBox_5">
+          <widget class="QGroupBox" name="datePrefixGroup">
            <property name="maximumSize">
             <size>
              <width>300</width>
@@ -343,7 +343,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_6">
+          <widget class="QGroupBox" name="firstSeperatorGroup">
            <property name="minimumSize">
             <size>
              <width>90</width>
@@ -381,7 +381,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_4">
+          <widget class="QGroupBox" name="fileNameBodyGroup">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -435,7 +435,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_7">
+          <widget class="QGroupBox" name="secondSeperatorGroup">
            <property name="minimumSize">
             <size>
              <width>90</width>
@@ -473,7 +473,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_3">
+          <widget class="QGroupBox" name="numberingSuffixGroup">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>
