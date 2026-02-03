@@ -79,7 +79,7 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
                         }
                 }
                 else {
-                    allowed_file_type = true;
+                    allowed_file_type = false;
                 }
 
                 if (allowed_file_type) {
