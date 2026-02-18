@@ -128,6 +128,13 @@ void ModelConfigfile::appendFileHistory(string new_directory_parameter) {
         if (new_directory_parameter == each_directory) {
             seen_this_directory_before = true;
         }
+
+    // If we have seen this folder before, move it to the first element in the list
+    if (seen_this_directory_before) {
+        file_history.erase(std::remove(file_history.begin(), file_history.end(), new_directory_parameter), file_history.end());
+        file_history.insert(file_history.begin(), new_directory_parameter);
+    }
+
     if (!seen_this_directory_before) {
         file_history.insert(file_history.begin(),new_directory_parameter);
         // file_history.push_back(new_directory_parameter);
@@ -135,10 +142,9 @@ void ModelConfigfile::appendFileHistory(string new_directory_parameter) {
             file_history.erase(file_history.begin());
         }
         SPDLOG_INFO("ConfigFileModel::setCurrentWorkingDirectory: Stored a new working directory {}", new_directory_parameter);
-
-        this -> updateLastDirectories();
-        this -> saveConfigFile();
     }
+    this -> updateLastDirectories();
+    this -> saveConfigFile();
 }
 
 
