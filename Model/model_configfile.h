@@ -19,7 +19,12 @@ class ModelConfigfile {
     string current_working_directory;
     string config_file_name;
     vector<string> file_history;
+
+    // file_types_processed is the list of file types we SHOULD be able to edit metadata of
     vector<string> file_types_processed;
+    // filetypes_can_only_edit_filename is a list of file types we can't edit metadata, but allow filename editing features
+    vector<string> filetypes_can_only_edit_filename;
+
     vector<string> date_formats_parsed;
 
     public:
@@ -30,6 +35,8 @@ class ModelConfigfile {
     void appendFileHistory(string new_directory_parameter);
 
     vector<std::string> getFileTypesProcessed();
+    vector<std::string> getFileTypesFilenameOnlyProcessed();
+
     vector<std::string> getDateFormatsParsed();
 
     void reloadFileTypesProcessed();

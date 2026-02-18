@@ -68,6 +68,8 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
                 SPDLOG_INFO("Filename found: {}", outfilename_str);
 
                 bool allowed_file_type = false;
+                bool file_type_we_can_only_edit_filename = false;
+
                 int dot_position = outfilename_str.rfind('.');
                 if (dot_position != string::npos) {
                     string extension = outfilename_str.substr(dot_position + 1);
@@ -77,9 +79,12 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
                         if (extension == each_file_type) {
                             allowed_file_type = true;
                         }
-                }
-                else {
-                    allowed_file_type = false;
+
+                    vector<std::string> file_types_filename_only = p_ModelConfigfile -> getFileTypesFilenameOnlyProcessed();
+                    for(const string& each_file_type : file_types_filename_only)
+                        if (extension == each_file_type) {
+                            file_type_we_can_only_edit_filename = true;
+                        }
                 }
 
                 if (allowed_file_type) {
@@ -115,6 +120,10 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
                     }
 
                     addEntry(outfilename_str, dateTakenOriginal);
+                }
+
+                if (file_type_we_can_only_edit_filename) {
+                    addEntry(outfilename_str, "");
                 }
             }
         }
@@ -240,24 +249,35 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
         }
 
         if(renameDateTakenOriginal) {
-            try {
-                // int year = 0, month = 0, day = 0;
-                //
-                string fullFilePath = getCurrentWorkingDirectory() + "/" + currentFilename;
-                // string newDate = format("{:04d}:{:02d}:{:02d}", year, month, day);
-                //
-                Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(fullFilePath);
-                Exiv2::ExifData &exifData = image->exifData();
-                //
-                // exifData["Exif.Photo.DateTimeOriginal"] = newDate;
 
-                exifData["Exif.Photo.DateTimeOriginal"] = returnPair.second;
+            // If currentFileExtension is not in the list of filetypes we can only edit the filenames, try to edit the metadata
+            bool file_type_we_can_only_edit_filename = false;
+            vector<std::string> file_types_filename_only = p_ModelConfigfile -> getFileTypesFilenameOnlyProcessed();
+            for(const string& each_file_type : file_types_filename_only)
+                if (currentFileExtension == each_file_type) {
+                    file_type_we_can_only_edit_filename = true;
+                }
 
-                image->writeMetadata();
+            if (!file_type_we_can_only_edit_filename) {
+                try {
+                    // int year = 0, month = 0, day = 0;
+                    //
+                    string fullFilePath = getCurrentWorkingDirectory() + "/" + currentFilename;
+                    // string newDate = format("{:04d}:{:02d}:{:02d}", year, month, day);
+                    //
+                    Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(fullFilePath);
+                    Exiv2::ExifData &exifData = image->exifData();
+                    //
+                    // exifData["Exif.Photo.DateTimeOriginal"] = newDate;
 
-                SPDLOG_INFO("Renamed {}'s date time original to {}", currentFilename, returnPair.second);
-            } catch(Exiv2::Error& e) {
-                SPDLOG_ERROR("Couldn't rename {}'s EXIF Current Date Taken Original");
+                    exifData["Exif.Photo.DateTimeOriginal"] = returnPair.second;
+
+                    image->writeMetadata();
+
+                    SPDLOG_INFO("Renamed {}'s date time original to {}", currentFilename, returnPair.second);
+                } catch(Exiv2::Error& e) {
+                    SPDLOG_ERROR("Couldn't rename {}'s EXIF Current Date Taken Original");
+                }
             }
         }
     }

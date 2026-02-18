@@ -30,6 +30,10 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
         file_types_processed.push_back("png");
         json_data_from_file["filetypes_parsed"] = file_types_processed;
 
+        filetypes_can_only_edit_filename.push_back("mp4");
+        filetypes_can_only_edit_filename.push_back("CR2");
+        json_data_from_file["filetypes_can_only_edit_filename"] = filetypes_can_only_edit_filename;
+
         this->saveConfigFile();
         return;
     }
@@ -86,6 +90,9 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
 
     file_types_processed = json_data_from_file["filetypes_parsed"].get<std::vector<string>>();
     SPDLOG_INFO("Loaded filetypes_parsed from config file");
+
+    filetypes_can_only_edit_filename = json_data_from_file["filetypes_can_only_edit_filename"].get<std::vector<string>>();
+    SPDLOG_INFO("Loaded filetypes_can_only_edit_filename from config file");
 }
 
 
@@ -153,6 +160,13 @@ vector<std::string> ModelConfigfile::getFileTypesProcessed() {
     SPDLOG_INFO("Model::getFileTypesProcessed");
     return file_types_processed;
 }
+
+
+vector<std::string> ModelConfigfile::getFileTypesFilenameOnlyProcessed() {
+    SPDLOG_INFO("Model::getFileTypesFilenameOnlyProcessed");
+    return filetypes_can_only_edit_filename;
+}
+
 
 vector<std::string> ModelConfigfile::getDateFormatsParsed() {
     SPDLOG_INFO("Model::getDateFormatParsed");
