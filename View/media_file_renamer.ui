@@ -378,7 +378,7 @@
              </size>
             </property>
             <property name="text">
-             <string> </string>
+             <string/>
             </property>
            </widget>
           </widget>
@@ -473,7 +473,7 @@
              </size>
             </property>
             <property name="text">
-             <string> </string>
+             <string/>
             </property>
            </widget>
           </widget>
@@ -578,6 +578,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionChain_Editor"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -608,6 +609,11 @@
   <action name="actionAbouyt3">
    <property name="text">
     <string>Abouyt3</string>
+   </property>
+  </action>
+  <action name="actionChain_Editor">
+   <property name="text">
+    <string>Chain Editor</string>
    </property>
   </action>
  </widget>

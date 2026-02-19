@@ -13,6 +13,8 @@
 
 #include "../Model/model.h"
 
+#include "chain_editor.h"
+
 mediaFileRenamerMainView::mediaFileRenamerMainView(ModelInterface * modelParam) {
     SPDLOG_INFO("Initialising View ....");
 
@@ -90,6 +92,7 @@ void mediaFileRenamerMainView::create_window() {
     // Menu signal
     // connect actionExit QAction::triggered   (bool checked = false)
     connect(this -> actionExit, &QAction::triggered, this, &mediaFileRenamerMainView::menuExit);
+    connect(this -> actionChain_Editor, &QAction::triggered, this, &mediaFileRenamerMainView::menuChainEditor);
 }
 
 void mediaFileRenamerMainView::datePrefixGroupToggled(bool state) {
@@ -514,6 +517,13 @@ void mediaFileRenamerMainView::setDay(const QString &text) {
 void mediaFileRenamerMainView::menuExit(bool newValue) {
     SPDLOG_INFO("mediaFileRenamerMainView::menuExit");
     p_model -> exitApplication();
+}
+
+
+void mediaFileRenamerMainView::menuChainEditor(bool newValue) {
+    SPDLOG_INFO("mediaFileRenamerMainView::menuChainEditor");
+    auto chain_editor_instance = new chain_editor(this);
+    chain_editor_instance->exec();
 }
 
 

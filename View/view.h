@@ -10,11 +10,12 @@
 
 #include "ui_media_file_renamer.h"
 #include "../model_interface.h"
-
 #include "../Model/model_configfile.h"
 #include "../Model/model_remaming_queue.h"
 #include "../Model/model_renaming_engine_counter.h"
 #include "../Model/model_renaming_engine_textbody.h"
+
+
 
 class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer {
     QApplication * p_QApplication;
@@ -63,6 +64,8 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void numberingSuffixGroupToggled(bool state);
 
         void menuExit(bool newValue);
+        void menuChainEditor(bool newValue);
+
         void loadPreviews(Qt::CheckState state);
         void redoTableColumnNames();
 
