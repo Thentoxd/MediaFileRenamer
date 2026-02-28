@@ -93,6 +93,14 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
 
     filetypes_can_only_edit_filename = json_data_from_file["filetypes_can_only_edit_filename"].get<std::vector<string>>();
     SPDLOG_INFO("Loaded filetypes_can_only_edit_filename from config file");
+
+    vector<EngineTypes> renaming_chain = json_data_from_file["renaming_chain"];
+    SPDLOG_INFO("Loaded last renaming chain from config file");
+    if (renaming_chain.empty()) {
+        SPDLOG_CRITICAL("Renaming chain from config file is empty");
+        assert(0);
+    }
+    renaming_chain_parsed = renaming_chain;
 }
 
 
@@ -171,4 +179,24 @@ vector<std::string> ModelConfigfile::getFileTypesFilenameOnlyProcessed() {
 vector<std::string> ModelConfigfile::getDateFormatsParsed() {
     SPDLOG_INFO("Model::getDateFormatParsed");
     return date_formats_parsed;
+}
+
+
+vector<ModelConfigfile::EngineTypes> ModelConfigfile::getSavedEngineChain() {
+    SPDLOG_INFO("Model::getSavedEngineChain");
+    return renaming_chain_parsed;
+}
+
+
+
+void ModelConfigfile::updateSavedEngineChain(vector<EngineTypes>) {
+    SPDLOG_INFO("Model::updateSavedEngineChain");
+    assert(0);
+}
+
+
+
+void ModelConfigfile::restoreSavedEngineChain() {
+    SPDLOG_INFO("Model::restoreSavedEngineChain");
+    assert(0);
 }

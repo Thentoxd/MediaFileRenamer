@@ -21,8 +21,6 @@
 class ModelRemamingQueue {
 private:
 
-    int mode; // This is a first default chain. A date-seperator-text-seperator-number" filename
-
     vector<ModelRenamingEngine *> renaming_engine;
 
 public:
@@ -30,8 +28,9 @@ public:
     ModelRemamingQueue();
     ~ModelRemamingQueue();
 
-    void init(int mode, ModelRenamingEngineDate * p_ModelRenamingEngineDate, ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody, ModelRenamingEngineCounter * p_ModelRenamingEngineCounter);
-    void clear();
+    void appendEngine(ModelRenamingEngine * engine);
+    void clearEngines();
+    void deleteAllEngines();
 
     pair<string, string> executeQueue(const pair<string, string>& input_parameter, vector<string> separators);
 

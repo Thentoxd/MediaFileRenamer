@@ -12,22 +12,10 @@ using json = nlohmann::json;
 
 class ModelConfigfile {
 
-    protected:
+public:
 
-    json json_data_from_file;
-
-    string current_working_directory;
-    string config_file_name;
-    vector<string> file_history;
-
-    // file_types_processed is the list of file types we SHOULD be able to edit metadata of
-    vector<string> file_types_processed;
-    // filetypes_can_only_edit_filename is a list of file types we can't edit metadata, but allow filename editing features
-    vector<string> filetypes_can_only_edit_filename;
-
-    vector<string> date_formats_parsed;
-
-    public:
+    // The
+    enum EngineTypes {DateEngine, SeperatorEngine, FilenameBodyEngine, NumberingEngine};
 
     void loadConfigFile(const string config_file_name_param);
     void saveConfigFile();
@@ -47,6 +35,26 @@ class ModelConfigfile {
 
     string getCurrentWorkingDirectory();
 
+    vector<EngineTypes> getSavedEngineChain();
+    void updateSavedEngineChain(vector<EngineTypes>);
+    void restoreSavedEngineChain();
+
+protected:
+
+    json json_data_from_file;
+
+    string current_working_directory;
+    string config_file_name;
+    vector<string> file_history;
+
+    // file_types_processed is the list of file types we SHOULD be able to edit metadata of
+    vector<string> file_types_processed;
+    // filetypes_can_only_edit_filename is a list of file types we can't edit metadata, but allow filename editing features
+    vector<string> filetypes_can_only_edit_filename;
+
+    vector<string> date_formats_parsed;
+
+    vector<EngineTypes> renaming_chain_parsed;
 };
 
 #endif //MEDIAFILERENAMER_MODEL_CONFIGFILE_H

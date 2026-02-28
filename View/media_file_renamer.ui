@@ -170,7 +170,7 @@
          </sizepolicy>
         </property>
         <property name="title">
-         <string>Basic Template A</string>
+         <string> Renaming Chain </string>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>

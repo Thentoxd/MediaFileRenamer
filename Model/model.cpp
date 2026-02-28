@@ -11,6 +11,7 @@
 #include <qstring.h>
 
 
+#include "model_renaming_engine_seperator.h"
 #include "exiv2/exiv2.hpp"
 
 using namespace std;
@@ -27,11 +28,17 @@ void Model::initialise() {
 
     p_ModelConfigfile = new ModelConfigfile();
     p_ModelRemamingQueue = new ModelRemamingQueue;
-    p_ModelRenamingEngineDate = new ModelRenamingEngineDate;
-    p_ModelRenamingEngineTextBody = new ModelRenamingEngineTextBody;
-    p_ModelRenamingEngineCounter = new ModelRenamingEngineCounter;
 
-    p_ModelRenamingEngineDate->setFormats(p_ModelConfigfile->getDateFormatsParsed());
+    // In the first version of this program we hardcoded the sequence of renaming components
+    // We now allow dynamic chains, so first read the last chain from the config file and
+    // create the renaming queue
+
+    // p_ModelRenamingEngineDate = new ModelRenamingEngineDate;
+    // p_ModelRenamingEngineTextBody = new ModelRenamingEngineTextBody;
+    // p_ModelRenamingEngineCounter = new ModelRenamingEngineCounter;
+
+    // We should now only call this on instances of ModelRenamingEngineDate
+    // p_ModelRenamingEngineDate->setFormats(p_ModelConfigfile->getDateFormatsParsed());
 
     SPDLOG_INFO("Model::initialise");
 
@@ -39,9 +46,44 @@ void Model::initialise() {
     this -> setCurrentWorkingDirectory(p_ModelConfigfile -> getCurrentWorkingDirectory());
     auto date_formats_parsed = p_ModelConfigfile -> getDateFormatsParsed();
 
-    p_ModelRenamingEngineDate -> setFormats(date_formats_parsed);
+    auto renaming_chain = p_ModelConfigfile -> getSavedEngineChain();
+    SPDLOG_INFO("Loaded renaming chain saved in the config file");
 
-    p_ModelRemamingQueue -> init(0, p_ModelRenamingEngineDate, p_ModelRenamingEngineTextBody, p_ModelRenamingEngineCounter);
+    // Let's iterate down the renaming_chain, creating instances of engines and appending those to the queue
+    for (ModelConfigfile::EngineTypes eachEngineType: renaming_chain) {
+        // Create an instance of EngineType and append to the p_ModelRemamingQueue
+        switch(eachEngineType) {
+            case ModelConfigfile::EngineTypes::DateEngine: {
+                SPDLOG_INFO("Appending a date renaming engine to the renaming queue");
+                auto * p_newRenamingDataEngine = new ModelRenamingEngineDate();
+                p_newRenamingDataEngine -> setFormats(date_formats_parsed);
+                p_ModelRemamingQueue -> appendEngine(p_newRenamingDataEngine);
+                break;
+            }
+
+            case ModelConfigfile::EngineTypes::SeperatorEngine: {
+                SPDLOG_INFO("Appending a seperator renaming engine to the renaming queue");
+                auto * newRenamingSeperatorEngine = new ModelRenamingEngineSeperator();
+                // newEngine -> setFormats(date_formats_parsed);
+                p_ModelRemamingQueue -> appendEngine(newRenamingSeperatorEngine);
+                break;
+            }
+
+            case ModelConfigfile::EngineTypes::FilenameBodyEngine: {
+                SPDLOG_INFO("Appending a filename body renaming engine to the renaming queue");
+                auto * p_newRenamingFilename = new ModelRenamingEngineTextBody();
+                p_ModelRemamingQueue -> appendEngine(p_newRenamingFilename);
+                break;
+            }
+
+            case ModelConfigfile::EngineTypes::NumberingEngine: {
+                SPDLOG_INFO("Appending a numbering renaming engine to the renaming queue");
+                auto * p_newRenamingNumbering = new ModelRenamingEngineCounter();
+                p_ModelRemamingQueue -> appendEngine(p_newRenamingNumbering);
+                break;
+            }
+        }
+    }
 }
 
 
@@ -213,7 +255,7 @@ vector<string> Model::getFolderHistory() {
 
 
 void Model::clearRenamingChain() {
-    p_ModelRemamingQueue -> clear();
+    p_ModelRemamingQueue -> clearEngines();
 }
 
 

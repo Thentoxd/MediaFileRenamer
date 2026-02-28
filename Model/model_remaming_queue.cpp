@@ -12,26 +12,32 @@ ModelRemamingQueue::ModelRemamingQueue() {
     SPDLOG_INFO("ModelRemamingQueue::ModelRemamingQueue");
 }
 
+
 ModelRemamingQueue::~ModelRemamingQueue() {
     SPDLOG_INFO("ModelRemamingQueue::~ModelRemamingQueue");
 
 }
 
-void ModelRemamingQueue::init(int mode, ModelRenamingEngineDate * p_ModelRenamingEngineDate, ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody, ModelRenamingEngineCounter * p_ModelRenamingEngineCounter) {
-    SPDLOG_INFO("ModelRemamingQueue::init");
 
-    renaming_engine.push_back(p_ModelRenamingEngineDate);
-    renaming_engine.push_back(p_ModelRenamingEngineTextBody);
-    renaming_engine.push_back(p_ModelRenamingEngineCounter);
+void ModelRemamingQueue::appendEngine(ModelRenamingEngine * engine) {
+    SPDLOG_INFO("ModelRemamingQueue::appendEngine");
+    renaming_engine.push_back(engine);
 }
 
-void ModelRemamingQueue::clear() {
-    SPDLOG_INFO("ModelRemamingQueue::clear");
+
+void ModelRemamingQueue::clearEngines() {
+    SPDLOG_INFO("ModelRemamingQueue::clearEngines");
 
     for (auto eachEngine : renaming_engine)
     {
         eachEngine -> clear();
     }
+}
+
+
+void ModelRemamingQueue::deleteAllEngines() {
+    SPDLOG_INFO("ModelRemamingQueue::deleteAllEngines");
+    assert(0);
 }
 
 

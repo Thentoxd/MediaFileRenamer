@@ -71,6 +71,8 @@ add_executable(MediaFileRenamer main.cpp
         Model/model_renaming_engine.h
         View/chain_editor.h
         View/chain_editor.cpp
+        Model/model_renaming_engine_seperator.h
+        Model/model_renaming_engine_seperator.cpp
 )
 
 target_link_libraries(MediaFileRenamer
