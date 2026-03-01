@@ -25,6 +25,8 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
     bool loadPreviewsFlag = false;
     int columnOffset = 0;
 
+    vector<EngineTypes> currentRenamingChain;
+
     void updateTable();
     void setYearMonthDayButtonsEnabled(bool newValue);
 
@@ -70,7 +72,7 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void redoTableColumnNames();
 
         void seperatorAEntered();
-    void seperatorBEntered();
+        void seperatorBEntered();
 };
 
 

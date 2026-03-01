@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 
+#include "../main.h"  // To bring in the EngineTypes enum
+
 using namespace std;
 
 class FileEntryInterface {
@@ -46,25 +48,23 @@ public:
     // This function is handled by an aggregate class in the Model
     virtual vector<string> getFolderHistory() = 0;
 
-    virtual void setRenamingEngineDateSetYear(string newText) = 0;
-    virtual void setRenamingEngineDateSetMonth(string newText) = 0;
-    virtual void setRenamingEngineDateSetDay(string newText) = 0;
+    // We use this to get the saved/current renaming chain - we can then build to bottom of the
+    // main window. We default to a 0,1,2,1,3 chain. Date/Seperator/FilenameBody/Seperator/Counter
+    virtual vector<EngineTypes> getSavedEngineChain() = 0;
 
-    virtual void setRenamingEngineDateTryExtractDate(bool newValue) = 0;
-    virtual void setRenamingEngineDateSetOriginalDateTaken(bool newValue) = 0;
-    virtual void setRenamingEngineDateUseOriginalDateTaken(bool newValue) = 0;
+    virtual void setRenamingEngineDateSetYear(int instanceNumber, string newText) = 0;
+    virtual void setRenamingEngineDateSetMonth(int instanceNumber, string newText) = 0;
+    virtual void setRenamingEngineDateSetDay(int instanceNumber, string newText) = 0;
+    virtual void setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) = 0;
+    virtual void setRenamingEngineDateSetOriginalDateTaken(int instanceNumber, bool newValue) = 0;
+    virtual void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) = 0;
 
-    virtual void setRenamingEngineTextbody(string newText) = 0;
+    virtual void setRenamingEngineTextbody(int instanceNumber, string newText) = 0;
 
-    virtual void setEngineDatePrefix(bool state) = 0;
-    virtual void setEngineText(bool state) = 0;
-    virtual void setEngineCounterSuffix(bool state) = 0;
+    virtual void setCounterStart(int instanceNumber, int newValue) = 0;
+    virtual void setCounterPadding(int instanceNumber, int newValue) = 0;
 
-    virtual void setCounterStart(int newValue) = 0;
-    virtual void setCounterPadding(int newValue) = 0;
-
-    virtual void setSeperatorA(string newValue) = 0;
-    virtual void setSeperatorB(string newValue) = 0;
+    virtual void setSeperator(int instanceNumber, string newValue) = 0;
 
     virtual void exitApplication() = 0;
 

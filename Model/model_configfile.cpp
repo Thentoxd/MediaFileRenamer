@@ -182,7 +182,7 @@ vector<std::string> ModelConfigfile::getDateFormatsParsed() {
 }
 
 
-vector<ModelConfigfile::EngineTypes> ModelConfigfile::getSavedEngineChain() {
+vector<EngineTypes> ModelConfigfile::getSavedEngineChain() {
     SPDLOG_INFO("Model::getSavedEngineChain");
     return renaming_chain_parsed;
 }

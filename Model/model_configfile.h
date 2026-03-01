@@ -5,6 +5,8 @@
 #ifndef MEDIAFILERENAMER_MODEL_CONFIGFILE_H
 #define MEDIAFILERENAMER_MODEL_CONFIGFILE_H
 
+#include "../main.h"
+
 using namespace std;
 
 #include <nlohmann/json.hpp>
@@ -15,7 +17,6 @@ class ModelConfigfile {
 public:
 
     // The
-    enum EngineTypes {DateEngine, SeperatorEngine, FilenameBodyEngine, NumberingEngine};
 
     void loadConfigFile(const string config_file_name_param);
     void saveConfigFile();

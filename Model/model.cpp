@@ -50,10 +50,10 @@ void Model::initialise() {
     SPDLOG_INFO("Loaded renaming chain saved in the config file");
 
     // Let's iterate down the renaming_chain, creating instances of engines and appending those to the queue
-    for (ModelConfigfile::EngineTypes eachEngineType: renaming_chain) {
+    for (EngineTypes eachEngineType: renaming_chain) {
         // Create an instance of EngineType and append to the p_ModelRemamingQueue
         switch(eachEngineType) {
-            case ModelConfigfile::EngineTypes::DateEngine: {
+            case EngineTypes::DateEngine: {
                 SPDLOG_INFO("Appending a date renaming engine to the renaming queue");
                 auto * p_newRenamingDataEngine = new ModelRenamingEngineDate();
                 p_newRenamingDataEngine -> setFormats(date_formats_parsed);
@@ -61,7 +61,7 @@ void Model::initialise() {
                 break;
             }
 
-            case ModelConfigfile::EngineTypes::SeperatorEngine: {
+            case EngineTypes::SeperatorEngine: {
                 SPDLOG_INFO("Appending a seperator renaming engine to the renaming queue");
                 auto * newRenamingSeperatorEngine = new ModelRenamingEngineSeperator();
                 // newEngine -> setFormats(date_formats_parsed);
@@ -69,14 +69,14 @@ void Model::initialise() {
                 break;
             }
 
-            case ModelConfigfile::EngineTypes::FilenameBodyEngine: {
+            case EngineTypes::FilenameBodyEngine: {
                 SPDLOG_INFO("Appending a filename body renaming engine to the renaming queue");
                 auto * p_newRenamingFilename = new ModelRenamingEngineTextBody();
                 p_ModelRemamingQueue -> appendEngine(p_newRenamingFilename);
                 break;
             }
 
-            case ModelConfigfile::EngineTypes::NumberingEngine: {
+            case EngineTypes::NumberingEngine: {
                 SPDLOG_INFO("Appending a numbering renaming engine to the renaming queue");
                 auto * p_newRenamingNumbering = new ModelRenamingEngineCounter();
                 p_ModelRemamingQueue -> appendEngine(p_newRenamingNumbering);
@@ -176,22 +176,12 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
     SPDLOG_INFO("Model::setCurrentWorkingDirectory. New model built");
 }
 
-void Model::setEngineDatePrefix(bool state) {
-    p_ModelRenamingEngineDate->setActive(state);
-}
-
-void Model::setEngineText(bool state) {
-    p_ModelRenamingEngineTextBody->setActive(state);
-}
-
-void Model::setEngineCounterSuffix(bool state) {
-    p_ModelRenamingEngineCounter->setActive(state);
-}
 
 void Model::renameEXIFFile(FileEntry* newFile) {
     rename((getCurrentWorkingDirectory() + "/" + newFile->getCurrentFileName()).c_str(), (getCurrentWorkingDirectory() + "/" + newFile->getNewFileName()).c_str());
     newFile->setFileName(newFile->getNewFileName());
 }
+
 
 void Model::changeEXIFDateTakenOriginal(FileEntry* file) {
     try {
@@ -215,9 +205,11 @@ void Model::changeEXIFDateTakenOriginal(FileEntry* file) {
     }
 }
 
+
 void Model::setDateFormat(string format) {
     dateFormat = format;
 }
+
 
 string Model::getDateFormat() {
     return dateFormat;
@@ -328,69 +320,63 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
 }
 
 
-void Model::setCounterStart(int newValue) {
+void Model::setCounterStart(int instanceNumber, int newValue) {
     SPDLOG_INFO("Model::setCounterStart");
     p_ModelRenamingEngineCounter -> setCounter(newValue);
 }
 
 
-void Model::setCounterPadding(int newValue) {
+void Model::setCounterPadding(int instanceNumber, int newValue) {
     SPDLOG_INFO("Model::setCounterPadding");
     p_ModelRenamingEngineCounter -> setPadding(newValue);
 }
 
 
-void Model::setRenamingEngineTextbody(string newText) {
+void Model::setRenamingEngineTextbody(int instanceNumber, string newText) {
     SPDLOG_INFO("Model::setRenamingEngineTextbody");
     p_ModelRenamingEngineTextBody -> setTextBody(newText);
 }
 
 
-void Model::setRenamingEngineDateSetYear(string newText) {
+void Model::setRenamingEngineDateSetYear(int instanceNumber, string newText) {
     SPDLOG_INFO("Model::setRenamingEngineDateSetYear");
     p_ModelRenamingEngineDate -> setRenamingEngineDateSetYear(newText);
 }
 
 
-void Model::setRenamingEngineDateSetMonth(string newText) {
+void Model::setRenamingEngineDateSetMonth(int instanceNumber, string newText) {
     SPDLOG_INFO("Model::setRenamingEngineDateSetMonth");
     p_ModelRenamingEngineDate -> setRenamingEngineDateSetMonth(newText);
 }
 
 
-void Model::setRenamingEngineDateSetDay(string newText) {
+void Model::setRenamingEngineDateSetDay(int instanceNumber, string newText) {
     SPDLOG_INFO("Model::setRenamingEngineDateSetDay");
     p_ModelRenamingEngineDate -> setRenamingEngineDateSetDay(newText);
 }
 
 
-void Model::setRenamingEngineDateTryExtractDate(bool newValue) {
+void Model::setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) {
     SPDLOG_INFO("Model::setRenamingEngineDateTryExtractDate");
     p_ModelRenamingEngineDate -> setRenamingEngineDateTryExtractDate(newValue);
 }
 
 
-void Model::setRenamingEngineDateSetOriginalDateTaken(bool newValue) {
+void Model::setRenamingEngineDateSetOriginalDateTaken(int instanceNumber, bool newValue) {
     SPDLOG_INFO("Model::setRenamingEngineDateSetOriginalDateTaken");
     p_ModelRenamingEngineDate -> setRenamingEngineDateSetOriginalDateTaken(newValue);
 }
 
 
-void Model::setRenamingEngineDateUseOriginalDateTaken(bool newValue) {
+void Model::setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) {
     SPDLOG_INFO("Model::setRenamingEngineDateUseOriginalDateTaken");
     p_ModelRenamingEngineDate -> setRenamingEngineDateUseOriginalDateTaken(newValue);
 }
 
 
-void Model::setSeperatorA(string newValue) {
+void Model::setSeperator(int instanceNumber, string newValue) {
     SPDLOG_INFO("Model::setSeperatorA. Set separatorA to {}", newValue);
     separatorA = newValue;
-}
-
-
-void Model::setSeperatorB(string newValue) {
-    SPDLOG_INFO("Model::setSeperatorB. Set separatorB to {}", newValue);
-    separatorB = newValue;
 }
 
 
@@ -398,6 +384,12 @@ void Model::exitApplication() {
     SPDLOG_INFO("Model::exitApplication");
 
     // Can we throw an exit exception here?
+}
+
+
+vector<EngineTypes> Model::getSavedEngineChain() {
+    SPDLOG_INFO("Model::getSavedEngineChain");
+    return p_ModelConfigfile ->getSavedEngineChain();
 }
 
 

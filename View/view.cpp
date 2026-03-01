@@ -14,6 +14,8 @@
 #include "../Model/model.h"
 
 #include "chain_editor.h"
+#include "dateRename.h"
+
 
 mediaFileRenamerMainView::mediaFileRenamerMainView(ModelInterface * modelParam) {
     SPDLOG_INFO("Initialising View ....");
@@ -23,6 +25,7 @@ mediaFileRenamerMainView::mediaFileRenamerMainView(ModelInterface * modelParam) 
     this -> setupUi(this);
     this -> show();
 }
+
 
 void mediaFileRenamerMainView::reload_window() {
     QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
@@ -38,6 +41,7 @@ void mediaFileRenamerMainView::reload_window() {
 
     this -> redoTableColumnNames();
 }
+
 
 void mediaFileRenamerMainView::create_window() {
     SPDLOG_INFO("Creating main window ....");
@@ -55,215 +59,47 @@ void mediaFileRenamerMainView::create_window() {
 
     this -> redoTableColumnNames();
 
-
-
     connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
     connect(this -> folderComboBox, &QComboBox::currentIndexChanged, this, &mediaFileRenamerMainView::selectFolderComboBox);
-    connect(this -> use_DateTaken_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setUseDateTakenButtonClicked);
-    connect(this -> set_DateTaken_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setDateTakenOriginalButtonClicked);
-    connect(this -> filenamebody_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setFilenameBody);
-    connect(this -> numSuffixStartSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &mediaFileRenamerMainView::setCounterStart);
-    connect(this -> numSuffixPadSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &mediaFileRenamerMainView::setCounterPadding);
     connect(this -> renameFilesButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::renameFilesButtonClicked);
     connect(this -> resetToDefaultsButton, &QPushButton::clicked,  this, &mediaFileRenamerMainView::resetToDefaultButtonClicked);
     connect(tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &mediaFileRenamerMainView::onSelectedRowsChange);
-
-    connect(this -> attempt_findDate_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setDateTryExtractDateButtonClicked);
-    connect(this -> year_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setYear);
-    connect(this -> month_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setMonth);
-    connect(this -> day_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setDay);
-
     connect(this -> loadPreviews_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::loadPreviews);
-
-    // connect(this -> useNumberingSuffix, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::useNumberingSuffixClicked);
-
-    connect(this -> seperatorA_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorAEntered);
-    connect(this -> seperatorB_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorBEntered);
-    connect(this->dateFormat, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::setDateFormat);
-
-
-    connect(this -> datePrefixGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::datePrefixGroupToggled);
-    connect(this -> firstSeperatorGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::firstSeperatorGroupToggled);
-    connect(this -> fileNameBodyGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::fileNameBodyGroupToggled);
-    connect(this -> secondSeperatorGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::secondSeperatorGroupToggled);
-    connect(this -> numberingSuffixGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::numberingSuffixGroupToggled);
-
 
     // Menu signal
     // connect actionExit QAction::triggered   (bool checked = false)
     connect(this -> actionExit, &QAction::triggered, this, &mediaFileRenamerMainView::menuExit);
     connect(this -> actionChain_Editor, &QAction::triggered, this, &mediaFileRenamerMainView::menuChainEditor);
-}
-
-void mediaFileRenamerMainView::datePrefixGroupToggled(bool state) {
-    SPDLOG_INFO("mediaFileRenamerMainView::datePrefixGroupToggled");
-    p_model->setEngineDatePrefix(state);
-    onSelectedRowsChange();
-}
 
 
-void mediaFileRenamerMainView::fileNameBodyGroupToggled(bool state) {
-    SPDLOG_INFO("mediaFileRenamerMainView::fileNameBodyGroupToggled");
-    p_model->setEngineText(state);
-    onSelectedRowsChange();
-}
+    currentRenamingChain = p_model -> getSavedEngineChain();
+
+    auto date1 = new dateRename();
+    date1 -> connectSlots(this);
+
+    // These slots were for the old model where the sequence of renaming "parts" was fixed in the UI
+    // This meant we can hard-code slots into one running instance of the mediaFileRenamerMainView class
 
 
-void mediaFileRenamerMainView::numberingSuffixGroupToggled(bool state) {
-    SPDLOG_INFO("mediaFileRenamerMainView::numberingSuffixGroupToggled");
-    p_model->setEngineCounterSuffix(state);
-    onSelectedRowsChange();
-}
 
 
-void mediaFileRenamerMainView::firstSeperatorGroupToggled(bool state) {
-    SPDLOG_INFO("mediaFileRenamerMainView::firstSeperatorGroupToggled");
-
-    if (state == false) {
-        p_model -> setSeperatorA("");
-    }
-    else {
-        QString separator = seperatorB_lineEdit -> text();
-        string seperatorA = separator.toStdString();
-        SPDLOG_INFO("String entered: {}", seperatorA);
-        p_model -> setSeperatorB(seperatorA);
-    }
-    onSelectedRowsChange();
-}
+    // connect(this -> filenamebody_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setFilenameBody);
 
 
-void mediaFileRenamerMainView::secondSeperatorGroupToggled(bool state) {
-    SPDLOG_INFO("mediaFileRenamerMainView::secondSeperatorGroupToggled");
-    if (state == false) {
-        p_model -> setSeperatorB("");
-    }
-    else {
-        QString separator = seperatorB_lineEdit -> text();
-        string seperatorB = separator.toStdString();
-        SPDLOG_INFO("String entered: {}", seperatorB);
-        p_model -> setSeperatorB(seperatorB);
-    }
-    onSelectedRowsChange();
-    onSelectedRowsChange();
-}
+    // connect(this -> numSuffixStartSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &mediaFileRenamerMainView::setCounterStart);
+    // connect(this -> numSuffixPadSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &mediaFileRenamerMainView::setCounterPadding);
 
+    // // connect(this -> useNumberingSuffix, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::useNumberingSuffixClicked);
+    //
+    // connect(this -> seperatorA_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorAEntered);
+    // connect(this -> seperatorB_lineEdit, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::seperatorBEntered);
+    // connect(this->dateFormat, &QLineEdit::textEdited, this, &mediaFileRenamerMainView::setDateFormat);
+    //
 
-void mediaFileRenamerMainView::selectFolderButtonClicked() {
-    SPDLOG_DEBUG("mediaFileRenamerMainView::selectFolderButtonClicked");
-
-    QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
-                                            qstr,
-                                            QFileDialog::ShowDirsOnly
-                                            | QFileDialog::DontResolveSymlinks);
-
-    if(dir == nullptr) {
-        SPDLOG_INFO("No directory selected!");
-    } else {
-
-        string newCurrentWorkingDirectory = dir.toStdString();
-        p_model -> setCurrentWorkingDirectory(newCurrentWorkingDirectory);
-
-        int entryCount = p_model -> getEntryCount();
-        SPDLOG_INFO("Number of files in the model: {}", entryCount);
-        this -> updateFolderComboBox();
-    }
-}
-
-
-void mediaFileRenamerMainView::setYearMonthDayButtonsEnabled(bool newValue) {
-    year_label->setEnabled(newValue);
-    month_label->setEnabled(newValue);
-    day_label->setEnabled(newValue);
-
-    year_lineEdit ->setEnabled(newValue);
-    month_lineEdit ->setEnabled(newValue);
-    day_lineEdit ->setEnabled(newValue);
-}
-
-void mediaFileRenamerMainView::setDateTryExtractDateButtonClicked(Qt::CheckState newState) {
-    SPDLOG_INFO("mediaFileRenamerMainView::setDateTryExtractDate");
-    if (newState == Qt::Checked) {
-        this -> setYearMonthDayButtonsEnabled(false);
-
-        if(use_DateTaken_checkBox->isChecked()) {
-            use_DateTaken_checkBox -> setChecked(false);
-        }
-        p_model -> setRenamingEngineDateTryExtractDate(true);
-    }
-    else {
-        this -> setYearMonthDayButtonsEnabled(true);
-        p_model -> setRenamingEngineDateTryExtractDate(false);
-    }
-    onSelectedRowsChange();
-}
-
-void mediaFileRenamerMainView::setUseDateTakenButtonClicked(Qt::CheckState newState) {
-    SPDLOG_DEBUG("Use Date Taken (Original)");
-    if (newState == Qt::Checked) {
-        p_model -> setRenamingEngineDateUseOriginalDateTaken(true);
-        attempt_findDate_checkBox->setChecked(false);
-        p_model -> setRenamingEngineDateTryExtractDate(false);
-
-        set_DateTaken_checkBox->setChecked(false);
-        p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
-    }
-    else {
-        p_model -> setRenamingEngineDateUseOriginalDateTaken(false);
-
-        attempt_findDate_checkBox->setChecked(true);
-        p_model -> setRenamingEngineDateTryExtractDate(true);
-    }
-    onSelectedRowsChange();
-}
-
-
-void mediaFileRenamerMainView::setDateTakenOriginalButtonClicked(Qt::CheckState newState) {
-    SPDLOG_DEBUG("Set Date Taken (Original)");
-    if (newState == Qt::Checked) {
-        // this -> setYearMonthDayButtonsEnabled(false);
-        use_DateTaken_checkBox -> setChecked(false);
-        // attempt_findDate_checkBox -> setChecked(false);
-
-        p_model -> setRenamingEngineDateSetOriginalDateTaken(true);
-        // p_model -> setRenamingEngineDateTryExtractDate(false);
-    }
-    else {
-        p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
-    }
-    onSelectedRowsChange();
-}
-
-
-void mediaFileRenamerMainView::selectFolderComboBox(int index) {
-    SPDLOG_INFO("mediaFileRenamerMainView::selectFolderComboBox");
-    SPDLOG_INFO("folder combo box index changed to {}", index);
-    if (index != -1) {
-        vector<string> folders = p_model -> getFolderHistory();
-
-        // Have we entered a new dirrectory?
-        if (index > folders.size() - 1) {
-            string newFolder = (folderComboBox -> currentText()).toStdString();
-            SPDLOG_INFO("New folder entered: {}", newFolder);
-            p_model -> setCurrentWorkingDirectory(newFolder);
-        }
-        else {
-            p_model -> setCurrentWorkingDirectory(folders[index]);
-        }
-
-        this -> updateTable();
-    }
-}
-
-
-void mediaFileRenamerMainView::updateFolderComboBox() {
-    SPDLOG_INFO("mediaFileRenamerMainView::updateFolderComboBox");
-    vector<string> folders = p_model -> getFolderHistory();
-
-    folderComboBox -> clear();
-
-    for(const string folder : folders)
-        folderComboBox -> addItem(QString::fromStdString(folder));
+    // connect(this -> firstSeperatorGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::firstSeperatorGroupToggled);
+    // connect(this -> fileNameBodyGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::fileNameBodyGroupToggled);
+    // connect(this -> secondSeperatorGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::secondSeperatorGroupToggled);
+    // connect(this -> numberingSuffixGroup, &QGroupBox::toggled, this, &mediaFileRenamerMainView::numberingSuffixGroupToggled);
 }
 
 
@@ -339,6 +175,81 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
         counter++;
     }
 }
+
+
+void mediaFileRenamerMainView::resetToDefaultButtonClicked() {
+    SPDLOG_INFO("mediaFileRenamerMainView::resetToDefaultButtonClicked");
+    reload_window();
+}
+
+
+void mediaFileRenamerMainView::loadPreviews(Qt::CheckState state) {
+    SPDLOG_INFO("mediaFileRenamerMainView::loadPreviews");
+    if (state == Qt::Checked) {
+        loadPreviewsFlag = true;
+        tableWidget->setColumnCount(5);
+        // Need to reset Column Names
+    }
+    else {
+        loadPreviewsFlag = false;
+        tableWidget->setColumnCount(4);
+    }
+    this -> redoTableColumnNames();
+    this -> updateTable();
+}
+
+
+void mediaFileRenamerMainView::renameFilesButtonClicked() {
+    SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
+    p_model->clearRenamingChain();
+    p_model->executeRenamingChain(getSelectedUniqueRows(), true, true);
+    reload_window();
+}
+
+
+void mediaFileRenamerMainView::selectFolderComboBox(int index) {
+    SPDLOG_INFO("mediaFileRenamerMainView::selectFolderComboBox");
+    SPDLOG_INFO("folder combo box index changed to {}", index);
+    if (index != -1) {
+        vector<string> folders = p_model -> getFolderHistory();
+
+        // Have we entered a new dirrectory?
+        if (index > folders.size() - 1) {
+            string newFolder = (folderComboBox -> currentText()).toStdString();
+            SPDLOG_INFO("New folder entered: {}", newFolder);
+            p_model -> setCurrentWorkingDirectory(newFolder);
+        }
+        else {
+            p_model -> setCurrentWorkingDirectory(folders[index]);
+        }
+
+        this -> updateTable();
+    }
+}
+
+
+void mediaFileRenamerMainView::selectFolderButtonClicked() {
+    SPDLOG_DEBUG("mediaFileRenamerMainView::selectFolderButtonClicked");
+
+    QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                            qstr,
+                                            QFileDialog::ShowDirsOnly
+                                            | QFileDialog::DontResolveSymlinks);
+
+    if(dir == nullptr) {
+        SPDLOG_INFO("No directory selected!");
+    } else {
+
+        string newCurrentWorkingDirectory = dir.toStdString();
+        p_model -> setCurrentWorkingDirectory(newCurrentWorkingDirectory);
+
+        int entryCount = p_model -> getEntryCount();
+        SPDLOG_INFO("Number of files in the model: {}", entryCount);
+        this -> updateFolderComboBox();
+    }
+}
+
 
 void mediaFileRenamerMainView::updateTable() {
     // Make a call onto the model to get the table data
@@ -431,17 +342,46 @@ void mediaFileRenamerMainView::updateTable() {
 
 }
 
-void mediaFileRenamerMainView::resetToDefaultButtonClicked() {
-    SPDLOG_INFO("mediaFileRenamerMainView::resetToDefaultButtonClicked");
-    reload_window();
+
+void mediaFileRenamerMainView::updateFolderComboBox() {
+    SPDLOG_INFO("mediaFileRenamerMainView::updateFolderComboBox");
+    vector<string> folders = p_model -> getFolderHistory();
+
+    folderComboBox -> clear();
+
+    for(const string folder : folders)
+        folderComboBox -> addItem(QString::fromStdString(folder));
 }
 
 
-void mediaFileRenamerMainView::setFilenameBody(const QString &text) {
-    SPDLOG_INFO("mediaFileRenamerMainView::setFilenameBody");
-    SPDLOG_INFO("Text entered: {}", text.toStdString());
-    p_model -> setRenamingEngineTextbody(text.toStdString());
-    onSelectedRowsChange();
+void mediaFileRenamerMainView::redoTableColumnNames() {
+    SPDLOG_INFO("mediaFileRenamerMainView::redoTableColumnNames");
+
+    QStringList m_TableHeader;
+    if (loadPreviewsFlag == true) {
+        m_TableHeader<< "Preview" << "Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
+        columnOffset = 1;
+    }
+    else {
+
+        m_TableHeader<<"Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
+        columnOffset = 0;
+    }
+    tableWidget->setHorizontalHeaderLabels(m_TableHeader);
+
+    if (loadPreviewsFlag == true) {
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(0, QHeaderView::ResizeToContents);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(1, QHeaderView::Stretch);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(2, QHeaderView::Stretch);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(3, QHeaderView::Stretch);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(4, QHeaderView::Stretch);
+    }
+    else {
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(0, QHeaderView::Stretch);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(1, QHeaderView::Stretch);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(2, QHeaderView::Stretch);
+        tableWidget -> horizontalHeader() -> setSectionResizeMode(3, QHeaderView::Stretch);
+    }
 }
 
 
@@ -459,12 +399,160 @@ vector<int> mediaFileRenamerMainView::getSelectedUniqueRows() {
 }
 
 
-void mediaFileRenamerMainView::renameFilesButtonClicked() {
-    SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
-    p_model->clearRenamingChain();
-    p_model->executeRenamingChain(getSelectedUniqueRows(), true, true);
-    reload_window();
+void mediaFileRenamerMainView::menuChainEditor(bool newValue) {
+    SPDLOG_INFO("mediaFileRenamerMainView::menuChainEditor");
+    auto chain_editor_instance = new chain_editor(this);
+    chain_editor_instance->exec();
 }
+
+
+void mediaFileRenamerMainView::menuExit(bool newValue) {
+    SPDLOG_INFO("mediaFileRenamerMainView::menuExit");
+    p_model -> exitApplication();
+}
+
+
+/*
+
+
+void mediaFileRenamerMainView::fileNameBodyGroupToggled(bool state) {
+    SPDLOG_INFO("mediaFileRenamerMainView::fileNameBodyGroupToggled");
+    p_model->setEngineText(int instanceNumber, state);
+    onSelectedRowsChange();
+}
+
+
+void mediaFileRenamerMainView::numberingSuffixGroupToggled(bool state) {
+    SPDLOG_INFO("mediaFileRenamerMainView::numberingSuffixGroupToggled");
+    p_model->setEngineCounterSuffix(int instanceNumber, state);
+    onSelectedRowsChange();
+}
+
+
+void mediaFileRenamerMainView::firstSeperatorGroupToggled(bool state) {
+    SPDLOG_INFO("mediaFileRenamerMainView::firstSeperatorGroupToggled");
+
+    if (state == false) {
+        p_model -> setSeperatorA("");
+    }
+    else {
+        QString separator = seperatorB_lineEdit -> text();
+        string seperatorA = separator.toStdString();
+        SPDLOG_INFO("String entered: {}", seperatorA);
+        p_model -> setSeperatorB(seperatorA);
+    }
+    onSelectedRowsChange();
+}
+
+
+void mediaFileRenamerMainView::secondSeperatorGroupToggled(bool state) {
+    SPDLOG_INFO("mediaFileRenamerMainView::secondSeperatorGroupToggled");
+    if (state == false) {
+        p_model -> setSeperatorB("");
+    }
+    else {
+        QString separator = seperatorB_lineEdit -> text();
+        string seperatorB = separator.toStdString();
+        SPDLOG_INFO("String entered: {}", seperatorB);
+        p_model -> setSeperatorB(seperatorB);
+    }
+    onSelectedRowsChange();
+    onSelectedRowsChange();
+}
+
+
+
+
+
+void mediaFileRenamerMainView::setYearMonthDayButtonsEnabled(bool newValue) {
+    year_label->setEnabled(newValue);
+    month_label->setEnabled(newValue);
+    day_label->setEnabled(newValue);
+
+    year_lineEdit ->setEnabled(newValue);
+    month_lineEdit ->setEnabled(newValue);
+    day_lineEdit ->setEnabled(newValue);
+}
+
+void mediaFileRenamerMainView::setDateTryExtractDateButtonClicked(Qt::CheckState newState) {
+    SPDLOG_INFO("mediaFileRenamerMainView::setDateTryExtractDate");
+    if (newState == Qt::Checked) {
+        this -> setYearMonthDayButtonsEnabled(false);
+
+        if(use_DateTaken_checkBox->isChecked()) {
+            use_DateTaken_checkBox -> setChecked(false);
+        }
+        p_model -> setRenamingEngineDateTryExtractDate(true);
+    }
+    else {
+        this -> setYearMonthDayButtonsEnabled(true);
+        p_model -> setRenamingEngineDateTryExtractDate(false);
+    }
+    onSelectedRowsChange();
+}
+
+void mediaFileRenamerMainView::setUseDateTakenButtonClicked(Qt::CheckState newState) {
+    SPDLOG_DEBUG("Use Date Taken (Original)");
+    if (newState == Qt::Checked) {
+        p_model -> setRenamingEngineDateUseOriginalDateTaken(true);
+        attempt_findDate_checkBox->setChecked(false);
+        p_model -> setRenamingEngineDateTryExtractDate(false);
+
+        set_DateTaken_checkBox->setChecked(false);
+        p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
+    }
+    else {
+        p_model -> setRenamingEngineDateUseOriginalDateTaken(false);
+
+        attempt_findDate_checkBox->setChecked(true);
+        p_model -> setRenamingEngineDateTryExtractDate(true);
+    }
+    onSelectedRowsChange();
+}
+
+
+void mediaFileRenamerMainView::setDateTakenOriginalButtonClicked(Qt::CheckState newState) {
+    SPDLOG_DEBUG("Set Date Taken (Original)");
+    if (newState == Qt::Checked) {
+        // this -> setYearMonthDayButtonsEnabled(false);
+        use_DateTaken_checkBox -> setChecked(false);
+        // attempt_findDate_checkBox -> setChecked(false);
+
+        p_model -> setRenamingEngineDateSetOriginalDateTaken(true);
+        // p_model -> setRenamingEngineDateTryExtractDate(false);
+    }
+    else {
+        p_model -> setRenamingEngineDateSetOriginalDateTaken(false);
+    }
+    onSelectedRowsChange();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void mediaFileRenamerMainView::setFilenameBody(const QString &text) {
+    SPDLOG_INFO("mediaFileRenamerMainView::setFilenameBody");
+    SPDLOG_INFO("Text entered: {}", text.toStdString());
+    p_model -> setRenamingEngineTextbody(text.toStdString());
+    onSelectedRowsChange();
+}
+
+
+
+
+
+
 
 
 void mediaFileRenamerMainView::setCounterStart(int newValue) {
@@ -514,64 +602,16 @@ void mediaFileRenamerMainView::setDay(const QString &text) {
 }
 
 
-void mediaFileRenamerMainView::menuExit(bool newValue) {
-    SPDLOG_INFO("mediaFileRenamerMainView::menuExit");
-    p_model -> exitApplication();
-}
 
 
-void mediaFileRenamerMainView::menuChainEditor(bool newValue) {
-    SPDLOG_INFO("mediaFileRenamerMainView::menuChainEditor");
-    auto chain_editor_instance = new chain_editor(this);
-    chain_editor_instance->exec();
-}
 
 
-void mediaFileRenamerMainView::loadPreviews(Qt::CheckState state) {
-    SPDLOG_INFO("mediaFileRenamerMainView::loadPreviews");
-    if (state == Qt::Checked) {
-        loadPreviewsFlag = true;
-        tableWidget->setColumnCount(5);
-        // Need to reset Column Names
-    }
-    else {
-        loadPreviewsFlag = false;
-        tableWidget->setColumnCount(4);
-    }
-    this -> redoTableColumnNames();
-    this -> updateTable();
-}
 
 
-void mediaFileRenamerMainView::redoTableColumnNames() {
-    SPDLOG_INFO("mediaFileRenamerMainView::redoTableColumnNames");
 
-    QStringList m_TableHeader;
-    if (loadPreviewsFlag == true) {
-        m_TableHeader<< "Preview" << "Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
-        columnOffset = 1;
-    }
-    else {
 
-        m_TableHeader<<"Filename"<<"New Filename"<<"Date Taken (Original)" <<"New Date Taken (Original)";
-        columnOffset = 0;
-    }
-    tableWidget->setHorizontalHeaderLabels(m_TableHeader);
 
-    if (loadPreviewsFlag == true) {
-        tableWidget -> horizontalHeader() -> setSectionResizeMode(0, QHeaderView::ResizeToContents);
-        tableWidget -> horizontalHeader() -> setSectionResizeMode(1, QHeaderView::Stretch);
-        tableWidget -> horizontalHeader() -> setSectionResizeMode(2, QHeaderView::Stretch);
-        tableWidget -> horizontalHeader() -> setSectionResizeMode(3, QHeaderView::Stretch);
-        tableWidget -> horizontalHeader() -> setSectionResizeMode(4, QHeaderView::Stretch);
-    }
-    else {
-        tableWidget -> horizontalHeader() -> setSectionResizeMode(0, QHeaderView::Stretch);
-        tableWidget -> horizontalHeader() -> setSectionResizeMode(1, QHeaderView::Stretch);
-        tableWidget -> horizontalHeader() -> setSectionResizeMode(2, QHeaderView::Stretch);
-        tableWidget -> horizontalHeader() -> setSectionResizeMode(3, QHeaderView::Stretch);
-    }
-}
+
 
 
 void mediaFileRenamerMainView::seperatorAEntered() {
@@ -591,7 +631,7 @@ void mediaFileRenamerMainView::seperatorBEntered() {
     SPDLOG_INFO("String entered: {}", seperatorB);
     p_model -> setSeperatorB(seperatorB);
     onSelectedRowsChange();
-}
+}*/
 
 
 int mediaFileRenamerMainView::displayWindow() {

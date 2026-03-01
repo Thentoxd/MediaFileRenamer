@@ -82,6 +82,9 @@ private:
 
     ModelConfigfile * p_ModelConfigfile;
     ModelRemamingQueue * p_ModelRemamingQueue;
+
+    // In the old model, we had just three renaming engines in a fixed formation in the queue
+
     ModelRenamingEngineDate * p_ModelRenamingEngineDate;
     ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody;
     ModelRenamingEngineCounter * p_ModelRenamingEngineCounter;
@@ -93,9 +96,7 @@ public:
     void renameEXIFFile(FileEntry* newFile);
     void changeEXIFDateTakenOriginal(FileEntry* file);
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
-    void setEngineDatePrefix(bool state) override;
-    void setEngineText(bool state) override;
-    void setEngineCounterSuffix(bool state) override;
+
     void reload() override ;
     void clear() override ;
     void resetToDefaultButtonClicked();
@@ -148,24 +149,25 @@ public:
 
     vector<string> getFolderHistory() override;
 
-    void setRenamingEngineTextbody(string newText) override;
+    void setRenamingEngineTextbody(int instanceNumber, string newText) override;
 
-    void setCounterStart(int newValue) override;
-    void setCounterPadding(int newValue) override;
+    void setCounterStart(int instanceNumber, int newValue) override;
+    void setCounterPadding(int instanceNumber, int newValue) override;
 
 
     void setDateFormat(string format);
     string getDateFormat();
-    void setRenamingEngineDateSetYear(string newText) override;
-    void setRenamingEngineDateSetMonth(string newText) override;
-    void setRenamingEngineDateSetDay(string newText) override;
+    void setRenamingEngineDateSetYear(int instanceNumber, string newText) override;
+    void setRenamingEngineDateSetMonth(int instanceNumber, string newText) override;
+    void setRenamingEngineDateSetDay(int instanceNumber, string newText) override;
 
-    void setRenamingEngineDateTryExtractDate(bool newValue) override;
-    void setRenamingEngineDateSetOriginalDateTaken(bool newValue) override;
-    void setRenamingEngineDateUseOriginalDateTaken(bool newValue) override;
+    void setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) override;
+    void setRenamingEngineDateSetOriginalDateTaken(int instanceNumber, bool newValue) override;
+    void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) override;
 
-    void setSeperatorA(string newValue) override;
-    void setSeperatorB(string newValue) override;
+    void setSeperator(int instanceNumber, string newValue) override;
+
+    vector<EngineTypes> getSavedEngineChain() override;
 
     void exitApplication() override;
 
