@@ -145,9 +145,9 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
         string currentDateTakenOriginal = input_parameter.second;
 
         SPDLOG_DEBUG("Current Create Date Taken (Original): {}", currentDateTakenOriginal);
-        if (currentDateTakenOriginal.empty()) {
-            newDateTakenOriginal = year + ":" + month + ":" + day + " 12:00:00";
-        }
+        //if (currentDateTakenOriginal.empty()) {
+        newDateTakenOriginal = year + ":" + month + ":" + day + " 12:00:00";
+        //}
     }
 
     return make_pair(return_string, newDateTakenOriginal);

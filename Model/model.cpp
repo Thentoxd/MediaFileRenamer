@@ -276,7 +276,7 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
 
                     SPDLOG_INFO("Renamed {}'s date time original to {}", currentFilename, returnPair.second);
                 } catch(Exiv2::Error& e) {
-                    SPDLOG_ERROR("Couldn't rename {}'s EXIF Current Date Taken Original");
+                    SPDLOG_ERROR("Couldn't rename {}'s EXIF Current Date Taken Original. Error from Exiv2: {}", currentFilename, e.what());
                 }
             }
         }
