@@ -90,9 +90,23 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
 
     file_types_processed = json_data_from_file["filetypes_parsed"].get<std::vector<string>>();
     SPDLOG_INFO("Loaded filetypes_parsed from config file");
+    if (file_types_processed.empty()) {
+        file_types_processed.push_back("jpg");
+        file_types_processed.push_back("JPG");
+        file_types_processed.push_back("jpeg");
+        file_types_processed.push_back("png");
+        json_data_from_file["filetypes_parsed"] = file_types_processed;
+        this->saveConfigFile();
+    }
 
     filetypes_can_only_edit_filename = json_data_from_file["filetypes_can_only_edit_filename"].get<std::vector<string>>();
     SPDLOG_INFO("Loaded filetypes_can_only_edit_filename from config file");
+    if (filetypes_can_only_edit_filename.empty()) {
+        filetypes_can_only_edit_filename.push_back("mp4");
+        filetypes_can_only_edit_filename.push_back("CR2");
+        json_data_from_file["filetypes_can_only_edit_filename"] = filetypes_can_only_edit_filename;
+        this->saveConfigFile();
+    }
 }
 
 

@@ -58,8 +58,8 @@ add_executable(MediaFileRenamer main.cpp
         View/media_file_renamer.ui
         View/chain_editor.ui
         media_file_renamer_exceptions.h
-        Model/model_configfile.cpp
         Model/model_configfile.h
+        Model/model_configfile.cpp
         Model/model_remaming_queue.cpp
         Model/model_remaming_queue.h
         Model/model_renaming_engine_date.cpp
