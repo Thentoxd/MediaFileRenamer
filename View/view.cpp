@@ -15,6 +15,8 @@
 
 #include "chain_editor.h"
 #include "dateRename.h"
+#include "separator.h"
+
 #include "CLI/App.hpp"
 
 
@@ -120,7 +122,10 @@ void mediaFileRenamerMainView::create_window() {
                 uiRenamingRootObjects.append(seperatorGroupBox);
                 renamingChainHorizontalLayout -> addWidget(seperatorGroupBox);
 
-
+                auto p_separator = new separator(p_model, seperatorLineEdit, this);
+                int separatorID = p_separator ->getID();
+                SPDLOG_INFO("Created separator instance with ID {}", separatorID);
+                p_separator -> connectSlots(seperatorGroupBox);
 
                 break;
             }
