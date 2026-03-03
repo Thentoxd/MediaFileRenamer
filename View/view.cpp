@@ -15,6 +15,7 @@
 
 #include "chain_editor.h"
 #include "dateRename.h"
+#include "CLI/App.hpp"
 
 
 mediaFileRenamerMainView::mediaFileRenamerMainView(ModelInterface * modelParam) {
@@ -74,13 +75,75 @@ void mediaFileRenamerMainView::create_window() {
 
     currentRenamingChain = p_model -> getSavedEngineChain();
 
+    // We need to iterate down the currentRenamingChain creating the widgets (followed by a horizontal spacer to soak up the space on the right
+    if (currentRenamingChain.size() == 0) {
+        SPDLOG_CRITICAL("UI told to build an empty renaming chain. That doesn't make sense. Exiting ....");
+        assert(0);
+    }
+
+    for(const EngineTypes eachEngine : currentRenamingChain) {
+
+        // Create the widgets for each engine, adding to the renamingChainHorizontalLayout widget
+        // We store the root widget for each engine in the uiRenamingRootObjects vector
+
+        switch (eachEngine)
+        {
+            case DateEngine: {
+                SPDLOG_INFO("Creating a Date engine widget");
+
+                // auto date1 = new dateRename();
+                // date1 -> connectSlots(this);
+
+                // auto date2 = new dateRename();
+                // date2 -> connectSlots(this);
+
+                break;
+            }
+            case SeperatorEngine: {
+                SPDLOG_INFO("Creating a Seperator engine widget");
+
+                // First create a QGroupBox
+                QGroupBox *seperatorGroupBox = new QGroupBox(this);
+                seperatorGroupBox -> setTitle("Seperator");
+                seperatorGroupBox -> setCheckable(TRUE);
+                seperatorGroupBox -> setChecked(TRUE);
+
+                QLineEdit *seperatorLineEdit = new QLineEdit(this);
+                seperatorLineEdit -> setFixedWidth(50);
+
+                QVBoxLayout *layout = new QVBoxLayout;
+                layout->addWidget(seperatorLineEdit);
+                seperatorGroupBox -> setLayout(layout);
+
+                uiRenamingRootObjects.append(seperatorGroupBox);
+                renamingChainHorizontalLayout -> addWidget(seperatorGroupBox);
+                break;
+            }
+            case FilenameBodyEngine: {
+                SPDLOG_INFO("Creating a FilenameBody engine widget");
+                break;
+            }
+            case NumberingEngine: {
+                SPDLOG_INFO("Creating a Numbering engine widget");
+                break;
+            }
+
+        }
+
+        // We add a final horizontal spacer at the end of the horizontal layout - just to make the spacing look OK
+
+    }
+
+
     // We need to add widgets to the renamingChainHorizontalLayout widget
+    // QLabel *test_label = new QLabel(this);
+    // test_label->setText("Random String");
+    // renamingChainHorizontalLayout -> addWidget(test_label);
+    //
+    // QLabel *test_label2 = new QLabel(this);
+    // test_label2->setText("Bob");
+    // renamingChainHorizontalLayout -> addWidget(test_label2);
 
-    auto date1 = new dateRename();
-    date1 -> connectSlots(this);
-
-    auto date2 = new dateRename();
-    date2 -> connectSlots(this);
 
     // These slots were for the old model where the sequence of renaming "parts" was fixed in the UI
     // This meant we can hard-code slots into one running instance of the mediaFileRenamerMainView class

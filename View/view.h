@@ -25,6 +25,8 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
     bool loadPreviewsFlag = false;
     int columnOffset = 0;
 
+    QVector<QWidget*> uiRenamingRootObjects;
+
     vector<EngineTypes> currentRenamingChain;
 
     void updateTable();
