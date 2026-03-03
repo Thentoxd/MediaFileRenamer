@@ -34,6 +34,13 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
         filetypes_can_only_edit_filename.push_back("CR2");
         json_data_from_file["filetypes_can_only_edit_filename"] = filetypes_can_only_edit_filename;
 
+        renaming_chain_parsed.push_back(DateEngine);
+        renaming_chain_parsed.push_back(SeperatorEngine);
+        renaming_chain_parsed.push_back(FilenameBodyEngine);
+        renaming_chain_parsed.push_back(SeperatorEngine);
+        renaming_chain_parsed.push_back(NumberingEngine);
+        json_data_from_file["renaming_chain"] = renaming_chain_parsed;
+
         this->saveConfigFile();
         return;
     }

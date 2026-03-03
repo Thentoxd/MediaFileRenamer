@@ -26,7 +26,7 @@ void dateRename::datePrefixGroupToggled(bool state) {
 
 void dateRename::connectSlots(mediaFileRenamerMainView * param_mediaFileRenamerMainView) {
     // These are the slots for the Date renaming widget
-    QObject::connect(param_mediaFileRenamerMainView -> datePrefixGroup, &QGroupBox::toggled, this, &dateRename::datePrefixGroupToggled);
+    // QObject::connect(param_mediaFileRenamerMainView -> datePrefixGroup, &QGroupBox::toggled, this, &dateRename::datePrefixGroupToggled);
     // connect(this -> use_DateTaken_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setUseDateTakenButtonClicked);
     // connect(this -> set_DateTaken_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setDateTakenOriginalButtonClicked);
     // connect(this -> attempt_findDate_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setDateTryExtractDateButtonClicked);

@@ -74,8 +74,13 @@ void mediaFileRenamerMainView::create_window() {
 
     currentRenamingChain = p_model -> getSavedEngineChain();
 
+    // We need to add widgets to the renamingChainHorizontalLayout widget
+
     auto date1 = new dateRename();
     date1 -> connectSlots(this);
+
+    auto date2 = new dateRename();
+    date2 -> connectSlots(this);
 
     // These slots were for the old model where the sequence of renaming "parts" was fixed in the UI
     // This meant we can hard-code slots into one running instance of the mediaFileRenamerMainView class
