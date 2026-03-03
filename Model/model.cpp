@@ -375,8 +375,8 @@ void Model::setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool n
 
 
 void Model::setSeperator(int instanceNumber, string newValue) {
-    SPDLOG_INFO("Model::setSeperatorA. Set separatorA to {}", newValue);
-    separatorA = newValue;
+    SPDLOG_INFO("Model::setSeperator. Set separator instance {} to {}", instanceNumber, newValue);
+    // separatorA = newValue;
 }
 
 
