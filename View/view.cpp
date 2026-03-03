@@ -99,14 +99,16 @@ void mediaFileRenamerMainView::create_window() {
 
                 break;
             }
+
             case SeperatorEngine: {
                 SPDLOG_INFO("Creating a Seperator engine widget");
 
                 // First create a QGroupBox
                 QGroupBox *seperatorGroupBox = new QGroupBox(this);
-                seperatorGroupBox -> setTitle("Seperator");
+                seperatorGroupBox -> setTitle("Separator");
                 seperatorGroupBox -> setCheckable(TRUE);
                 seperatorGroupBox -> setChecked(TRUE);
+                seperatorGroupBox -> setFixedWidth(80);
 
                 QLineEdit *seperatorLineEdit = new QLineEdit(this);
                 seperatorLineEdit -> setFixedWidth(50);
@@ -117,22 +119,27 @@ void mediaFileRenamerMainView::create_window() {
 
                 uiRenamingRootObjects.append(seperatorGroupBox);
                 renamingChainHorizontalLayout -> addWidget(seperatorGroupBox);
+
+
+
                 break;
             }
+
             case FilenameBodyEngine: {
                 SPDLOG_INFO("Creating a FilenameBody engine widget");
                 break;
             }
+
             case NumberingEngine: {
                 SPDLOG_INFO("Creating a Numbering engine widget");
                 break;
             }
 
         }
-
-        // We add a final horizontal spacer at the end of the horizontal layout - just to make the spacing look OK
-
     }
+    // We add a final horizontal spacer at the end of the horizontal layout - just to make the spacing look OK
+    QSpacerItem *horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Maximum);
+    renamingChainHorizontalLayout->addSpacerItem(horizontalSpacer);
 
 
     // We need to add widgets to the renamingChainHorizontalLayout widget
