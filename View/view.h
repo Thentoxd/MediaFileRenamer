@@ -73,8 +73,11 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void loadPreviews(Qt::CheckState state);
         void redoTableColumnNames();
 
-        void seperatorAEntered();
-        void seperatorBEntered();
+        //void seperatorAEntered();
+        //void seperatorBEntered();
+
+        void setmetaDataCheckBoxToggled(bool state);
+        void metadataParseFilenameForDateCheckBoxToggled(bool state);
 };
 
 
