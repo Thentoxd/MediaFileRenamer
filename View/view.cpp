@@ -102,11 +102,52 @@ void mediaFileRenamerMainView::create_window() {
             case DateEngine: {
                 SPDLOG_INFO("Creating a Date engine widget");
 
+                QGroupBox *dateGroupBox = new QGroupBox(this);
+                dateGroupBox -> setTitle("Date");
+                dateGroupBox -> setCheckable(TRUE);
+                dateGroupBox -> setChecked(TRUE);
+
+                QCheckBox *dateCheckBox = new QCheckBox("Try to extract date from existing filename", this);
+                dateCheckBox -> setChecked(TRUE);
                 // auto date1 = new dateRename();
                 // date1 -> connectSlots(this);
 
+                QHBoxLayout *dateComponentsLayout = new QHBoxLayout;
+
+                QLabel *dateYearLabel = new QLabel("Year", this);
+                dateYearLabel -> setFixedWidth(50);
+                QLineEdit *dateYearLineEdit = new QLineEdit(this);
+                dateYearLineEdit -> setFixedWidth(50);
+
+                QLabel *dateMonthLabel = new QLabel("Month", this);
+                dateMonthLabel -> setFixedWidth(50);
+                QLineEdit *dateMonthLineEdit = new QLineEdit(this);
+                dateMonthLineEdit -> setFixedWidth(50);
+
+                QLabel *dateDayLabel = new QLabel("Day", this);
+                dateDayLabel -> setFixedWidth(50);
+                QLineEdit *dateDayLineEdit = new QLineEdit(this);
+                dateDayLineEdit -> setFixedWidth(50);
+
+                dateComponentsLayout->addWidget(dateYearLabel);
+                dateComponentsLayout->addWidget(dateYearLineEdit);
+                dateComponentsLayout->addWidget(dateMonthLabel);
+                dateComponentsLayout->addWidget(dateMonthLineEdit);
+                dateComponentsLayout->addWidget(dateDayLabel);
+                dateComponentsLayout->addWidget(dateDayLineEdit);
+
+                QCheckBox *dateUseMetadataOriginalDateCheckBox = new QCheckBox("If set, use Metadata Date Taken Original", this);
+
                 // auto date2 = new dateRename();
                 // date2 -> connectSlots(this);
+                QVBoxLayout *layout = new QVBoxLayout;
+                layout -> addWidget(dateCheckBox);
+                layout -> addLayout(dateComponentsLayout);
+                layout -> addWidget(dateUseMetadataOriginalDateCheckBox);
+                dateGroupBox -> setLayout(layout);
+
+                uiRenamingRootObjects.append(dateGroupBox);
+                renamingChainHorizontalLayout -> addWidget(dateGroupBox);
 
                 break;
             }
@@ -146,6 +187,20 @@ void mediaFileRenamerMainView::create_window() {
 
             case NumberingEngine: {
                 SPDLOG_INFO("Creating a Numbering engine widget");
+                QGroupBox *dateGroupBox = new QGroupBox(this);
+                dateGroupBox -> setTitle("Numbering");
+                dateGroupBox -> setCheckable(TRUE);
+                dateGroupBox -> setChecked(TRUE);
+
+                QGridLayout *layout = new QGridLayout;
+                layout->setContentsMargins(0, 0, 0, 0);
+
+                QLabel *dateYearLabel = new QLabel("test", this);
+                layout->addWidget(dateYearLabel, 0, 1, 1, 1);
+
+
+                uiRenamingRootObjects.append(dateGroupBox);
+                renamingChainHorizontalLayout -> addWidget(dateGroupBox);
                 break;
             }
 
