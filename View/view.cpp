@@ -4,6 +4,7 @@
 
 #include <QFileDialog>
 #include <QPixmap>
+#include <QSpinBox>
 
 #include "../main.h"
 #include "view.h"
@@ -196,12 +197,15 @@ void mediaFileRenamerMainView::create_window() {
                 dateGroupBox -> setCheckable(TRUE);
                 dateGroupBox -> setChecked(TRUE);
 
-                QGridLayout *layout = new QGridLayout;
-                layout->setContentsMargins(0, 0, 0, 0);
+                QGridLayout *grid_layout = new QGridLayout;
+                grid_layout->setContentsMargins(0, 0, 0, 0);
 
-                QLabel *dateYearLabel = new QLabel("test", this);
-                layout->addWidget(dateYearLabel, 0, 1, 1, 1);
+                grid_layout->addWidget(new QLabel("Starting Value", this), 0, 0);
+                grid_layout->addWidget(new QLabel("Seperator", this), 1, 0);
+                grid_layout->addWidget(new QSpinBox, 0, 1);
+                grid_layout->addWidget(new QSpinBox, 1, 1);
 
+                dateGroupBox->setLayout(grid_layout);
 
                 uiRenamingRootObjects.append(dateGroupBox);
                 renamingChainHorizontalLayout -> addWidget(dateGroupBox);
