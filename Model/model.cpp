@@ -362,10 +362,10 @@ void Model::setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValu
 }
 
 
-void Model::setRenamingEngineDateSetOriginalDateTaken(int instanceNumber, bool newValue) {
-    SPDLOG_INFO("Model::setRenamingEngineDateSetOriginalDateTaken");
-    p_ModelRenamingEngineDate -> setRenamingEngineDateSetOriginalDateTaken(newValue);
-}
+// void Model::setRenamingEngineDateSetOriginalDateTaken(int instanceNumber, bool newValue) {
+//     SPDLOG_INFO("Model::setRenamingEngineDateSetOriginalDateTaken");
+//     p_ModelRenamingEngineDate -> setRenamingEngineDateSetOriginalDateTaken(newValue);
+// }
 
 
 void Model::setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) {
@@ -377,6 +377,16 @@ void Model::setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool n
 void Model::setSeperator(int instanceNumber, string newValue) {
     SPDLOG_INFO("Model::setSeperator. Set separator instance {} to {}", instanceNumber, newValue);
     // separatorA = newValue;
+}
+
+
+void Model::setMetadataOriginalTakenDateFromFilename() {
+    SPDLOG_INFO("Model::setMetadataOriginalTakenDateFromFilename");
+}
+
+
+void Model::setMetadataOriginalTakenDateFromUserGivenYearMonthDay(string param_year, string param_month, string param_day) {
+    SPDLOG_INFO("Model::setMetadataOriginalTakenDateFromFilename");
 }
 
 

@@ -56,8 +56,14 @@ public:
     virtual void setRenamingEngineDateSetMonth(int instanceNumber, string newText) = 0;
     virtual void setRenamingEngineDateSetDay(int instanceNumber, string newText) = 0;
     virtual void setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) = 0;
-    virtual void setRenamingEngineDateSetOriginalDateTaken(int instanceNumber, bool newValue) = 0;
+
+    // The controls to set the metadata have been moved out of the Date renaming engine.
+    // virtual void setRenamingEngineDateSetOriginalDateTaken(int instanceNumber, bool newValue) = 0;
     virtual void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) = 0;
+
+    // These are the new "set metadata" controls - these are hardcoded into the UI and not part of the renaming chain
+    virtual void setMetadataOriginalTakenDateFromFilename() = 0;;
+    virtual void setMetadataOriginalTakenDateFromUserGivenYearMonthDay(string param_year, string param_month, string param_day) = 0;;
 
     virtual void setRenamingEngineTextbody(int instanceNumber, string newText) = 0;
 

@@ -76,8 +76,9 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         //void seperatorAEntered();
         //void seperatorBEntered();
 
-        void setmetaDataCheckBoxToggled(bool state);
+        // void setmetaDataCheckBoxToggled(bool state);
         void metadataParseFilenameForDateCheckBoxToggled(bool state);
+        void metadataUseFixedDate(bool newValue);
 };
 
 

@@ -76,8 +76,10 @@ void mediaFileRenamerMainView::create_window() {
 
     // Connect up the slots for the metadata renaming widgets
     // setMetadataOriginalCreateDateCheckBox
-    connect(this -> setMetadataOriginalCreateDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setmetaDataCheckBoxToggled);
+    // connect(this -> setMetadataOriginalCreateDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setmetaDataCheckBoxToggled);
     connect(this -> metadataParseFilenameForDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::metadataParseFilenameForDateCheckBoxToggled);
+    connect(this -> useFixedDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::metadataUseFixedDate);
+
 
 
 
@@ -721,41 +723,59 @@ void mediaFileRenamerMainView::seperatorBEntered() {
 }*/
 
 
-void mediaFileRenamerMainView::setmetaDataCheckBoxToggled(bool state) {
+// void mediaFileRenamerMainView::setmetaDataCheckBoxToggled(bool state) {
+//     if (state == false) {
+//         SPDLOG_INFO("setmetaDataCheckBoxToggled to OFF");
+//         metadataParseFilenameForDateCheckBox -> setEnabled(FALSE);
+//         metadataParseFilenameForDateCheckBox -> setChecked(FALSE);
+//     }
+//     else {
+//         SPDLOG_INFO("setmetaDataCheckBoxToggled to ON");
+//         metadataParseFilenameForDateCheckBox -> setEnabled(TRUE);
+//         metadataParseFilenameForDateCheckBox -> setChecked(TRUE);
+//     }
+//
+//     onSelectedRowsChange();
+// }
+
+
+void mediaFileRenamerMainView::metadataParseFilenameForDateCheckBoxToggled(bool state) {
     if (state == false) {
-        SPDLOG_INFO("setmetaDataCheckBoxToggled to OFF");
-        metadataParseFilenameForDateCheckBox -> setEnabled(FALSE);
-        metadataParseFilenameForDateCheckBox -> setChecked(FALSE);
+        SPDLOG_INFO("metadataParseFilenameForDateCheckBoxToggled to OFF");
+        // metadataParseFilenameForDateCheckBox -> setChecked(FALSE);
+        // useFixedDateCheckBox -> setEnabled(TRUE);
+        // useFixedDateCheckBox -> setChecked(TRUE);
+        // fixedYearLabel -> setEnabled(TRUE);
+        // fixedMonthLabel -> setEnabled(TRUE);
+        // fixedDayLabel -> setEnabled(TRUE);
+        // metadataYearlineEdit -> setEnabled(TRUE);
+        // metadataMonthLineEdit -> setEnabled(TRUE);
+        // metadataDayLineEdit -> setEnabled(TRUE);
+        // metadataParseFilenameForDateCheckBox -> setEnabled(FALSE);
+        // metadataParseFilenameForDateCheckBox -> setChecked(FALSE);
     }
     else {
-        SPDLOG_INFO("setmetaDataCheckBoxToggled to ON");
-        metadataParseFilenameForDateCheckBox -> setEnabled(TRUE);
-        metadataParseFilenameForDateCheckBox -> setChecked(TRUE);
+        SPDLOG_INFO("metadataParseFilenameForDateCheckBoxToggled to ON");
+        // metadataParseFilenameForDateCheckBox -> setEnabled(TRUE);
+        // metadataParseFilenameForDateCheckBox -> setChecked(TRUE);
+        p_model -> setMetadataOriginalTakenDateFromFilename();
     }
 
     onSelectedRowsChange();
 }
 
 
-void mediaFileRenamerMainView::metadataParseFilenameForDateCheckBoxToggled(bool state) {
+void mediaFileRenamerMainView::metadataUseFixedDate(bool state) {
     if (state == false) {
-        SPDLOG_INFO("metadataParseFilenameForDateCheckBoxToggled to OFF");
-        metadataParseFilenameForDateCheckBox -> setChecked(FALSE);
-        useFixedDateCheckBox -> setEnabled(TRUE);
-        useFixedDateCheckBox -> setChecked(TRUE);
-        fixedYearLabel -> setEnabled(TRUE);
-        fixedMonthLabel -> setEnabled(TRUE);
-        fixedDayLabel -> setEnabled(TRUE);
-        metadataYearlineEdit -> setEnabled(TRUE);
-        metadataMonthLineEdit -> setEnabled(TRUE);
-        metadataDayLineEdit -> setEnabled(TRUE);
-        metadataParseFilenameForDateCheckBox -> setEnabled(FALSE);
-        metadataParseFilenameForDateCheckBox -> setChecked(FALSE);
+        SPDLOG_INFO("mediaFileRenamerMainView::useFixedDate toggled to OFF");
     }
     else {
-        SPDLOG_INFO("metadataParseFilenameForDateCheckBoxToggled to ON");
-        metadataParseFilenameForDateCheckBox -> setEnabled(TRUE);
-        metadataParseFilenameForDateCheckBox -> setChecked(TRUE);
+        SPDLOG_INFO("mediaFileRenamerMainView::useFixedDate toggled to ON");
+        // metadataParseFilenameForDateCheckBox -> setEnabled(TRUE);
+        // metadataParseFilenameForDateCheckBox -> setChecked(TRUE);
+
+        // This is the call I want to make - not yet implemented
+        // p_model -> setMetadataOriginalTakenDateFromUserGivenYearMonthDay(param_year, param_month, param_day);
     }
 
     onSelectedRowsChange();
