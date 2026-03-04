@@ -106,6 +106,7 @@ void mediaFileRenamerMainView::create_window() {
                 dateGroupBox -> setTitle("Date");
                 dateGroupBox -> setCheckable(TRUE);
                 dateGroupBox -> setChecked(TRUE);
+                dateGroupBox -> setMaximumWidth(300);
 
                 QCheckBox *dateCheckBox = new QCheckBox("Try to extract date from existing filename", this);
                 dateCheckBox -> setChecked(TRUE);
@@ -113,21 +114,24 @@ void mediaFileRenamerMainView::create_window() {
                 // date1 -> connectSlots(this);
 
                 QHBoxLayout *dateComponentsLayout = new QHBoxLayout;
+                dateComponentsLayout -> setSpacing(6);
+                dateComponentsLayout -> setSizeConstraint(QLayout::SetDefaultConstraint);
+
 
                 QLabel *dateYearLabel = new QLabel("Year", this);
-                dateYearLabel -> setFixedWidth(50);
+                //dateYearLabel -> setFixedWidth(50);
                 QLineEdit *dateYearLineEdit = new QLineEdit(this);
-                dateYearLineEdit -> setFixedWidth(50);
+                //dateYearLineEdit -> setFixedWidth(50);
 
                 QLabel *dateMonthLabel = new QLabel("Month", this);
-                dateMonthLabel -> setFixedWidth(50);
+                //dateMonthLabel -> setFixedWidth(50);
                 QLineEdit *dateMonthLineEdit = new QLineEdit(this);
-                dateMonthLineEdit -> setFixedWidth(50);
+                //dateMonthLineEdit -> setFixedWidth(50);
 
                 QLabel *dateDayLabel = new QLabel("Day", this);
-                dateDayLabel -> setFixedWidth(50);
+                //dateDayLabel -> setFixedWidth(50);
                 QLineEdit *dateDayLineEdit = new QLineEdit(this);
-                dateDayLineEdit -> setFixedWidth(50);
+                //dateDayLineEdit -> setFixedWidth(50);
 
                 dateComponentsLayout->addWidget(dateYearLabel);
                 dateComponentsLayout->addWidget(dateYearLineEdit);
