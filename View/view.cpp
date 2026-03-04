@@ -17,6 +17,7 @@
 #include "chain_editor.h"
 #include "dateRename.h"
 #include "separator.h"
+#include "types.hpp"
 
 #include "CLI/App.hpp"
 
@@ -196,14 +197,21 @@ void mediaFileRenamerMainView::create_window() {
                 dateGroupBox -> setTitle("Numbering");
                 dateGroupBox -> setCheckable(TRUE);
                 dateGroupBox -> setChecked(TRUE);
+                dateGroupBox->setMinimumWidth(200);
 
                 QGridLayout *grid_layout = new QGridLayout;
                 grid_layout->setContentsMargins(0, 0, 0, 0);
 
                 grid_layout->addWidget(new QLabel("Starting Value", this), 0, 0);
                 grid_layout->addWidget(new QLabel("Seperator", this), 1, 0);
-                grid_layout->addWidget(new QSpinBox, 0, 1);
-                grid_layout->addWidget(new QSpinBox, 1, 1);
+                QSpinBox *spin_box1 = new QSpinBox(this);
+                spin_box1->setMaximumWidth(60);
+
+                QSpinBox *spin_box2 = new QSpinBox(this);
+                spin_box2->setMaximumWidth(60);
+
+                grid_layout->addWidget(spin_box1, 0, 1);
+                grid_layout->addWidget(spin_box2, 1, 1);
 
                 dateGroupBox->setLayout(grid_layout);
 
