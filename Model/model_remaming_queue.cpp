@@ -91,3 +91,19 @@ pair<string, string> ModelRemamingQueue::executeQueue(const pair<string, string>
 
     return returnPair;
 }
+
+
+ModelRenamingEngineDate * ModelRemamingQueue::getNthDateEngine(int instanceNumber) {
+    SPDLOG_INFO("ModelRemamingQueue::getNthDateEngine");
+    // Work down the renaming_engine vector. Find the nth (instance number) of type ModelRenamingEngineDate *
+    int count = 1;
+    for (auto each_engine : renaming_engine) {
+        if (typeid(*each_engine) == typeid(ModelRenamingEngineDate)) {
+            if (count == instanceNumber) {
+                return(dynamic_cast<ModelRenamingEngineDate*>(each_engine));
+            }
+            count++;
+        }
+    }
+    return(nullptr);
+}

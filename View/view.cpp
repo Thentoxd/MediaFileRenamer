@@ -153,8 +153,8 @@ void mediaFileRenamerMainView::create_window() {
                 uiRenamingRootObjects.append(dateGroupBox);
                 renamingChainHorizontalLayout -> addWidget(dateGroupBox);
 
-                auto date2 = new dateRename();
-                // date2 -> connectSlots();
+                auto p_date = new dateRename(p_model, dateGroupBox, dateCheckBox, dateYearLineEdit, dateMonthLineEdit, dateDayLineEdit, dateUseMetadataOriginalDateCheckBox, this);
+                p_date -> connectSlots();
 
                 break;
             }

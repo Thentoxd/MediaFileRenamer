@@ -177,6 +177,29 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
 }
 
 
+void Model::setEngineDatePrefix(int instanceNumber, bool state) {
+    SPDLOG_INFO("Model::setEngineDatePrefix: {}", instanceNumber);
+
+    // Work down the p_ModelRemamingQueue, find the nth (instance number) of a date engine
+    // And then call the setActive on that engine
+    ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
+    assert(p_DateEngine != nullptr);
+    p_DateEngine->setActive(state);
+}
+
+
+void Model::setEngineText(int instanceNumber, bool state) {
+    SPDLOG_INFO("Model::setEngineText: {}", instanceNumber);
+    //p_ModelRenamingEngineTextBody->setActive(state);
+}
+
+
+void Model::setEngineCounterSuffix(int instanceNumber, bool state) {
+    SPDLOG_INFO("Model::setEngineCounterSuffix: {}", instanceNumber);
+    //p_ModelRenamingEngineCounter->setActive(state);
+}
+
+
 void Model::renameEXIFFile(FileEntry* newFile) {
     rename((getCurrentWorkingDirectory() + "/" + newFile->getCurrentFileName()).c_str(), (getCurrentWorkingDirectory() + "/" + newFile->getNewFileName()).c_str());
     newFile->setFileName(newFile->getNewFileName());
@@ -322,43 +345,43 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
 
 void Model::setCounterStart(int instanceNumber, int newValue) {
     SPDLOG_INFO("Model::setCounterStart");
-    p_ModelRenamingEngineCounter -> setCounter(newValue);
+    //p_ModelRenamingEngineCounter -> setCounter(newValue);
 }
 
 
 void Model::setCounterPadding(int instanceNumber, int newValue) {
     SPDLOG_INFO("Model::setCounterPadding");
-    p_ModelRenamingEngineCounter -> setPadding(newValue);
+    //p_ModelRenamingEngineCounter -> setPadding(newValue);
 }
 
 
 void Model::setRenamingEngineTextbody(int instanceNumber, string newText) {
     SPDLOG_INFO("Model::setRenamingEngineTextbody");
-    p_ModelRenamingEngineTextBody -> setTextBody(newText);
+    //p_ModelRenamingEngineTextBody -> setTextBody(newText);
 }
 
 
 void Model::setRenamingEngineDateSetYear(int instanceNumber, string newText) {
     SPDLOG_INFO("Model::setRenamingEngineDateSetYear");
-    p_ModelRenamingEngineDate -> setRenamingEngineDateSetYear(newText);
+    //p_ModelRenamingEngineDate -> setRenamingEngineDateSetYear(newText);
 }
 
 
 void Model::setRenamingEngineDateSetMonth(int instanceNumber, string newText) {
     SPDLOG_INFO("Model::setRenamingEngineDateSetMonth");
-    p_ModelRenamingEngineDate -> setRenamingEngineDateSetMonth(newText);
+    //p_ModelRenamingEngineDate -> setRenamingEngineDateSetMonth(newText);
 }
 
 
 void Model::setRenamingEngineDateSetDay(int instanceNumber, string newText) {
     SPDLOG_INFO("Model::setRenamingEngineDateSetDay");
-    p_ModelRenamingEngineDate -> setRenamingEngineDateSetDay(newText);
+    //p_ModelRenamingEngineDate -> setRenamingEngineDateSetDay(newText);
 }
 
 
 void Model::setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) {
     SPDLOG_INFO("Model::setRenamingEngineDateTryExtractDate");
-    p_ModelRenamingEngineDate -> setRenamingEngineDateTryExtractDate(newValue);
+    //p_ModelRenamingEngineDate -> setRenamingEngineDateTryExtractDate(newValue);
 }
 
 
@@ -370,7 +393,7 @@ void Model::setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValu
 
 void Model::setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) {
     SPDLOG_INFO("Model::setRenamingEngineDateUseOriginalDateTaken");
-    p_ModelRenamingEngineDate -> setRenamingEngineDateUseOriginalDateTaken(newValue);
+    //p_ModelRenamingEngineDate -> setRenamingEngineDateUseOriginalDateTaken(newValue);
 }
 
 

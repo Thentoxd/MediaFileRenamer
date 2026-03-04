@@ -31,6 +31,7 @@ public:
     void appendEngine(ModelRenamingEngine * engine);
     void clearEngines();
     void deleteAllEngines();
+    ModelRenamingEngineDate *  getNthDateEngine(int instanceNumber);
 
     pair<string, string> executeQueue(const pair<string, string>& input_parameter, vector<string> separators);
 

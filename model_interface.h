@@ -67,6 +67,10 @@ public:
 
     virtual void setRenamingEngineTextbody(int instanceNumber, string newText) = 0;
 
+    virtual void setEngineDatePrefix(int instanceNumber, bool state) = 0;
+    virtual void setEngineText(int instanceNumber, bool state) = 0;
+    virtual void setEngineCounterSuffix(int instanceNumber, bool state) = 0;
+
     virtual void setCounterStart(int instanceNumber, int newValue) = 0;
     virtual void setCounterPadding(int instanceNumber, int newValue) = 0;
 

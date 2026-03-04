@@ -12,13 +12,24 @@ protected:
     static int nextID;
 private:
     int id;
+    ModelInterface * p_model;
+    QLineEdit * p_dateYearLineEdit;
+    QLineEdit * p_dateMonthLineEdit;
+    QLineEdit * p_dateDayLineEdit;
+    mediaFileRenamerMainView * p_mainView;
+    QGroupBox * p_dateQGroupBox;
+    QCheckBox * p_dateTryExtractCheckBox;
+    QCheckBox * p_dateUseMetadataOriginalDateCheckBox;
 public:
-    dateRename();
-    void connectSlots(mediaFileRenamerMainView * param_mediaFileRenamerMainView);
+    dateRename(ModelInterface * param_model, QGroupBox * param_dateQGroupBox, QCheckBox * param_dateTryExtractCheckBox, QLineEdit * param_dateYearLineEdit,
+        QLineEdit * param_dateMonthLineEdit, QLineEdit * param_dateDayLineEdit, QCheckBox * param_useMatadataDateTakenOrigCheckBox,
+        mediaFileRenamerMainView * param_mainView);
+    void connectSlots();
     int getID();
 
     // Slots
     void datePrefixGroupToggled(bool state);
+    void setdateTryExtractButtonClicked(bool state);
 };
 
 

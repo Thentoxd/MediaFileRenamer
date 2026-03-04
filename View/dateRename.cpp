@@ -9,8 +9,17 @@
 
 int dateRename::nextID = 0;
 
-dateRename::dateRename() {
+dateRename::dateRename(ModelInterface * param_model, QGroupBox * param_dateQGroupBox, QCheckBox * param_dateTryExtractCheckBox, QLineEdit * param_dateYearLineEdit,
+        QLineEdit * param_dateMonthLineEdit, QLineEdit * param_dateDayLineEdit, QCheckBox * param_useMatadataDateTakenOrigCheckBox,
+        mediaFileRenamerMainView * param_mainView) {
     id = ++nextID;
+    p_model = param_model;
+    p_dateQGroupBox = param_dateQGroupBox;
+    p_dateTryExtractCheckBox = param_dateTryExtractCheckBox;
+    p_dateYearLineEdit = param_dateYearLineEdit;
+    p_dateMonthLineEdit = param_dateMonthLineEdit;
+    p_dateDayLineEdit = param_dateDayLineEdit;
+    p_mainView = param_mainView;
 }
 
 int dateRename::getID() {
@@ -20,14 +29,22 @@ int dateRename::getID() {
 
 void dateRename::datePrefixGroupToggled(bool state) {
     SPDLOG_INFO("dateRename::datePrefixGroupToggled");
-    // p_model->setEngineDatePrefix(int instanceNumber, state);
-    // onSelectedRowsChange();
+    p_model -> setEngineDatePrefix(id, state);
+    p_mainView -> onSelectedRowsChange();
 }
 
-void dateRename::connectSlots(mediaFileRenamerMainView * param_mediaFileRenamerMainView) {
+
+void dateRename::setdateTryExtractButtonClicked(bool state) {
+    SPDLOG_INFO("dateRename::setdateTryExtractButtonClicked");
+    p_model -> setRenamingEngineDateUseOriginalDateTaken(id, state);
+    p_mainView -> onSelectedRowsChange();
+}
+
+
+void dateRename::connectSlots() {
     // These are the slots for the Date renaming widget
-    // QObject::connect(param_mediaFileRenamerMainView -> datePrefixGroup, &QGroupBox::toggled, this, &dateRename::datePrefixGroupToggled);
-    // connect(this -> use_DateTaken_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setUseDateTakenButtonClicked);
+    QObject::connect(p_dateQGroupBox, &QGroupBox::toggled, this, &dateRename::datePrefixGroupToggled);
+    QObject::connect(p_dateTryExtractCheckBox, &QCheckBox::checkStateChanged, this, &dateRename::setdateTryExtractButtonClicked);
     // connect(this -> set_DateTaken_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setDateTakenOriginalButtonClicked);
     // connect(this -> attempt_findDate_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setDateTryExtractDateButtonClicked);
     // connect(this -> year_lineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::setYear);

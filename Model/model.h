@@ -84,10 +84,9 @@ private:
     ModelRemamingQueue * p_ModelRemamingQueue;
 
     // In the old model, we had just three renaming engines in a fixed formation in the queue
-
-    ModelRenamingEngineDate * p_ModelRenamingEngineDate;
-    ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody;
-    ModelRenamingEngineCounter * p_ModelRenamingEngineCounter;
+    // ModelRenamingEngineDate * p_ModelRenamingEngineDate;
+    // ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody;
+    // ModelRenamingEngineCounter * p_ModelRenamingEngineCounter;
 
 public:
     Model();
@@ -96,6 +95,10 @@ public:
     void renameEXIFFile(FileEntry* newFile);
     void changeEXIFDateTakenOriginal(FileEntry* file);
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
+
+    void setEngineDatePrefix(int instanceNumber, bool state) override;
+    void setEngineText(int instanceNumber, bool state) override;
+    void setEngineCounterSuffix(int instanceNumber, bool state) override;
 
     void reload() override ;
     void clear() override ;
