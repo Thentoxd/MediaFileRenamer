@@ -188,6 +188,21 @@ void mediaFileRenamerMainView::create_window() {
 
             case FilenameBodyEngine: {
                 SPDLOG_INFO("Creating a FilenameBody engine widget");
+
+                QGroupBox *filenameBodyGroupBox = new QGroupBox(this);
+                filenameBodyGroupBox -> setTitle("Filename Body");
+                filenameBodyGroupBox -> setCheckable(TRUE);
+                filenameBodyGroupBox -> setChecked(TRUE);
+
+                QLineEdit *filenameBodyLineEdit = new QLineEdit("Fixed Text: ", this);
+
+                QVBoxLayout *filenameBodyVLayout = new QVBoxLayout;
+                filenameBodyVLayout -> addWidget(filenameBodyLineEdit);
+                filenameBodyGroupBox -> setLayout(filenameBodyVLayout);
+
+                uiRenamingRootObjects.append(filenameBodyGroupBox);
+                renamingChainHorizontalLayout -> addWidget(filenameBodyGroupBox);
+
                 break;
             }
 
