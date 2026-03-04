@@ -144,8 +144,6 @@ void mediaFileRenamerMainView::create_window() {
 
                 QCheckBox *dateUseMetadataOriginalDateCheckBox = new QCheckBox("If set, use Metadata Date Taken Original", this);
 
-                // auto date2 = new dateRename();
-                // date2 -> connectSlots(this);
                 QVBoxLayout *layout = new QVBoxLayout;
                 layout -> addWidget(dateCheckBox);
                 layout -> addLayout(dateComponentsLayout);
@@ -154,6 +152,9 @@ void mediaFileRenamerMainView::create_window() {
 
                 uiRenamingRootObjects.append(dateGroupBox);
                 renamingChainHorizontalLayout -> addWidget(dateGroupBox);
+
+                auto date2 = new dateRename();
+                // date2 -> connectSlots();
 
                 break;
             }
@@ -178,10 +179,10 @@ void mediaFileRenamerMainView::create_window() {
                 uiRenamingRootObjects.append(seperatorGroupBox);
                 renamingChainHorizontalLayout -> addWidget(seperatorGroupBox);
 
-                auto p_separator = new separator(p_model, seperatorLineEdit, this);
+                auto p_separator = new separator(p_model, seperatorLineEdit, seperatorGroupBox, this);
                 int separatorID = p_separator ->getID();
                 SPDLOG_INFO("Created separator instance with ID {}", separatorID);
-                p_separator -> connectSlots(seperatorGroupBox);
+                p_separator -> connectSlots();
 
                 break;
             }

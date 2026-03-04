@@ -18,13 +18,15 @@ private:
     ModelInterface * p_model;
     QLineEdit * p_lineEdit;
     mediaFileRenamerMainView * p_mainView;
+    QGroupBox * p_QGroupBox;
 public:
-    separator(ModelInterface * param_model, QLineEdit * param_seperatorLineEdit, mediaFileRenamerMainView * param_mainView);
-    void connectSlots(QGroupBox * param_QGroupBox);
+    separator(ModelInterface * param_model, QLineEdit * param_seperatorLineEdit, QGroupBox * param_QGroupBox, mediaFileRenamerMainView * param_mainView);
+    void connectSlots();
     int getID();
 
     // Slots
     void separatorToggled(bool state);
+    void setSeperator();
 };
 
 
