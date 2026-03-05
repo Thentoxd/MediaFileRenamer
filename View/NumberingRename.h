@@ -28,7 +28,7 @@ public:
 
     // Slots
     void updateStartingValue(int newValue);
-    void updateSeperatorValue(int newValue);
+    void updatePaddingValue(int newValue);
     void groupBoxToggled(bool state);
 };
 

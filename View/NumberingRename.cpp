@@ -26,7 +26,7 @@ void NumberingRename::updateStartingValue(int newValue) {
     p_mainView -> onSelectedRowsChange();
 }
 
-void NumberingRename::updateSeperatorValue(int newValue) {
+void NumberingRename::updatePaddingValue(int newValue) {
     SPDLOG_DEBUG("NumberingRename::updateSeperatorValue: {}", newValue);
     p_model -> setCounterPadding(id, newValue);
     p_mainView -> onSelectedRowsChange();
@@ -41,11 +41,11 @@ void NumberingRename::groupBoxToggled(bool state) {
 void NumberingRename::connectSlots() {
     connect(p_dateQGroupBox, &QGroupBox::toggled, this, &NumberingRename::groupBoxToggled);
     connect(p_spinBox1, &QSpinBox::valueChanged, this, &NumberingRename::updateStartingValue);
-    connect(p_spinBox2, &QSpinBox::valueChanged, this, &NumberingRename::updateStartingValue);
+    connect(p_spinBox2, &QSpinBox::valueChanged, this, &NumberingRename::updatePaddingValue);
 }
 
 void NumberingRename::disconnectSlots() {
     disconnect(p_dateQGroupBox, &QGroupBox::toggled, this, &NumberingRename::groupBoxToggled);
     disconnect(p_spinBox1, &QSpinBox::valueChanged, this, &NumberingRename::updateStartingValue);
-    disconnect(p_spinBox2, &QSpinBox::valueChanged, this, &NumberingRename::updateStartingValue);
+    disconnect(p_spinBox2, &QSpinBox::valueChanged, this, &NumberingRename::updatePaddingValue);
 }

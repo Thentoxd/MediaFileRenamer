@@ -238,9 +238,11 @@ void mediaFileRenamerMainView::create_window() {
                 grid_layout->addWidget(new QLabel("Starting Value", this), 0, 0);
                 grid_layout->addWidget(new QLabel("Padding", this), 1, 0);
                 QSpinBox *spin_box1 = new QSpinBox(this);
+                spin_box1 -> setValue(1);
                 spin_box1->setMaximumWidth(60);
 
                 QSpinBox *spin_box2 = new QSpinBox(this);
+                spin_box2 -> setValue(1);
                 spin_box2->setMaximumWidth(60);
 
                 grid_layout->addWidget(spin_box1, 0, 1);

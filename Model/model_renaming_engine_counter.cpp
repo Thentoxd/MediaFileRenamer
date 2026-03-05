@@ -18,6 +18,8 @@ void ModelRenamingEngineCounter::init(int mode) {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::init");
     counter = 1;
     padding = 1;
+    counterStart = 1;
+    paddingStart = 1;
     SPDLOG_DEBUG("Set counter and padding to 1");
 }
 
@@ -25,7 +27,7 @@ void ModelRenamingEngineCounter::clear() {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::clear");
     counter = counterStart;
     padding = paddingStart;
-    SPDLOG_DEBUG("Set counter and padding to 1");
+    SPDLOG_DEBUG("Set counter to {} and padding to {}", counter, padding);
 }
 
 pair<string, string> ModelRenamingEngineCounter::execute(pair<string, string> input_parameter) {
@@ -50,14 +52,14 @@ pair<string, string> ModelRenamingEngineCounter::execute(pair<string, string> in
 
 void ModelRenamingEngineCounter::setCounter(int value) {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::setCounter");
-    SPDLOG_DEBUG("Setting the numbering counter to {}", value);
+    SPDLOG_DEBUG("Setting the counter to {}", value);
     counter = value;
     counterStart = value;
 }
 
 void ModelRenamingEngineCounter::setPadding(int value) {
     SPDLOG_DEBUG("ModelRenamingEngineCounter::setPadding");
-    SPDLOG_DEBUG("Setting the padding counter to {}", value);
+    SPDLOG_DEBUG("Setting the padding to {}", value);
     padding = value;
     paddingStart = value;
 }
