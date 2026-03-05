@@ -120,21 +120,29 @@ void mediaFileRenamerMainView::create_window() {
                 dateComponentsLayout -> setSpacing(6);
                 dateComponentsLayout -> setSizeConstraint(QLayout::SetDefaultConstraint);
 
+                QDate todaysDate = QDate::currentDate();
+                QString yearQString = todaysDate.toString("yyyy");
+                QString monthQString = todaysDate.toString("MM");
+                QString dayQString = todaysDate.toString("dd");
 
                 QLabel *dateYearLabel = new QLabel("Year", this);
-                //dateYearLabel -> setFixedWidth(50);
+                dateYearLabel -> setEnabled(false);
                 QLineEdit *dateYearLineEdit = new QLineEdit(this);
-                //dateYearLineEdit -> setFixedWidth(50);
+                dateYearLineEdit -> setText(yearQString);
+                dateYearLineEdit -> setEnabled(false);
+
 
                 QLabel *dateMonthLabel = new QLabel("Month", this);
-                //dateMonthLabel -> setFixedWidth(50);
+                dateMonthLabel -> setEnabled(false);
                 QLineEdit *dateMonthLineEdit = new QLineEdit(this);
-                //dateMonthLineEdit -> setFixedWidth(50);
+                dateMonthLineEdit -> setText(monthQString);
+                dateMonthLineEdit -> setEnabled(false);
 
                 QLabel *dateDayLabel = new QLabel("Day", this);
-                //dateDayLabel -> setFixedWidth(50);
+                dateDayLabel -> setEnabled(false);
                 QLineEdit *dateDayLineEdit = new QLineEdit(this);
-                //dateDayLineEdit -> setFixedWidth(50);
+                dateDayLineEdit -> setText(dayQString);
+                dateDayLineEdit -> setEnabled(false);
 
                 dateComponentsLayout->addWidget(dateYearLabel);
                 dateComponentsLayout->addWidget(dateYearLineEdit);

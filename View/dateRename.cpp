@@ -29,14 +29,33 @@ int dateRename::getID() {
 
 
 void dateRename::datePrefixGroupToggled(bool state) {
-    SPDLOG_INFO("dateRename::datePrefixGroupToggled");
+    if (state == true) {
+        SPDLOG_INFO("dateRename::datePrefixGroupToggled On");
+
+    }
+    else {
+        SPDLOG_INFO("dateRename::datePrefixGroupToggled Off");
+    }
+
     p_model -> setEngineDateState(id, state);
     p_mainView -> onSelectedRowsChange();
 }
 
 
 void dateRename::setdateTryExtractButtonClicked(bool state) {
-    SPDLOG_INFO("dateRename::setdateTryExtractButtonClicked");
+    if (state == true) {
+        SPDLOG_INFO("dateRename::setdateTryExtractButtonClicked On");
+        p_dateYearLineEdit -> setEnabled(false);
+        p_dateMonthLineEdit -> setEnabled(false);
+        p_dateDayLineEdit -> setEnabled(false);
+    }
+    else {
+        SPDLOG_INFO("dateRename::setdateTryExtractButtonClicked Off");
+        p_dateYearLineEdit -> setEnabled(true);
+        p_dateMonthLineEdit -> setEnabled(true);
+        p_dateDayLineEdit -> setEnabled(true);
+    }
+
     p_model -> setRenamingEngineDateUseOriginalDateTaken(id, state);
     p_mainView -> onSelectedRowsChange();
 }
