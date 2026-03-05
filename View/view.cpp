@@ -172,6 +172,7 @@ void mediaFileRenamerMainView::create_window() {
 
                 QLineEdit *seperatorLineEdit = new QLineEdit(this);
                 seperatorLineEdit -> setFixedWidth(50);
+                seperatorLineEdit -> setText(" ");
 
                 QVBoxLayout *layout = new QVBoxLayout;
                 layout->addWidget(seperatorLineEdit);

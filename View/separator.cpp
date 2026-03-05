@@ -12,6 +12,7 @@ separator::separator(ModelInterface * param_model, QLineEdit * param_seperatorLi
     p_lineEdit = param_seperatorLineEdit;
     p_mainView = param_mainView;
     p_QGroupBox = param_QGroupBox;
+    p_model -> setSeperator(id, " ");
 }
 
 int separator::getID() {
