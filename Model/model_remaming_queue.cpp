@@ -27,7 +27,6 @@ void ModelRemamingQueue::appendEngine(ModelRenamingEngine * engine) {
 
 void ModelRemamingQueue::clearEngines() {
     SPDLOG_INFO("ModelRemamingQueue::clearEngines");
-
     for (auto eachEngine : renaming_engine)
     {
         eachEngine -> clear();

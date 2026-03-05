@@ -86,6 +86,7 @@ public:
 
     virtual void clearRenamingChain() = 0;
     virtual vector<pair<string, string>> executeRenamingChain(vector<int> rows, bool renameFiles, bool renameDateTakenOriginal) = 0;
+    virtual void emptyRenamningChainAndRebuild(vector<EngineTypes> newChain) = 0;
 };
 
 #endif //MEDIAFILERENAMER_MODEL_INTERFACE_H

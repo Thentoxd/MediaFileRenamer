@@ -200,6 +200,7 @@ public:
 
     void clearRenamingChain() override;
     vector<pair<string, string>> executeRenamingChain(vector<int> row, bool renameFiles, bool renameDateTakenOriginal) override;
+    void emptyRenamningChainAndRebuild(vector<EngineTypes> newChain) override;
 };
 
 

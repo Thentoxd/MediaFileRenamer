@@ -33,13 +33,6 @@ void Model::initialise() {
     // We now allow dynamic chains, so first read the last chain from the config file and
     // create the renaming queue
 
-    // p_ModelRenamingEngineDate = new ModelRenamingEngineDate;
-    // p_ModelRenamingEngineTextBody = new ModelRenamingEngineTextBody;
-    // p_ModelRenamingEngineCounter = new ModelRenamingEngineCounter;
-
-    // We should now only call this on instances of ModelRenamingEngineDate
-    // p_ModelRenamingEngineDate->setFormats(p_ModelConfigfile->getDateFormatsParsed());
-
     SPDLOG_INFO("Model::initialise");
 
     p_ModelConfigfile -> loadConfigFile("config.json");
@@ -343,6 +336,10 @@ vector<EngineTypes> Model::getSavedEngineChain() {
 }
 
 
+void Model::emptyRenamningChainAndRebuild(vector<EngineTypes> newChain) {
+    SPDLOG_INFO("Model::emptyRenamningChainAndRebuild");
+
+}
 
 
 
