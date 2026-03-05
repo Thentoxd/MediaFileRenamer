@@ -30,7 +30,6 @@ public:
     void updateStartingValue(int newValue);
     void updateSeperatorValue(int newValue);
     void groupBoxToggled(bool state);
-
 };
 
 

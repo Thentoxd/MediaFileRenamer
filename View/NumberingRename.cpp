@@ -28,6 +28,10 @@ void NumberingRename::updateSeperatorValue(int newValue) {
     SPDLOG_DEBUG("NumberingRename::updateSeperatorValue: {}", newValue);
 }
 
+void NumberingRename::groupBoxToggled(bool state) {
+    SPDLOG_DEBUG("NumberingRename::updateSeperatorValue: {}", state);
+}
+
 void NumberingRename::connectSlots() {
     connect(p_dateQGroupBox, &QGroupBox::toggled, this, &NumberingRename::groupBoxToggled);
     connect(p_spinBox1, &QSpinBox::valueChanged, this, &NumberingRename::updateStartingValue);
