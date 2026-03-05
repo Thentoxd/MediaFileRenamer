@@ -77,6 +77,8 @@ add_executable(MediaFileRenamer main.cpp
         View/dateRename.cpp
         View/separator.h
         View/separator.cpp
+        View/FilenameBodyRename.h
+        View/FilenameBodyRename.cpp
 )
 
 target_link_libraries(MediaFileRenamer

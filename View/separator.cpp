@@ -55,3 +55,10 @@ void separator::connectSlots() {
     QObject::QObject::connect(p_QGroupBox, &QGroupBox::toggled, this, &separator::separatorToggled);
     QObject::connect(p_lineEdit, &QLineEdit::textChanged, this, &separator::setSeperator);
 }
+
+
+void separator::disconnectSlots() {
+    // These are the slots for the Seperator renaming widget
+    QObject::disconnect(p_QGroupBox, &QGroupBox::toggled, this, &separator::separatorToggled);
+    QObject::disconnect(p_lineEdit, &QLineEdit::textChanged, this, &separator::setSeperator);
+}

@@ -99,6 +99,5 @@ void dateRename::disconnectSlots() {
     QObject::disconnect(p_dateMonthLineEdit, &QLineEdit::textChanged, this, &dateRename::setMonth);
     QObject::disconnect(p_dateDayLineEdit, &QLineEdit::textChanged, this, &dateRename::setDay);
     QObject::disconnect(p_dateUseMetadataOriginalDateCheckBox, &QCheckBox::checkStateChanged, this, &dateRename::tryUseMetadata);
-
 }
 

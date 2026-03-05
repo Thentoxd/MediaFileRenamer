@@ -18,6 +18,7 @@
 #include "dateRename.h"
 #include "separator.h"
 #include "types.hpp"
+#include "FilenameBodyRename.h"
 
 #include "CLI/App.hpp"
 
@@ -195,14 +196,20 @@ void mediaFileRenamerMainView::create_window() {
                 filenameBodyGroupBox -> setCheckable(TRUE);
                 filenameBodyGroupBox -> setChecked(TRUE);
 
-                QLineEdit *filenameBodyLineEdit = new QLineEdit("Fixed Text: ", this);
+                QLabel * p_QLabel = new QLabel("Fixed Text: ", this);
 
-                QVBoxLayout *filenameBodyVLayout = new QVBoxLayout;
-                filenameBodyVLayout -> addWidget(filenameBodyLineEdit);
-                filenameBodyGroupBox -> setLayout(filenameBodyVLayout);
+                QLineEdit *filenameBodyLineEdit = new QLineEdit(this);
+
+                QHBoxLayout * filenameBodyHLayout = new QHBoxLayout();
+                filenameBodyHLayout -> addWidget(p_QLabel);
+                filenameBodyHLayout -> addWidget(filenameBodyLineEdit);
+                filenameBodyGroupBox -> setLayout(filenameBodyHLayout);
 
                 uiRenamingRootObjects.append(filenameBodyGroupBox);
                 renamingChainHorizontalLayout -> addWidget(filenameBodyGroupBox);
+
+                auto p_FilenameBody = new FilenameBodyRename(p_model, this, filenameBodyGroupBox, filenameBodyLineEdit);
+                p_FilenameBody -> connectSlots();
 
                 break;
             }
