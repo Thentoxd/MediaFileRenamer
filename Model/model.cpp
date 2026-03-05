@@ -260,11 +260,6 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
     SPDLOG_INFO("Model::executeRenamingChain");
     vector<pair<string, string>> returnPairList;
 
-    vector<string> separators;
-
-    separators.push_back(separatorA);
-    separators.push_back(separatorB);
-
     for (auto rowNumber : rows)
     {
         SPDLOG_INFO("Executing the chain on row {}", rowNumber);
@@ -274,7 +269,7 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
         string currentFilename = entry->getCurrentFileName();
         string currentFileExtension = currentFilename.substr(currentFilename.find("."));
 
-        pair<string, string> returnPair = p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal()), separators);
+        pair<string, string> returnPair = p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal()));
 
         SPDLOG_INFO("RETURNED VALUE: {}", returnPair.first);
 

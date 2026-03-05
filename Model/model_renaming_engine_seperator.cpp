@@ -29,7 +29,6 @@ void ModelRenamingEngineSeperator::setSeperator(string newValue) {
 
 pair<string, string> ModelRenamingEngineSeperator::execute(pair<string, string> input_parameter) {
     SPDLOG_DEBUG("ModelRenamingEngineSeperator::execute");
-    assert(0);
 
     pair<string, string> return_value;
 

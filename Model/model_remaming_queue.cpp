@@ -41,28 +41,23 @@ void ModelRemamingQueue::deleteAllEngines() {
 }
 
 
-pair<string, string> ModelRemamingQueue::executeQueue(const pair<string, string>& input_parameter, vector<string> separators) {
+pair<string, string> ModelRemamingQueue::executeQueue(const pair<string, string>& input_parameter) {
     SPDLOG_INFO("ModelRemamingQueue::executeQueue");
 
     string renamed_filename = "";
     string renamed_datecreated = "";
 
-    auto it = separators.begin();
     for(ModelRenamingEngine * each_engine : renaming_engine) {
         if(each_engine->isActive()) {
             pair<string, string> return_pair = each_engine -> execute(input_parameter);
 
             if (return_pair.first != input_parameter.first) {
                 renamed_filename += return_pair.first;
-                if (it != separators.end()) {
-                    renamed_filename += *it;
-                }
             }
 
             if (return_pair.second != input_parameter.second) {
                 renamed_datecreated += return_pair.second;
             }
-            it++;
         }
     }
 

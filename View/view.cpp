@@ -241,8 +241,8 @@ void mediaFileRenamerMainView::create_window() {
                 uiRenamingRootObjects.append(dateGroupBox);
                 renamingChainHorizontalLayout -> addWidget(dateGroupBox);
 
-                auto p_NumberingRename = new NumberingRename(p_model, this, spin_box1, spin_box2);
-                p_NumberingRename -> connectSlots();
+                //auto p_NumberingRename = new NumberingRename(p_model, this, spin_box1, spin_box2);
+                //p_NumberingRename -> connectSlots();
 
                 break;
             }

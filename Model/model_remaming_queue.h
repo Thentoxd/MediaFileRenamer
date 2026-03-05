@@ -37,7 +37,7 @@ public:
     ModelRenamingEngineSeperator * getNthSeperatorEngine(int instanceNumber);
     ModelRenamingEngineCounter * getNthCounterEngine(int instanceNumber);
 
-    pair<string, string> executeQueue(const pair<string, string>& input_parameter, vector<string> separators);
+    pair<string, string> executeQueue(const pair<string, string>& input_parameter);
 
 };
 
