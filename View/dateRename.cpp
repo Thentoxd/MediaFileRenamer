@@ -80,6 +80,7 @@ void dateRename::tryUseMetadata(bool state) {
 
 
 void dateRename::connectSlots() {
+    SPDLOG_INFO("dateRename::connectSlots");
     // These are the slots for the Date renaming widget
     QObject::connect(p_dateQGroupBox, &QGroupBox::toggled, this, &dateRename::datePrefixGroupToggled);
     QObject::connect(p_dateTryExtractCheckBox, &QCheckBox::checkStateChanged, this, &dateRename::setdateTryExtractButtonClicked);
@@ -87,8 +88,17 @@ void dateRename::connectSlots() {
     QObject::connect(p_dateMonthLineEdit, &QLineEdit::textChanged, this, &dateRename::setMonth);
     QObject::connect(p_dateDayLineEdit, &QLineEdit::textChanged, this, &dateRename::setDay);
     QObject::connect(p_dateUseMetadataOriginalDateCheckBox, &QCheckBox::checkStateChanged, this, &dateRename::tryUseMetadata);
+}
 
-    // connect(this -> set_DateTaken_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setDateTakenOriginalButtonClicked);
+
+void dateRename::disconnectSlots() {
+    SPDLOG_INFO("dateRename::disconnectSlots");
+    QObject::disconnect(p_dateQGroupBox, &QGroupBox::toggled, this, &dateRename::datePrefixGroupToggled);
+    QObject::disconnect(p_dateTryExtractCheckBox, &QCheckBox::checkStateChanged, this, &dateRename::setdateTryExtractButtonClicked);
+    QObject::disconnect(p_dateYearLineEdit, &QLineEdit::textChanged, this, &dateRename::setYear);
+    QObject::disconnect(p_dateMonthLineEdit, &QLineEdit::textChanged, this, &dateRename::setMonth);
+    QObject::disconnect(p_dateDayLineEdit, &QLineEdit::textChanged, this, &dateRename::setDay);
+    QObject::disconnect(p_dateUseMetadataOriginalDateCheckBox, &QCheckBox::checkStateChanged, this, &dateRename::tryUseMetadata);
 
 }
 

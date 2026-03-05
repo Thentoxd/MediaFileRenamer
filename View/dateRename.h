@@ -26,6 +26,7 @@ public:
         QLineEdit * param_dateDayLineEdit, QCheckBox * param_useMatadataDateTakenOrigCheckBox,
         mediaFileRenamerMainView * param_mainView);
     void connectSlots();
+    void disconnectSlots();
     int getID();
 
     // Slots
