@@ -80,8 +80,6 @@ add_executable(MediaFileRenamer main.cpp
         View/FilenameBodyRename.h
         View/FilenameBodyRename.cpp
         View/NumberingRename.cpp
-        View/NumberingRename.h
-        View/NumberingRename.h
 )
 
 target_link_libraries(MediaFileRenamer

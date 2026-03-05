@@ -22,14 +22,20 @@ int NumberingRename::getID() {
 
 void NumberingRename::updateStartingValue(int newValue) {
     SPDLOG_DEBUG("NumberingRename::updateStartingValue: {}", newValue);
+    p_model -> setCounterStart(id, newValue);
+    p_mainView -> onSelectedRowsChange();
 }
 
 void NumberingRename::updateSeperatorValue(int newValue) {
     SPDLOG_DEBUG("NumberingRename::updateSeperatorValue: {}", newValue);
+    p_model -> setCounterPadding(id, newValue);
+    p_mainView -> onSelectedRowsChange();
 }
 
 void NumberingRename::groupBoxToggled(bool state) {
     SPDLOG_DEBUG("NumberingRename::updateSeperatorValue: {}", state);
+    p_model -> setEngineCounterState(id, state);
+    p_mainView -> onSelectedRowsChange();
 }
 
 void NumberingRename::connectSlots() {

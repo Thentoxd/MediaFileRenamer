@@ -233,10 +233,10 @@ void mediaFileRenamerMainView::create_window() {
                 dateGroupBox->setMinimumWidth(200);
 
                 QGridLayout *grid_layout = new QGridLayout;
-                grid_layout->setContentsMargins(0, 0, 0, 0);
+                // grid_layout->setContentsMargins(0, 0, 0, 0);
 
                 grid_layout->addWidget(new QLabel("Starting Value", this), 0, 0);
-                grid_layout->addWidget(new QLabel("Seperator", this), 1, 0);
+                grid_layout->addWidget(new QLabel("Padding", this), 1, 0);
                 QSpinBox *spin_box1 = new QSpinBox(this);
                 spin_box1->setMaximumWidth(60);
 
@@ -253,6 +253,7 @@ void mediaFileRenamerMainView::create_window() {
 
                 auto p_NumberingRename = new NumberingRename(p_model, dateGroupBox, this, spin_box1, spin_box2);
                 p_NumberingRename -> connectSlots();
+
                 break;
             }
 
