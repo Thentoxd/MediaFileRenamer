@@ -64,7 +64,7 @@ public:
     virtual void setRenamingEngineDateSetMonth(int instanceNumber, string newText) = 0;
     virtual void setRenamingEngineDateSetDay(int instanceNumber, string newText) = 0;
     virtual void setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) = 0;
-    virtual void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) = 0;
+    virtual void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool state) = 0;
 
 
     // This block defines the interfaces for the Textbody engines

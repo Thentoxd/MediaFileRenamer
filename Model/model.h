@@ -111,7 +111,7 @@ public:
     void setRenamingEngineDateSetMonth(int instanceNumber, string newText) override;
     void setRenamingEngineDateSetDay(int instanceNumber, string newText) override;
     void setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) override;
-    void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) override;
+    void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool state) override;
 
 
     // This block defines the interfaces for the Textbody engines

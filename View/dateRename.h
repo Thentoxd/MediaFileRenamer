@@ -21,8 +21,9 @@ private:
     QCheckBox * p_dateTryExtractCheckBox;
     QCheckBox * p_dateUseMetadataOriginalDateCheckBox;
 public:
-    dateRename(ModelInterface * param_model, QGroupBox * param_dateQGroupBox, QCheckBox * param_dateTryExtractCheckBox, QLineEdit * param_dateYearLineEdit,
-        QLineEdit * param_dateMonthLineEdit, QLineEdit * param_dateDayLineEdit, QCheckBox * param_useMatadataDateTakenOrigCheckBox,
+    dateRename(ModelInterface * param_model, QGroupBox * param_dateQGroupBox, QCheckBox * param_dateTryExtractCheckBox,
+        QLineEdit * param_dateYearLineEdit, QLineEdit * param_dateMonthLineEdit,
+        QLineEdit * param_dateDayLineEdit, QCheckBox * param_useMatadataDateTakenOrigCheckBox,
         mediaFileRenamerMainView * param_mainView);
     void connectSlots();
     int getID();
@@ -30,6 +31,10 @@ public:
     // Slots
     void datePrefixGroupToggled(bool state);
     void setdateTryExtractButtonClicked(bool state);
+    void setYear();
+    void setMonth();
+    void setDay();
+    void tryUseMetadata(bool state);
 };
 
 

@@ -402,11 +402,11 @@ void Model::setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValu
 // }
 
 
-void Model::setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) {
+void Model::setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool state) {
     SPDLOG_INFO("Model::setRenamingEngineDateUseOriginalDateTaken");
     ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
     assert(p_DateEngine != nullptr);
-    p_DateEngine -> setRenamingEngineDateUseOriginalDateTaken(newValue);
+    p_DateEngine -> setRenamingEngineDateUseOriginalDateTaken(state);
 }
 
 
