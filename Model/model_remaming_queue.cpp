@@ -93,6 +93,54 @@ pair<string, string> ModelRemamingQueue::executeQueue(const pair<string, string>
 }
 
 
+ModelRenamingEngineCounter * ModelRemamingQueue::getNthCounterEngine(int instanceNumber) {
+    SPDLOG_INFO("ModelRemamingQueue::getNthCounterEngine");
+    // Work down the renaming_engine vector. Find the nth (instance number) of type ModelRenamingEngineCounter *
+    int count = 1;
+    for (auto each_engine : renaming_engine) {
+        if (typeid(*each_engine) == typeid(ModelRenamingEngineCounter)) {
+            if (count == instanceNumber) {
+                return(dynamic_cast<ModelRenamingEngineCounter*>(each_engine));
+            }
+            count++;
+        }
+    }
+    return(nullptr);
+}
+
+
+ModelRenamingEngineSeperator * ModelRemamingQueue::getNthSeperatorEngine(int instanceNumber) {
+    SPDLOG_INFO("ModelRemamingQueue::getNthSeperatorEngine");
+    // Work down the renaming_engine vector. Find the nth (instance number) of type ModelRenamingEngineSeperator *
+    int count = 1;
+    for (auto each_engine : renaming_engine) {
+        if (typeid(*each_engine) == typeid(ModelRenamingEngineSeperator)) {
+            if (count == instanceNumber) {
+                return(dynamic_cast<ModelRenamingEngineSeperator*>(each_engine));
+            }
+            count++;
+        }
+    }
+    return(nullptr);
+}
+
+
+ModelRenamingEngineTextBody * ModelRemamingQueue::getNthTextbodyEngine(int instanceNumber) {
+    SPDLOG_INFO("ModelRemamingQueue::getNthTextbodyEngine");
+    // Work down the renaming_engine vector. Find the nth (instance number) of type ModelRenamingEngineTextBody *
+    int count = 1;
+    for (auto each_engine : renaming_engine) {
+        if (typeid(*each_engine) == typeid(ModelRenamingEngineTextBody)) {
+            if (count == instanceNumber) {
+                return(dynamic_cast<ModelRenamingEngineTextBody*>(each_engine));
+            }
+            count++;
+        }
+    }
+    return(nullptr);
+}
+
+
 ModelRenamingEngineDate * ModelRemamingQueue::getNthDateEngine(int instanceNumber) {
     SPDLOG_INFO("ModelRemamingQueue::getNthDateEngine");
     // Work down the renaming_engine vector. Find the nth (instance number) of type ModelRenamingEngineDate *

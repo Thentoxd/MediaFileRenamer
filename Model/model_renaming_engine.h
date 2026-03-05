@@ -6,6 +6,7 @@
 #define MEDIAFILERENAMER_MODEL_RENAMING_ENGINE_H
 
 #include <string>
+#include "../main.h"
 
 using namespace std;
 
@@ -20,10 +21,12 @@ public:
     virtual void clear() = 0;
 
     virtual void setActive(bool state) {
+        SPDLOG_INFO("ModelRenamingEngine::setActive to {}", state);
         EngineActive = state;
     }
 
     virtual bool isActive() {
+        SPDLOG_INFO("ModelRenamingEngine::isActive. Returning {}");
         return EngineActive;
     }
 

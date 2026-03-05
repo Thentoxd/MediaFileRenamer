@@ -52,28 +52,34 @@ public:
     // main window. We default to a 0,1,2,1,3 chain. Date/Seperator/FilenameBody/Seperator/Counter
     virtual vector<EngineTypes> getSavedEngineChain() = 0;
 
-    virtual void setRenamingEngineDateSetYear(int instanceNumber, string newText) = 0;
-    virtual void setRenamingEngineDateSetMonth(int instanceNumber, string newText) = 0;
-    virtual void setRenamingEngineDateSetDay(int instanceNumber, string newText) = 0;
-    virtual void setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) = 0;
-
-    // The controls to set the metadata have been moved out of the Date renaming engine.
-    // virtual void setRenamingEngineDateSetOriginalDateTaken(int instanceNumber, bool newValue) = 0;
-    virtual void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) = 0;
 
     // These are the new "set metadata" controls - these are hardcoded into the UI and not part of the renaming chain
     virtual void setMetadataOriginalTakenDateFromFilename() = 0;;
     virtual void setMetadataOriginalTakenDateFromUserGivenYearMonthDay(string param_year, string param_month, string param_day) = 0;;
 
+
+    // This block defines the interfaces for the Date engines
+    virtual void setEngineDateState(int instanceNumber, bool state) = 0;
+    virtual void setRenamingEngineDateSetYear(int instanceNumber, string newText) = 0;
+    virtual void setRenamingEngineDateSetMonth(int instanceNumber, string newText) = 0;
+    virtual void setRenamingEngineDateSetDay(int instanceNumber, string newText) = 0;
+    virtual void setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) = 0;
+    virtual void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) = 0;
+
+
+    // This block defines the interfaces for the Textbody engines
+    virtual void setEngineTextBodyState(int instanceNumber, bool state) = 0;
     virtual void setRenamingEngineTextbody(int instanceNumber, string newText) = 0;
 
-    virtual void setEngineDatePrefix(int instanceNumber, bool state) = 0;
-    virtual void setEngineText(int instanceNumber, bool state) = 0;
-    virtual void setEngineCounterSuffix(int instanceNumber, bool state) = 0;
 
+    // This block defines the interfaces for the Counter engines
+    virtual void setEngineCounterState(int instanceNumber, bool state) = 0;
     virtual void setCounterStart(int instanceNumber, int newValue) = 0;
     virtual void setCounterPadding(int instanceNumber, int newValue) = 0;
 
+
+    // This block defines the interfaces for the Seperator engines
+    virtual void setEngineSeparatorState(int instanceNumber, bool state) = 0;
     virtual void setSeperator(int instanceNumber, string newValue) = 0;
 
     virtual void exitApplication() = 0;

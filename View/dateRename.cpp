@@ -29,7 +29,7 @@ int dateRename::getID() {
 
 void dateRename::datePrefixGroupToggled(bool state) {
     SPDLOG_INFO("dateRename::datePrefixGroupToggled");
-    p_model -> setEngineDatePrefix(id, state);
+    p_model -> setEngineDateState(id, state);
     p_mainView -> onSelectedRowsChange();
 }
 

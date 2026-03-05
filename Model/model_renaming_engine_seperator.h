@@ -29,6 +29,8 @@ public:
     void clear() override;
     void init(int mode) override;
 
+    void setSeperator(string newValue);
+
     pair<string, string> execute(pair<string, string> input_parameter) override;
 };
 

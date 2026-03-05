@@ -177,27 +177,9 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
 }
 
 
-void Model::setEngineDatePrefix(int instanceNumber, bool state) {
-    SPDLOG_INFO("Model::setEngineDatePrefix: {}", instanceNumber);
-
-    // Work down the p_ModelRemamingQueue, find the nth (instance number) of a date engine
-    // And then call the setActive on that engine
-    ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
-    assert(p_DateEngine != nullptr);
-    p_DateEngine->setActive(state);
-}
 
 
-void Model::setEngineText(int instanceNumber, bool state) {
-    SPDLOG_INFO("Model::setEngineText: {}", instanceNumber);
-    //p_ModelRenamingEngineTextBody->setActive(state);
-}
 
-
-void Model::setEngineCounterSuffix(int instanceNumber, bool state) {
-    SPDLOG_INFO("Model::setEngineCounterSuffix: {}", instanceNumber);
-    //p_ModelRenamingEngineCounter->setActive(state);
-}
 
 
 void Model::renameEXIFFile(FileEntry* newFile) {
@@ -343,66 +325,6 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
 }
 
 
-void Model::setCounterStart(int instanceNumber, int newValue) {
-    SPDLOG_INFO("Model::setCounterStart");
-    //p_ModelRenamingEngineCounter -> setCounter(newValue);
-}
-
-
-void Model::setCounterPadding(int instanceNumber, int newValue) {
-    SPDLOG_INFO("Model::setCounterPadding");
-    //p_ModelRenamingEngineCounter -> setPadding(newValue);
-}
-
-
-void Model::setRenamingEngineTextbody(int instanceNumber, string newText) {
-    SPDLOG_INFO("Model::setRenamingEngineTextbody");
-    //p_ModelRenamingEngineTextBody -> setTextBody(newText);
-}
-
-
-void Model::setRenamingEngineDateSetYear(int instanceNumber, string newText) {
-    SPDLOG_INFO("Model::setRenamingEngineDateSetYear");
-    //p_ModelRenamingEngineDate -> setRenamingEngineDateSetYear(newText);
-}
-
-
-void Model::setRenamingEngineDateSetMonth(int instanceNumber, string newText) {
-    SPDLOG_INFO("Model::setRenamingEngineDateSetMonth");
-    //p_ModelRenamingEngineDate -> setRenamingEngineDateSetMonth(newText);
-}
-
-
-void Model::setRenamingEngineDateSetDay(int instanceNumber, string newText) {
-    SPDLOG_INFO("Model::setRenamingEngineDateSetDay");
-    //p_ModelRenamingEngineDate -> setRenamingEngineDateSetDay(newText);
-}
-
-
-void Model::setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) {
-    SPDLOG_INFO("Model::setRenamingEngineDateTryExtractDate");
-    //p_ModelRenamingEngineDate -> setRenamingEngineDateTryExtractDate(newValue);
-}
-
-
-// void Model::setRenamingEngineDateSetOriginalDateTaken(int instanceNumber, bool newValue) {
-//     SPDLOG_INFO("Model::setRenamingEngineDateSetOriginalDateTaken");
-//     p_ModelRenamingEngineDate -> setRenamingEngineDateSetOriginalDateTaken(newValue);
-// }
-
-
-void Model::setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) {
-    SPDLOG_INFO("Model::setRenamingEngineDateUseOriginalDateTaken");
-    //p_ModelRenamingEngineDate -> setRenamingEngineDateUseOriginalDateTaken(newValue);
-}
-
-
-void Model::setSeperator(int instanceNumber, string newValue) {
-    SPDLOG_INFO("Model::setSeperator. Set separator instance {} to {}", instanceNumber, newValue);
-    // separatorA = newValue;
-}
-
-
 void Model::setMetadataOriginalTakenDateFromFilename() {
     SPDLOG_INFO("Model::setMetadataOriginalTakenDateFromFilename");
 }
@@ -423,6 +345,142 @@ void Model::exitApplication() {
 vector<EngineTypes> Model::getSavedEngineChain() {
     SPDLOG_INFO("Model::getSavedEngineChain");
     return p_ModelConfigfile ->getSavedEngineChain();
+}
+
+
+
+
+
+//
+// This block handles all the Data methods
+//
+
+void Model::setEngineDateState(int instanceNumber, bool state) {
+    SPDLOG_INFO("Model::setEngineDatePrefix: {}", instanceNumber);
+
+    // Work down the p_ModelRemamingQueue, find the nth (instance number) of a date engine
+    // And then call the setActive on that engine
+    ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
+    assert(p_DateEngine != nullptr);
+    p_DateEngine->setActive(state);
+}
+
+void Model::setRenamingEngineDateSetYear(int instanceNumber, string newText) {
+    SPDLOG_INFO("Model::setRenamingEngineDateSetYear");
+    ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
+    assert(p_DateEngine != nullptr);
+    p_DateEngine -> setRenamingEngineDateSetYear(newText);
+}
+
+void Model::setRenamingEngineDateSetMonth(int instanceNumber, string newText) {
+    SPDLOG_INFO("Model::setRenamingEngineDateSetMonth");
+    ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
+    assert(p_DateEngine != nullptr);
+    p_DateEngine -> setRenamingEngineDateSetMonth(newText);
+}
+
+
+void Model::setRenamingEngineDateSetDay(int instanceNumber, string newText) {
+    SPDLOG_INFO("Model::setRenamingEngineDateSetDay");
+    ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
+    assert(p_DateEngine != nullptr);
+    p_DateEngine -> setRenamingEngineDateSetDay(newText);
+}
+
+
+void Model::setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) {
+    SPDLOG_INFO("Model::setRenamingEngineDateTryExtractDate");
+    ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
+    assert(p_DateEngine != nullptr);
+    p_DateEngine -> setRenamingEngineDateTryExtractDate(newValue);
+}
+
+
+// void Model::setRenamingEngineDateSetOriginalDateTaken(int instanceNumber, bool newValue) {
+//     SPDLOG_INFO("Model::setRenamingEngineDateSetOriginalDateTaken");
+//     p_ModelRenamingEngineDate -> setRenamingEngineDateSetOriginalDateTaken(newValue);
+// }
+
+
+void Model::setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) {
+    SPDLOG_INFO("Model::setRenamingEngineDateUseOriginalDateTaken");
+    ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
+    assert(p_DateEngine != nullptr);
+    p_DateEngine -> setRenamingEngineDateUseOriginalDateTaken(newValue);
+}
+
+
+
+
+//
+// This block handles all the Textbody methods
+//
+
+
+void Model::setEngineTextBodyState(int instanceNumber, bool state) {
+    SPDLOG_INFO("Model::setEngineTextBodyState: {}", instanceNumber);
+    ModelRenamingEngineTextBody * p_TextBodyEngine = p_ModelRemamingQueue -> getNthTextbodyEngine(instanceNumber);
+    assert(p_TextBodyEngine != nullptr);
+    p_TextBodyEngine->setActive(state);
+}
+
+void Model::setRenamingEngineTextbody(int instanceNumber, string newText) {
+    SPDLOG_INFO("Model::setRenamingEngineTextbody");
+    ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody = p_ModelRemamingQueue -> getNthTextbodyEngine(instanceNumber);
+    assert(p_ModelRenamingEngineTextBody != nullptr);
+    p_ModelRenamingEngineTextBody -> setTextBody(newText);
+}
+
+
+
+//
+// This block handles all the Counter methods
+//
+
+
+void Model::setEngineCounterState(int instanceNumber, bool state) {
+    SPDLOG_INFO("Model::setEngineCounterSuffix: {}", instanceNumber);
+    ModelRenamingEngineCounter * p_ModelRenamingEngineCounter = p_ModelRemamingQueue -> getNthCounterEngine(instanceNumber);
+    assert(p_ModelRenamingEngineCounter != nullptr);
+    p_ModelRenamingEngineCounter->setActive(state);
+}
+
+
+void Model::setCounterStart(int instanceNumber, int newValue) {
+    SPDLOG_INFO("Model::setCounterStart");
+    ModelRenamingEngineCounter * p_ModelRenamingEngineCounter = p_ModelRemamingQueue -> getNthCounterEngine(instanceNumber);
+    assert(p_ModelRenamingEngineCounter != nullptr);
+    p_ModelRenamingEngineCounter -> setCounter(newValue);
+}
+
+
+void Model::setCounterPadding(int instanceNumber, int newValue) {
+    SPDLOG_INFO("Model::setCounterPadding");
+    ModelRenamingEngineCounter * p_ModelRenamingEngineCounter = p_ModelRemamingQueue -> getNthCounterEngine(instanceNumber);
+    assert(p_ModelRenamingEngineCounter != nullptr);
+    p_ModelRenamingEngineCounter -> setPadding(newValue);
+}
+
+
+
+//
+// This block handles all the Seperator methods
+//
+
+
+void Model::setEngineSeparatorState(int instanceNumber, bool state) {
+    SPDLOG_INFO("Model::Model::setEngineSeparatorState: {}", instanceNumber);
+    ModelRenamingEngineSeperator * p_ModelRenamingEngineSeperator = p_ModelRemamingQueue -> getNthSeperatorEngine(instanceNumber);
+    assert(p_ModelRenamingEngineSeperator != nullptr);
+    p_ModelRenamingEngineSeperator -> setActive(state);
+}
+
+
+void Model::setSeperator(int instanceNumber, string newValue) {
+    SPDLOG_INFO("Model::setSeperator. Set separator instance {} to {}", instanceNumber, newValue);
+    ModelRenamingEngineSeperator * p_ModelRenamingEngineSeperator = p_ModelRemamingQueue -> getNthSeperatorEngine(instanceNumber);
+    assert(p_ModelRenamingEngineSeperator != nullptr);
+    p_ModelRenamingEngineSeperator -> setSeperator(newValue);
 }
 
 

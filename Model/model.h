@@ -96,9 +96,40 @@ public:
     void changeEXIFDateTakenOriginal(FileEntry* file);
     void setCurrentWorkingDirectory(string newCurrentWorkingDirectory) override;
 
-    void setEngineDatePrefix(int instanceNumber, bool state) override;
-    void setEngineText(int instanceNumber, bool state) override;
-    void setEngineCounterSuffix(int instanceNumber, bool state) override;
+
+    // virtual void setEngineDateState(int instanceNumber, bool state) = 0;
+    // virtual void setRenamingEngineDateSetYear(int instanceNumber, string newText) = 0;
+    // virtual void setRenamingEngineDateSetMonth(int instanceNumber, string newText) = 0;
+    // virtual void setRenamingEngineDateSetDay(int instanceNumber, string newText) = 0;
+    // virtual void setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) = 0;
+    // virtual void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) = 0;
+
+
+    // This block defines the interfaces for the Date engines
+    void setEngineDateState(int instanceNumber, bool state) override;
+    void setRenamingEngineDateSetYear(int instanceNumber, string newText) override;
+    void setRenamingEngineDateSetMonth(int instanceNumber, string newText) override;
+    void setRenamingEngineDateSetDay(int instanceNumber, string newText) override;
+    void setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) override;
+    void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) override;
+
+
+    // This block defines the interfaces for the Textbody engines
+    void setEngineTextBodyState(int instanceNumber, bool state) override;
+    void setRenamingEngineTextbody(int instanceNumber, string newText) override;
+
+
+    // This block defines the interfaces for the Counter engines
+    void setEngineCounterState(int instanceNumber, bool state) override;
+    void setCounterStart(int instanceNumber, int newValue) override;
+    void setCounterPadding(int instanceNumber, int newValue) override;
+
+
+    // This block defines the interfaces for the Seperator engines
+    void setEngineSeparatorState(int instanceNumber, bool state) override;
+    void setSeperator(int instanceNumber, string newValue) override;
+
+
 
     void reload() override ;
     void clear() override ;
@@ -152,25 +183,16 @@ public:
 
     vector<string> getFolderHistory() override;
 
-    void setRenamingEngineTextbody(int instanceNumber, string newText) override;
 
-    void setCounterStart(int instanceNumber, int newValue) override;
-    void setCounterPadding(int instanceNumber, int newValue) override;
 
     void setDateFormat(string format);
     string getDateFormat();
-
-    void setRenamingEngineDateSetYear(int instanceNumber, string newText) override;
-    void setRenamingEngineDateSetMonth(int instanceNumber, string newText) override;
-    void setRenamingEngineDateSetDay(int instanceNumber, string newText) override;
-    void setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) override;
-    void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool newValue) override;
 
     // void setRenamingEngineDateSetOriginalDateTaken(int instanceNumber, bool newValue) override;
     void setMetadataOriginalTakenDateFromFilename() override;
     void setMetadataOriginalTakenDateFromUserGivenYearMonthDay(string param_year, string param_month, string param_day) override;
 
-    void setSeperator(int instanceNumber, string newValue) override;
+
 
     vector<EngineTypes> getSavedEngineChain() override;
 

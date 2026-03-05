@@ -20,6 +20,13 @@ void ModelRenamingEngineSeperator::init(int mode) {
     SPDLOG_DEBUG("ModelRenamingEngineSeperator::init");
 }
 
+
+void ModelRenamingEngineSeperator::setSeperator(string newValue) {
+    SPDLOG_DEBUG("ModelRenamingEngineSeperator::setSeperator()");
+    textbody = newValue;
+}
+
+
 pair<string, string> ModelRenamingEngineSeperator::execute(pair<string, string> input_parameter) {
     SPDLOG_DEBUG("ModelRenamingEngineSeperator::execute");
     assert(0);

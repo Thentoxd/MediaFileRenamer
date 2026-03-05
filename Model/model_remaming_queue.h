@@ -17,6 +17,7 @@
 #include "model_renaming_engine_date.h"
 #include "model_renaming_engine_counter.h"
 #include "model_renaming_engine_textbody.h"
+#include "model_renaming_engine_seperator.h"
 
 class ModelRemamingQueue {
 private:
@@ -31,7 +32,10 @@ public:
     void appendEngine(ModelRenamingEngine * engine);
     void clearEngines();
     void deleteAllEngines();
-    ModelRenamingEngineDate *  getNthDateEngine(int instanceNumber);
+    ModelRenamingEngineDate * getNthDateEngine(int instanceNumber);
+    ModelRenamingEngineTextBody * getNthTextbodyEngine(int instanceNumber);
+    ModelRenamingEngineSeperator * getNthSeperatorEngine(int instanceNumber);
+    ModelRenamingEngineCounter * getNthCounterEngine(int instanceNumber);
 
     pair<string, string> executeQueue(const pair<string, string>& input_parameter, vector<string> separators);
 
