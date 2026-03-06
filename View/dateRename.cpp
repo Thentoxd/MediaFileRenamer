@@ -23,6 +23,11 @@ dateRename::dateRename(ModelInterface * param_model, QGroupBox * param_dateQGrou
     p_dateUseMetadataOriginalDateCheckBox = param_useMatadataDateTakenOrigCheckBox;
 }
 
+dateRename::~dateRename() {
+    SPDLOG_INFO("dateRename::~dateRename");
+    nextID--;
+}
+
 int dateRename::getID() {
     return id;
 }

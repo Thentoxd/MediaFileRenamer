@@ -15,6 +15,13 @@ separator::separator(ModelInterface * param_model, QLineEdit * param_seperatorLi
     p_model -> setSeperator(id, " ");
 }
 
+
+separator::~separator() {
+    SPDLOG_INFO("separator::~separator");
+    nextID--;
+}
+
+
 int separator::getID() {
     return id;
 }

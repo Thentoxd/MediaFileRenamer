@@ -42,7 +42,7 @@
          </item>
          <item>
           <property name="text">
-           <string>Separator</string>
+           <string>Seperator</string>
           </property>
          </item>
          <item>
@@ -234,7 +234,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="okButton"> 
+        <widget class="QPushButton" name="okButton">
          <property name="text">
           <string>OK</string>
          </property>

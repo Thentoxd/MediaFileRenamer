@@ -16,6 +16,12 @@ FilenameBodyRename::FilenameBodyRename(ModelInterface * param_model, mediaFileRe
 }
 
 
+FilenameBodyRename::~FilenameBodyRename() {
+    SPDLOG_INFO("FilenameBodyRename::~FilenameBodyRename");
+    nextID--;
+}
+
+
 int FilenameBodyRename::getID() {
     return id;
 }

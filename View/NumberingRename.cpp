@@ -16,6 +16,13 @@ NumberingRename::NumberingRename(ModelInterface* param_model, QGroupBox * param_
     p_dateQGroupBox = param_dateQGroupBox;
 }
 
+
+NumberingRename::~NumberingRename() {
+    SPDLOG_INFO("NumberingRename::~NumberingRename");
+    nextID--;
+}
+
+
 int NumberingRename::getID() {
     return id;
 }

@@ -114,6 +114,7 @@ public:
         QLineEdit * param_dateYearLineEdit, QLineEdit * param_dateMonthLineEdit,
         QLineEdit * param_dateDayLineEdit, QCheckBox * param_useMatadataDateTakenOrigCheckBox,
         mediaFileRenamerMainView * param_mainView);
+    ~dateRename();
     void connectSlots();
     void disconnectSlots();
     int getID();
@@ -139,6 +140,7 @@ private:
     QGroupBox * p_QGroupBox;
 public:
     separator(ModelInterface * param_model, QLineEdit * param_seperatorLineEdit, QGroupBox * param_QGroupBox, mediaFileRenamerMainView * param_mainView);
+    ~separator();
     void connectSlots();
     void disconnectSlots();
     int getID();
@@ -162,6 +164,7 @@ private:
 
 public:
     FilenameBodyRename(ModelInterface * param_model, mediaFileRenamerMainView * param_mainView, QGroupBox *param_filenameBodyGroupBox, QLineEdit * param_filenameBodyLineEdit);
+    ~FilenameBodyRename();
     void connectSlots();
     void disconnectSlots();
     int getID();
@@ -184,6 +187,7 @@ private:
     QSpinBox* p_spinBox2;
 public:
     NumberingRename(ModelInterface* param_model, QGroupBox * param_QGroupBox, mediaFileRenamerMainView* param_mainView, QSpinBox* param_spinBox1, QSpinBox* param_spinBox2);
+    ~NumberingRename();
 
     void connectSlots();
     void disconnectSlots();
