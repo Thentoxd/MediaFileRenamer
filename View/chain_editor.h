@@ -12,11 +12,11 @@ class chain_editor : public QDialog, public Ui::Dialog {
 
 public:
     chain_editor( QWidget * parent = 0);
-    void reloadUI();
 
 public slots:
     void onOkClick();
     void onCancelClick();
+    void onResetClick();
 };
 
 
