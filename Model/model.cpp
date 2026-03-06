@@ -170,11 +170,6 @@ void Model::setCurrentWorkingDirectory(string newCurrentWorkingDirectory) {
 }
 
 
-
-
-
-
-
 void Model::renameEXIFFile(FileEntry* newFile) {
     rename((getCurrentWorkingDirectory() + "/" + newFile->getCurrentFileName()).c_str(), (getCurrentWorkingDirectory() + "/" + newFile->getNewFileName()).c_str());
     newFile->setFileName(newFile->getNewFileName());
