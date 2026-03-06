@@ -139,16 +139,16 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
     SPDLOG_DEBUG("{}-{}-{}", year, month, day);\
 
     string newDateTakenOriginal = input_parameter.second;
-    // Do we need to set the Create Date Taken (Original)?
-    if (setDateTaken) {
-        SPDLOG_DEBUG("Need to set the Create Date Taken (Original)");
-        string currentDateTakenOriginal = input_parameter.second;
-
-        SPDLOG_DEBUG("Current Create Date Taken (Original): {}", currentDateTakenOriginal);
-        if (currentDateTakenOriginal.empty()) {
-            newDateTakenOriginal = year + ":" + month + ":" + day + " 12:00:00";
-        }
-    }
+    // // Do we need to set the Create Date Taken (Original)?
+    // if (setDateTaken) {
+    //     SPDLOG_DEBUG("Need to set the Create Date Taken (Original)");
+    //     string currentDateTakenOriginal = input_parameter.second;
+    //
+    //     SPDLOG_DEBUG("Current Create Date Taken (Original): {}", currentDateTakenOriginal);
+    //     if (currentDateTakenOriginal.empty()) {
+    //         newDateTakenOriginal = year + ":" + month + ":" + day + " 12:00:00";
+    //     }
+    // }
 
     return make_pair(return_string, newDateTakenOriginal);
 }
@@ -161,40 +161,68 @@ void ModelRenamingEngineDate::setFormats(vector<string> formats) {
 }
 
 
-void ModelRenamingEngineDate::setRenamingEngineDateSetYear(string newValue) {
-    SPDLOG_INFO("ModelRenamingEngineDate::setRenamingEngineDateSetYear. Set year to {}", newValue);
-    year = newValue;
+void ModelRenamingEngineDate::setRenamingEngineDateSetYearMonthDay(int instanceNumber, string param_Year, string param_Month, string param_Day) {
+    SPDLOG_INFO("ModelRenamingEngineDate::setRenamingEngineDateSetYearMonthDay. Set year to {}, month to {} and day to {}", param_Year, param_Month, param_Day);
+    year = param_Year;
+    month = param_Month;
+    day = param_Day;
+
+    tryExtractDate = false;
+    useDateTaken = false;
+    useGivenYearMonthDay = true;
 }
 
-
-void ModelRenamingEngineDate::setRenamingEngineDateSetMonth(string newValue) {
-    SPDLOG_INFO("ModelRenamingEngineDate::setRenamingEngineDateSetMonth. Set month to {}", newValue);
-    month = newValue;
-}
-
-
-void ModelRenamingEngineDate::setRenamingEngineDateSetDay(string newValue) {
-    SPDLOG_INFO("ModelRenamingEngineDate::setRenamingEngineDateSetDay. Set day to {}", newValue);
-    day = newValue;
-}
+// void ModelRenamingEngineDate::setRenamingEngineDateSetYear(string newValue) {
+//     SPDLOG_INFO("ModelRenamingEngineDate::setRenamingEngineDateSetYear. Set year to {}", newValue);
+//     year = newValue;
+// }
+//
+//
+// void ModelRenamingEngineDate::setRenamingEngineDateSetMonth(string newValue) {
+//     SPDLOG_INFO("ModelRenamingEngineDate::setRenamingEngineDateSetMonth. Set month to {}", newValue);
+//     month = newValue;
+// }
+//
+//
+// void ModelRenamingEngineDate::setRenamingEngineDateSetDay(string newValue) {
+//     SPDLOG_INFO("ModelRenamingEngineDate::setRenamingEngineDateSetDay. Set day to {}", newValue);
+//     day = newValue;
+// }
 
 
 void ModelRenamingEngineDate::clear() {
     SPDLOG_INFO("ModelRenamingEngineDate::clear");
 }
 
+
 void ModelRenamingEngineDate::setRenamingEngineDateTryExtractDate(bool newValue) {
     SPDLOG_INFO("setRenamingEngineDateTryExtractDate to {}", newValue);
     tryExtractDate = newValue;
+    if (newValue) {
+        useDateTaken = false;
+        useGivenYearMonthDay = false;
+    }
+    else {
+        useDateTaken = false;
+        useGivenYearMonthDay = true;
+    }
 }
 
 
-void ModelRenamingEngineDate::setRenamingEngineDateSetOriginalDateTaken(bool newValue) {
-    SPDLOG_INFO("setRenamingEngineDateSetOriginalDateTaken to {}", newValue);
-    setDateTaken = newValue;
-}
+// void ModelRenamingEngineDate::setRenamingEngineDateSetOriginalDateTaken(bool newValue) {
+//     SPDLOG_INFO("setRenamingEngineDateSetOriginalDateTaken to {}", newValue);
+//     setDateTaken = newValue;
+// }
 
 void ModelRenamingEngineDate::setRenamingEngineDateUseOriginalDateTaken(bool newValue) {
     SPDLOG_INFO("setRenamingEngineDateUseOriginalDateTaken to {}", newValue);
     useDateTaken = newValue;
+    if (newValue) {
+        tryExtractDate = false;
+        useGivenYearMonthDay = false;
+    }
+    else {
+        tryExtractDate = true;
+        useGivenYearMonthDay = false;
+    }
 }

@@ -60,10 +60,13 @@ public:
 
     // This block defines the interfaces for the Date engines
     virtual void setEngineDateState(int instanceNumber, bool state) = 0;
-    virtual void setRenamingEngineDateSetYear(int instanceNumber, string newText) = 0;
-    virtual void setRenamingEngineDateSetMonth(int instanceNumber, string newText) = 0;
-    virtual void setRenamingEngineDateSetDay(int instanceNumber, string newText) = 0;
+
+    // The data engine mas three modes. Calling on of these three functions will set the respective mode, and turn off the other two,
+    // This mode tells the Date engine to use the date passed over
+    virtual void setRenamingEngineDateSetYearMonthDay(int instanceNumber, string param_Year, string param_Month, string param_Day) = 0;
+    // This mode is used to try and extract the data from the existing filename
     virtual void setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) = 0;
+    // And this mode, use the Metadata Original Date Taken field for the filename date
     virtual void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool state) = 0;
 
 
