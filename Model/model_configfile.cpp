@@ -207,3 +207,14 @@ void ModelConfigfile::restoreSavedEngineChain() {
     SPDLOG_INFO("Model::restoreSavedEngineChain");
     assert(0);
 }
+
+
+
+void ModelConfigfile::savedNewEngineChain(vector<EngineTypes> newChain) {
+    SPDLOG_INFO("Model::savedNewEngineChain");
+    renaming_chain_parsed.clear();
+    renaming_chain_parsed = newChain;
+    json_data_from_file["renaming_chain"] = renaming_chain_parsed;
+    this->saveConfigFile();
+    return;
+}

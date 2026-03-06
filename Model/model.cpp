@@ -22,23 +22,30 @@ using namespace std;
 
 Model::Model() {
     SPDLOG_INFO("Model Constructor");
+    p_ModelConfigfile = new ModelConfigfile();
+    p_ModelRemamingQueue = new ModelRemamingQueue;
+    p_ModelConfigfile -> loadConfigFile("config.json");
+    this -> setCurrentWorkingDirectory(p_ModelConfigfile -> getCurrentWorkingDirectory());
+    date_formats_parsed = p_ModelConfigfile -> getDateFormatsParsed();
+
+}
+
+
+void Model::resetRenamingChain() {
+    SPDLOG_INFO("Model::ResetRenamingChain");
+    p_ModelRemamingQueue -> emptyQueue();
 }
 
 
 void Model::initialise() {
 
-    p_ModelConfigfile = new ModelConfigfile();
-    p_ModelRemamingQueue = new ModelRemamingQueue;
+
 
     // In the first version of this program we hardcoded the sequence of renaming components
     // We now allow dynamic chains, so first read the last chain from the config file and
     // create the renaming queue
 
     SPDLOG_INFO("Model::initialise");
-
-    p_ModelConfigfile -> loadConfigFile("config.json");
-    this -> setCurrentWorkingDirectory(p_ModelConfigfile -> getCurrentWorkingDirectory());
-    auto date_formats_parsed = p_ModelConfigfile -> getDateFormatsParsed();
 
     auto renaming_chain = p_ModelConfigfile -> getSavedEngineChain();
     SPDLOG_INFO("Loaded renaming chain saved in the config file");
@@ -334,7 +341,9 @@ vector<EngineTypes> Model::getSavedEngineChain() {
 
 void Model::emptyRenamningChainAndRebuild(vector<EngineTypes> newChain) {
     SPDLOG_INFO("Model::emptyRenamningChainAndRebuild");
-
+    this -> resetRenamingChain();
+    p_ModelConfigfile ->savedNewEngineChain(newChain);
+    this -> initialise();
 }
 
 

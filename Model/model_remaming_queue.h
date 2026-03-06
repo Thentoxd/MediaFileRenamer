@@ -32,6 +32,7 @@ public:
     void appendEngine(ModelRenamingEngine * engine);
     void clearEngines();
     void deleteAllEngines();
+    void emptyQueue();
     ModelRenamingEngineDate * getNthDateEngine(int instanceNumber);
     ModelRenamingEngineTextBody * getNthTextbodyEngine(int instanceNumber);
     ModelRenamingEngineSeperator * getNthSeperatorEngine(int instanceNumber);

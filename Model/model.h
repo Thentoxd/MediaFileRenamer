@@ -83,6 +83,8 @@ private:
     ModelConfigfile * p_ModelConfigfile;
     ModelRemamingQueue * p_ModelRemamingQueue;
 
+    vector<string> date_formats_parsed;
+
     // In the old model, we had just three renaming engines in a fixed formation in the queue
     // ModelRenamingEngineDate * p_ModelRenamingEngineDate;
     // ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody;
@@ -134,6 +136,7 @@ public:
     void reload() override ;
     void clear() override ;
     void resetToDefaultButtonClicked();
+    void resetRenamingChain();
 
     FileEntry * getFileEntry(int row) override {
         FileEntry * p_entry = &fileEntries[row];

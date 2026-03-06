@@ -149,3 +149,23 @@ ModelRenamingEngineDate * ModelRemamingQueue::getNthDateEngine(int instanceNumbe
     }
     return(nullptr);
 }
+
+
+void ModelRemamingQueue::emptyQueue() {
+    SPDLOG_INFO("ModelRemamingQueue::emptyQueue");
+    for (auto each_engine : renaming_engine) {
+        delete each_engine;
+        // if (typeid(*each_engine) == typeid(ModelRenamingEngineDate)) {
+        //     delete each_engine;
+        // }
+        // else if (typeid(*each_engine) == typeid(ModelRenamingEngineCounter)) {
+        //
+        // }
+        // else if (typeid(*each_engine) == typeid(ModelRenamingEngineSeperator)) {
+        //
+        // }
+        // else if (typeid(*each_engine) == typeid(ModelRenamingEngineTextBody)) {
+        // }
+    }
+    renaming_engine.clear();
+}

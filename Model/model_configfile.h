@@ -14,6 +14,9 @@ using json = nlohmann::json;
 
 class ModelConfigfile {
 
+private:
+
+
 public:
 
     // The
@@ -39,6 +42,7 @@ public:
     vector<EngineTypes> getSavedEngineChain();
     void updateSavedEngineChain(vector<EngineTypes>);
     void restoreSavedEngineChain();
+    void savedNewEngineChain(vector<EngineTypes>);
 
 protected:
 
