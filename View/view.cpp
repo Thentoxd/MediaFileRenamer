@@ -50,44 +50,8 @@ void mediaFileRenamerMainView::reload_window() {
 }
 
 
-void mediaFileRenamerMainView::create_window() {
-    SPDLOG_INFO("Creating main window ....");
-    QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
 
-    tableWidget->setColumnCount(4);
-
-    this -> updateTable();
-    this -> updateFolderComboBox();
-
-    // Disable editing directly
-    tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-    folderComboBox->setEditable(true);
-
-    this -> redoTableColumnNames();
-
-    connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
-    connect(this -> folderComboBox, &QComboBox::currentIndexChanged, this, &mediaFileRenamerMainView::selectFolderComboBox);
-    connect(this -> renameFilesButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::renameFilesButtonClicked);
-    connect(this -> resetToDefaultsButton, &QPushButton::clicked,  this, &mediaFileRenamerMainView::resetToDefaultButtonClicked);
-    connect(tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &mediaFileRenamerMainView::onSelectedRowsChange);
-    connect(this -> loadPreviews_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::loadPreviews);
-
-    // Menu signal
-    // connect actionExit QAction::triggered   (bool checked = false)
-    connect(this -> actionExit, &QAction::triggered, this, &mediaFileRenamerMainView::menuExit);
-    connect(this -> actionChain_Editor, &QAction::triggered, this, &mediaFileRenamerMainView::menuChainEditor);
-
-    // Connect up the slots for the metadata renaming widgets
-    // setMetadataOriginalCreateDateCheckBox
-    // connect(this -> setMetadataOriginalCreateDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setmetaDataCheckBoxToggled);
-    connect(this -> metadataParseFilenameForDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::metadataParseFilenameForDateCheckBoxToggled);
-    connect(this -> useFixedDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::metadataUseFixedDate);
-
-
-
-
-
+void mediaFileRenamerMainView::createChainWidgets() {
     currentRenamingChain = p_model -> getSavedEngineChain();
 
     // We need to iterate down the currentRenamingChain creating the widgets (followed by a horizontal spacer to soak up the space on the right
@@ -97,7 +61,6 @@ void mediaFileRenamerMainView::create_window() {
     }
 
     for(const EngineTypes eachEngine : currentRenamingChain) {
-
         // Create the widgets for each engine, adding to the renamingChainHorizontalLayout widget
         // We store the root widget for each engine in the uiRenamingRootObjects vector
 
@@ -285,6 +248,45 @@ void mediaFileRenamerMainView::create_window() {
 
         }
     }
+}
+
+
+void mediaFileRenamerMainView::create_window() {
+    SPDLOG_INFO("Creating main window ....");
+    QString qstr = QString::fromStdString(p_model -> getCurrentWorkingDirectory());
+
+    tableWidget->setColumnCount(4);
+
+    this -> updateTable();
+    this -> updateFolderComboBox();
+
+    // Disable editing directly
+    tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    folderComboBox->setEditable(true);
+
+    this -> redoTableColumnNames();
+
+    connect(this -> selectFolderButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::selectFolderButtonClicked);
+    connect(this -> folderComboBox, &QComboBox::currentIndexChanged, this, &mediaFileRenamerMainView::selectFolderComboBox);
+    connect(this -> renameFilesButton, &QPushButton::clicked, this, &mediaFileRenamerMainView::renameFilesButtonClicked);
+    connect(this -> resetToDefaultsButton, &QPushButton::clicked,  this, &mediaFileRenamerMainView::resetToDefaultButtonClicked);
+    connect(tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &mediaFileRenamerMainView::onSelectedRowsChange);
+    connect(this -> loadPreviews_checkBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::loadPreviews);
+
+    // Menu signal
+    // connect actionExit QAction::triggered   (bool checked = false)
+    connect(this -> actionExit, &QAction::triggered, this, &mediaFileRenamerMainView::menuExit);
+    connect(this -> actionChain_Editor, &QAction::triggered, this, &mediaFileRenamerMainView::menuChainEditor);
+
+    // Connect up the slots for the metadata renaming widgets
+    // setMetadataOriginalCreateDateCheckBox
+    // connect(this -> setMetadataOriginalCreateDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setmetaDataCheckBoxToggled);
+    connect(this -> metadataParseFilenameForDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::metadataParseFilenameForDateCheckBoxToggled);
+    connect(this -> useFixedDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::metadataUseFixedDate);
+
+    this -> createChainWidgets();
+
     // We add a final horizontal spacer at the end of the horizontal layout - just to make the spacing look OK
     QSpacerItem *horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Maximum);
     renamingChainHorizontalLayout->addSpacerItem(horizontalSpacer);
@@ -660,7 +662,7 @@ void mediaFileRenamerMainView::updateUIChain(vector<EngineTypes> param_newChain)
     qGroupBoxVector.clear();
 
     p_model -> emptyRenamningChainAndRebuild(param_newChain);
-    //assert(0);
+        this -> createChainWidgets();
 }
 
 

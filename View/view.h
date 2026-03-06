@@ -42,6 +42,7 @@ private:
 
     void updateTable();
     void setYearMonthDayButtonsEnabled(bool newValue);
+    void createChainWidgets();
 
 public:
         mediaFileRenamerMainView(ModelInterface * p_model);
