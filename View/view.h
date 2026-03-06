@@ -7,6 +7,7 @@
 
 #include <QApplication>
 #include <QMainWindow>
+#include <QSpinBox>
 
 #include "ui_media_file_renamer.h"
 #include "../model_interface.h"
@@ -16,11 +17,15 @@
 #include "../Model/model_renaming_engine_textbody.h"
 
 
+class dateRename;
+class separator;
+class FilenameBodyRename;
+class NumberingRename;
 
 class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer {
     QApplication * p_QApplication;
 
-    private:
+private:
     ModelInterface * p_model;
     bool loadPreviewsFlag = false;
     int columnOffset = 0;
@@ -29,10 +34,16 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
 
     vector<EngineTypes> currentRenamingChain;
 
+    vector<dateRename *> dateRenameVector;
+    vector<separator *> seperatorRenameVector;
+    vector<FilenameBodyRename *> filenameBodyRenameVector;
+    vector<NumberingRename *> numberingRenameVector;
+    vector<QGroupBox *> qGroupBoxVector;
+
     void updateTable();
     void setYearMonthDayButtonsEnabled(bool newValue);
 
-    public:
+public:
         mediaFileRenamerMainView(ModelInterface * p_model);
         void create_window();
         void reload_window();
@@ -41,9 +52,11 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void updateFolderComboBox();
         void selectFolderComboBox(int index);
         void onSelectedRowsChange();
+        void updateUIChain(vector<EngineTypes> param_newChain);
+
         vector<int> getSelectedUniqueRows();
 
-    public slots:
+public slots:
         void selectFolderButtonClicked();
         // void onUpdateSelectedButton();
         void setUseDateTakenButtonClicked(Qt::CheckState newState);
@@ -81,5 +94,103 @@ class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer 
         void metadataUseFixedDate(bool newValue);
 };
 
+class dateRename: public QObject {
+protected:
+    static int nextID;
+private:
+    int id;
+    ModelInterface * p_model;
+    QLineEdit * p_dateYearLineEdit;
+    QLineEdit * p_dateMonthLineEdit;
+    QLineEdit * p_dateDayLineEdit;
+    mediaFileRenamerMainView * p_mainView;
+    QGroupBox * p_dateQGroupBox;
+    QCheckBox * p_dateTryExtractCheckBox;
+    QCheckBox * p_dateUseMetadataOriginalDateCheckBox;
+    void    extractEnteredDateAndSendToModel();
+public:
+    dateRename(ModelInterface * param_model, QGroupBox * param_dateQGroupBox, QCheckBox * param_dateTryExtractCheckBox,
+        QLineEdit * param_dateYearLineEdit, QLineEdit * param_dateMonthLineEdit,
+        QLineEdit * param_dateDayLineEdit, QCheckBox * param_useMatadataDateTakenOrigCheckBox,
+        mediaFileRenamerMainView * param_mainView);
+    void connectSlots();
+    void disconnectSlots();
+    int getID();
 
+    // Slots
+    void datePrefixGroupToggled(bool state);
+    void setdateTryExtractButtonClicked(bool state);
+    void setYear();
+    void setMonth();
+    void setDay();
+    void tryUseMetadata(bool state);
+};
+
+
+class separator: public QObject {
+protected:
+    static int nextID;
+private:
+    int id;
+    ModelInterface * p_model;
+    QLineEdit * p_lineEdit;
+    mediaFileRenamerMainView * p_mainView;
+    QGroupBox * p_QGroupBox;
+public:
+    separator(ModelInterface * param_model, QLineEdit * param_seperatorLineEdit, QGroupBox * param_QGroupBox, mediaFileRenamerMainView * param_mainView);
+    void connectSlots();
+    void disconnectSlots();
+    int getID();
+
+    // Slots
+    void separatorToggled(bool state);
+    void setSeperator();
+};
+
+
+class FilenameBodyRename: public QObject {
+protected:
+    static int nextID;
+private:
+    int id;
+    ModelInterface * p_model;
+    mediaFileRenamerMainView * p_mainView;
+
+    QGroupBox * p_filenameBodyGroupBox;
+    QLineEdit * p_filenameBodyLineEdit;
+
+public:
+    FilenameBodyRename(ModelInterface * param_model, mediaFileRenamerMainView * param_mainView, QGroupBox *param_filenameBodyGroupBox, QLineEdit * param_filenameBodyLineEdit);
+    void connectSlots();
+    void disconnectSlots();
+    int getID();
+
+    // Slots
+    void fileBodyToggled(bool state);
+    void fileBodyTextChange();
+};
+
+
+class NumberingRename: public QObject {
+protected:
+    static int nextID;
+private:
+    int id;
+    ModelInterface* p_model;
+    mediaFileRenamerMainView* p_mainView;
+    QGroupBox * p_dateQGroupBox;
+    QSpinBox* p_spinBox1;
+    QSpinBox* p_spinBox2;
+public:
+    NumberingRename(ModelInterface* param_model, QGroupBox * param_QGroupBox, mediaFileRenamerMainView* param_mainView, QSpinBox* param_spinBox1, QSpinBox* param_spinBox2);
+
+    void connectSlots();
+    void disconnectSlots();
+    int getID();
+
+    // Slots
+    void updateStartingValue(int newValue);
+    void updatePaddingValue(int newValue);
+    void groupBoxToggled(bool state);
+};
 #endif //MEDIAFILERENAMER_VIEW_H

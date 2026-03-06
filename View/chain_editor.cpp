@@ -8,7 +8,7 @@
 #include "../main.h"
 #include "spdlog/spdlog.h"
 
-chain_editor::chain_editor( QWidget * parent) : QDialog(parent) {
+chain_editor::chain_editor( QWidget * parent, mediaFileRenamerMainView * param_mediaFileRenamerMainView) : QDialog(parent) {
 
     setupUi(this);
     connect(cancelButton, &QPushButton::clicked, this, &chain_editor::onCancelClick);
@@ -16,6 +16,7 @@ chain_editor::chain_editor( QWidget * parent) : QDialog(parent) {
     connect(resetButton, &QPushButton::clicked, this, &chain_editor::onResetClick);
 
     // perform additional setup here ...
+    p_mediaFileRenamerMainView = param_mediaFileRenamerMainView;
 }
 
 void chain_editor::onOkClick() {
@@ -36,7 +37,7 @@ void chain_editor::onOkClick() {
             parsed_renaming_engine.push_back(NumberingEngine);
         }
     }
-
+    p_mediaFileRenamerMainView -> updateUIChain(parsed_renaming_engine);
     close();
 }
 

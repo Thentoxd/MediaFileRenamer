@@ -15,9 +15,9 @@
 #include "../Model/model.h"
 
 #include "chain_editor.h"
+#include "types.hpp"
 #include "dateRename.h"
 #include "separator.h"
-#include "types.hpp"
 #include "FilenameBodyRename.h"
 #include "NumberingRename.h"
 
@@ -166,6 +166,12 @@ void mediaFileRenamerMainView::create_window() {
                 auto p_date = new dateRename(p_model, dateGroupBox, dateCheckBox, dateYearLineEdit, dateMonthLineEdit, dateDayLineEdit, dateUseMetadataOriginalDateCheckBox, this);
                 p_date -> connectSlots();
 
+                // If the UI is changed, well need to disconnect the slots and delete this dateRename object
+                dateRenameVector.push_back(p_date);
+
+                // If the UI is changed, we'll need to clean up all these dynamic widgets/layouts. Store on this list to do that.
+                qGroupBoxVector.push_back(dateGroupBox);
+
                 break;
             }
 
@@ -195,6 +201,12 @@ void mediaFileRenamerMainView::create_window() {
                 SPDLOG_INFO("Created separator instance with ID {}", separatorID);
                 p_separator -> connectSlots();
 
+                // If the UI is changed, we'll need to disconnect the slots and delete this dateRename object
+                seperatorRenameVector.push_back(p_separator);
+
+                // If the UI is changed, we'll need to clean up all these dynamic widgets/layouts. Store on this list to do that.
+                qGroupBoxVector.push_back(seperatorGroupBox);
+
                 break;
             }
 
@@ -220,6 +232,12 @@ void mediaFileRenamerMainView::create_window() {
 
                 auto p_FilenameBody = new FilenameBodyRename(p_model, this, filenameBodyGroupBox, filenameBodyLineEdit);
                 p_FilenameBody -> connectSlots();
+
+                // If the UI is changed, well need to disconnect the slots and delete this dateRename object
+                filenameBodyRenameVector.push_back(p_FilenameBody);
+
+                // If the UI is changed, we'll need to clean up all these dynamic widgets/layouts. Store on this list to do that.
+                qGroupBoxVector.push_back(filenameBodyGroupBox);
 
                 break;
             }
@@ -255,6 +273,12 @@ void mediaFileRenamerMainView::create_window() {
 
                 auto p_NumberingRename = new NumberingRename(p_model, dateGroupBox, this, spin_box1, spin_box2);
                 p_NumberingRename -> connectSlots();
+
+                // If the UI is changed, well need to disconnect the slots and delete this dateRename object
+                numberingRenameVector.push_back(p_NumberingRename);
+
+                // If the UI is changed, we'll need to clean up all these dynamic widgets/layouts. Store on this list to do that.
+                qGroupBoxVector.push_back(dateGroupBox);
 
                 break;
             }
@@ -600,8 +624,43 @@ vector<int> mediaFileRenamerMainView::getSelectedUniqueRows() {
 
 void mediaFileRenamerMainView::menuChainEditor(bool newValue) {
     SPDLOG_INFO("mediaFileRenamerMainView::menuChainEditor");
-    auto chain_editor_instance = new chain_editor(this);
+    auto chain_editor_instance = new chain_editor(this, this);
     chain_editor_instance->exec();
+}
+
+
+void mediaFileRenamerMainView::updateUIChain(vector<EngineTypes> param_newChain) {
+    SPDLOG_INFO("mediaFileRenamerMainView::updateUIChain");
+
+    // Need to work through the 4 vectors, calling disconnect on each. Then deleting all the objects
+    for (dateRename * eachDateRename : dateRenameVector) {
+        eachDateRename -> disconnectSlots();
+        delete eachDateRename;
+    }
+    dateRenameVector.clear();
+    for (separator * eachSeperator : seperatorRenameVector) {
+        eachSeperator -> disconnectSlots();
+        delete eachSeperator;
+    }
+    seperatorRenameVector.clear();
+    for (FilenameBodyRename * eachFilenameBodyRename : filenameBodyRenameVector) {
+        eachFilenameBodyRename -> disconnectSlots();
+        delete eachFilenameBodyRename;
+    }
+    filenameBodyRenameVector.clear();
+    for (NumberingRename * eachNumberingRename : numberingRenameVector) {
+        eachNumberingRename -> disconnectSlots();
+        delete eachNumberingRename;
+    }
+    filenameBodyRenameVector.clear();
+
+    for (QGroupBox * eachQGroupBox : qGroupBoxVector) {
+        delete eachQGroupBox;
+    }
+    qGroupBoxVector.clear();
+
+    p_model -> emptyRenamningChainAndRebuild(param_newChain);
+    //assert(0);
 }
 
 

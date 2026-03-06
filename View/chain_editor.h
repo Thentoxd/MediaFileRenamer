@@ -6,12 +6,16 @@
 #define MEDIAFILERENAMER_CHAIN_EDITOR_H
 
 #include "ui_chain_editor.h"
+#include "view.h"
 
 class chain_editor : public QDialog, public Ui::Dialog {
     Q_OBJECT
 
+private:
+    mediaFileRenamerMainView * p_mediaFileRenamerMainView;
+
 public:
-    chain_editor( QWidget * parent = 0);
+    chain_editor( QWidget * parent, mediaFileRenamerMainView * param_mediaFileRenamerMainView);
 
 public slots:
     void onOkClick();

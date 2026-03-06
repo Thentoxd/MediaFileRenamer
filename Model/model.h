@@ -110,9 +110,6 @@ public:
     // This block defines the interfaces for the Date engines
     void setEngineDateState(int instanceNumber, bool state) override;
     void setRenamingEngineDateSetYearMonthDay(int instanceNumber, string param_Year, string param_Month, string Param_Day) override;
-    // void setRenamingEngineDateSetYear(int instanceNumber, string newText) override;
-    // void setRenamingEngineDateSetMonth(int instanceNumber, string newText) override;
-    // void setRenamingEngineDateSetDay(int instanceNumber, string newText) override;
     void setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) override;
     void setRenamingEngineDateUseOriginalDateTaken(int instanceNumber, bool state) override;
 
