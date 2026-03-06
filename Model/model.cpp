@@ -8,6 +8,7 @@
 #include <vector>
 
 #include <filesystem>
+#include <QApplication>
 #include <qstring.h>
 
 
@@ -320,8 +321,8 @@ void Model::setMetadataOriginalTakenDateFromUserGivenYearMonthDay(string param_y
 
 void Model::exitApplication() {
     SPDLOG_INFO("Model::exitApplication");
-
-    // Can we throw an exit exception here?
+    QApplication::exit(0);
+    // always throws QThreadStorageError: thread 0x201f97a9da0
 }
 
 

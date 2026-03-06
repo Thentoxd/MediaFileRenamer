@@ -15,6 +15,10 @@ chain_editor::chain_editor( QWidget * parent) : QDialog(parent) {
     // perform additional setup here ...
 }
 
+void chain_editor::reloadUI() {
+
+}
+
 void chain_editor::onOkClick() {
     SPDLOG_INFO("chain_editor::onOkClick");
     close();
@@ -22,6 +26,7 @@ void chain_editor::onOkClick() {
 
 void chain_editor::onCancelClick() {
     // only SPDLOG ERROR is producing an output???
-    SPDLOG_DEBUG("chain_editor::onCancelClick");
+    // no - only DEBUG doesn't produce an output
+    SPDLOG_INFO("chain_editor::onCancelClick");
     close();
 }
