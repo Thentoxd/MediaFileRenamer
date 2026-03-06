@@ -48,46 +48,61 @@ void dateRename::setdateTryExtractButtonClicked(bool state) {
         p_dateYearLineEdit -> setEnabled(false);
         p_dateMonthLineEdit -> setEnabled(false);
         p_dateDayLineEdit -> setEnabled(false);
+        p_model -> setRenamingEngineDateTryExtractDate(id, state);
     }
     else {
         SPDLOG_INFO("dateRename::setdateTryExtractButtonClicked Off");
         p_dateYearLineEdit -> setEnabled(true);
         p_dateMonthLineEdit -> setEnabled(true);
         p_dateDayLineEdit -> setEnabled(true);
+
+        QString yearString = p_dateYearLineEdit -> text();
+        string yearEntered = yearString.toStdString();
+
+        QString monthString = p_dateMonthLineEdit -> text();
+        string monthEntered = monthString.toStdString();
+
+        QString dayString = p_dateDayLineEdit -> text();
+        string dayEntered = dayString.toStdString();
+
+        p_model -> setRenamingEngineDateSetYearMonthDay(id, yearEntered, monthEntered, dayEntered);
     }
 
-    p_model -> setRenamingEngineDateUseOriginalDateTaken(id, state);
+    p_mainView -> onSelectedRowsChange();
+}
+
+
+void dateRename::extractEnteredDateAndSendToModel() {
+    SPDLOG_INFO("dateRename::extractEnteredDateAndSendToModel");
+
+    QString yearEnteredQstring = p_dateYearLineEdit -> text();
+    string yearEntered = yearEnteredQstring.toStdString();
+
+    QString monthString = p_dateMonthLineEdit -> text();
+    string monthEntered = monthString.toStdString();
+
+    QString dayString = p_dateDayLineEdit -> text();
+    string dayEntered = dayString.toStdString();
+
+    p_model -> setRenamingEngineDateSetYearMonthDay(id, yearEntered, monthEntered, dayEntered);
     p_mainView -> onSelectedRowsChange();
 }
 
 
 void dateRename::setYear() {
     SPDLOG_INFO("dateRename::setYear");
-    QString yearEnteredQstring = p_dateYearLineEdit -> text();
-    string yearEntered = yearEnteredQstring.toStdString();
-    SPDLOG_INFO("Extracted year: {}", yearEntered);
-    p_model -> setRenamingEngineDateSetYear(id, yearEntered);
-    p_mainView -> onSelectedRowsChange();
+    this -> extractEnteredDateAndSendToModel();
 }
 
 
 void dateRename::setMonth() {
     SPDLOG_INFO("dateRename::setMonth");
-    QString monthEnteredQstring = p_dateMonthLineEdit -> text();
-    string monthEntered = monthEnteredQstring.toStdString();
-    SPDLOG_INFO("Extracted month: {}", monthEntered);
-    p_model -> setRenamingEngineDateSetMonth(id, monthEntered);
-    p_mainView -> onSelectedRowsChange();
+    this -> extractEnteredDateAndSendToModel();
 }
 
 
 void dateRename::setDay() {
-    SPDLOG_INFO("dateRename::setDay");
-    QString dayEnteredQstring = p_dateDayLineEdit -> text();
-    string dayEntered = dayEnteredQstring.toStdString();
-    SPDLOG_INFO("Extracted month: {}", dayEntered);
-    p_model -> setRenamingEngineDateSetMonth(id, dayEntered);
-    p_mainView -> onSelectedRowsChange();
+    this -> extractEnteredDateAndSendToModel();
 }
 
 

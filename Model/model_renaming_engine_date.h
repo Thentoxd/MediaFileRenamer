@@ -30,8 +30,9 @@ private:
     string day;
 
     bool tryExtractDate = true;
-    bool setDateTaken = false;
+    // bool setDateTaken = false;
     bool useDateTaken = false;
+    bool useGivenYearMonthDay = false;
 
     char separator = ' ';
 
@@ -47,13 +48,16 @@ public:
     void clear() override;
     pair<string, string> execute(pair<string, string> input_parameter) override;
 
-    void setRenamingEngineDateSetYear(string newValue);
-    void setRenamingEngineDateSetMonth(string newValue);
-    void setRenamingEngineDateSetDay(string newValue);
+
     void setFormats(vector<string> formats);
 
+
+    // void setRenamingEngineDateSetYear(string newValue);
+    // void setRenamingEngineDateSetMonth(string newValue);
+    // void setRenamingEngineDateSetDay(string newValue);
+    void setRenamingEngineDateSetYearMonthDay(int instanceNumber, string param_Year, string param_Month, string Param_Day);
     void setRenamingEngineDateTryExtractDate(bool newValue);
-    void setRenamingEngineDateSetOriginalDateTaken(bool newValue);
+    // void setRenamingEngineDateSetOriginalDateTaken(bool newValue);
     void setRenamingEngineDateUseOriginalDateTaken(bool newValue);
 
     string patternToRegex(const string& pattern);

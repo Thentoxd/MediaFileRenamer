@@ -362,27 +362,37 @@ void Model::setEngineDateState(int instanceNumber, bool state) {
     p_DateEngine->setActive(state);
 }
 
-void Model::setRenamingEngineDateSetYear(int instanceNumber, string newText) {
-    SPDLOG_INFO("Model::setRenamingEngineDateSetYear");
-    ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
-    assert(p_DateEngine != nullptr);
-    p_DateEngine -> setRenamingEngineDateSetYear(newText);
-}
 
-void Model::setRenamingEngineDateSetMonth(int instanceNumber, string newText) {
-    SPDLOG_INFO("Model::setRenamingEngineDateSetMonth");
+void Model::setRenamingEngineDateSetYearMonthDay(int instanceNumber, string param_Year, string param_Month, string Param_Day) {
+    SPDLOG_INFO("Model::setRenamingEngineDateSetYearMonthDay");
     ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
-    assert(p_DateEngine != nullptr);
-    p_DateEngine -> setRenamingEngineDateSetMonth(newText);
+    p_DateEngine -> setRenamingEngineDateSetYearMonthDay(instanceNumber, param_Year, param_Month, Param_Day);
 }
 
 
-void Model::setRenamingEngineDateSetDay(int instanceNumber, string newText) {
-    SPDLOG_INFO("Model::setRenamingEngineDateSetDay");
-    ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
-    assert(p_DateEngine != nullptr);
-    p_DateEngine -> setRenamingEngineDateSetDay(newText);
-}
+
+
+// void Model::setRenamingEngineDateSetYear(int instanceNumber, string newText) {
+//     SPDLOG_INFO("Model::setRenamingEngineDateSetYear");
+//     ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
+//     assert(p_DateEngine != nullptr);
+//     p_DateEngine -> setRenamingEngineDateSetYear(newText);
+// }
+//
+// void Model::setRenamingEngineDateSetMonth(int instanceNumber, string newText) {
+//     SPDLOG_INFO("Model::setRenamingEngineDateSetMonth");
+//     ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
+//     assert(p_DateEngine != nullptr);
+//     p_DateEngine -> setRenamingEngineDateSetMonth(newText);
+// }
+//
+//
+// void Model::setRenamingEngineDateSetDay(int instanceNumber, string newText) {
+//     SPDLOG_INFO("Model::setRenamingEngineDateSetDay");
+//     ModelRenamingEngineDate * p_DateEngine = p_ModelRemamingQueue -> getNthDateEngine(instanceNumber);
+//     assert(p_DateEngine != nullptr);
+//     p_DateEngine -> setRenamingEngineDateSetDay(newText);
+// }
 
 
 void Model::setRenamingEngineDateTryExtractDate(int instanceNumber, bool newValue) {

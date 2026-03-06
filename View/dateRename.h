@@ -20,6 +20,7 @@ private:
     QGroupBox * p_dateQGroupBox;
     QCheckBox * p_dateTryExtractCheckBox;
     QCheckBox * p_dateUseMetadataOriginalDateCheckBox;
+    void    extractEnteredDateAndSendToModel();
 public:
     dateRename(ModelInterface * param_model, QGroupBox * param_dateQGroupBox, QCheckBox * param_dateTryExtractCheckBox,
         QLineEdit * param_dateYearLineEdit, QLineEdit * param_dateMonthLineEdit,
