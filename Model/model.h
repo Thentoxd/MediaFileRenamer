@@ -90,6 +90,7 @@ private:
     string metadataYear;
     string metadataMonth;
     string metadataDay;
+    string patternToRegex(const string& pattern);
 
 
 public:
@@ -202,7 +203,7 @@ public:
     void exitApplication() override;
 
     void clearRenamingChain() override;
-    vector<pair<string, string>> executeRenamingChain(vector<int> row, bool renameFiles, bool renameDateTakenOriginal) override;
+    vector<pair<string, string>> executeRenamingChain(vector<int> row, bool commitChanges) override;
     void emptyRenamningChainAndRebuild(vector<EngineTypes> newChain) override;
 };
 

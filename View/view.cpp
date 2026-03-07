@@ -373,7 +373,7 @@ void mediaFileRenamerMainView::onSelectedRowsChange() {
     }
 
     p_model ->clearRenamingChain();
-    vector<pair<string, string>> returnPairList = p_model -> executeRenamingChain(row_values, false, false);
+    vector<pair<string, string>> returnPairList = p_model -> executeRenamingChain(row_values, false);
 
     int counter = 0;
     for (auto returnPair : returnPairList)
@@ -439,7 +439,7 @@ void mediaFileRenamerMainView::loadPreviews(Qt::CheckState state) {
 void mediaFileRenamerMainView::renameFilesButtonClicked() {
     SPDLOG_INFO("mediaFileRenamerMainView::renameFilesButtonClicked");
     p_model->clearRenamingChain();
-    p_model->executeRenamingChain(getSelectedUniqueRows(), true, true);
+    p_model->executeRenamingChain(getSelectedUniqueRows(), true);
     reload_window();
 }
 

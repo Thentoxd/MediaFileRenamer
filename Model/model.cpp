@@ -256,7 +256,36 @@ void Model::clearRenamingChain() {
 }
 
 
-vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool renameFiles, bool renameDateTakenOriginal) {
+string Model::patternToRegex(const string& pattern) {
+    string regex;
+    size_t n = pattern.size();
+    for (size_t i = 0; i < n; ++i) {
+        char c = pattern[i];
+        int count = 1;
+
+        while (i + 1 < n && pattern[i + 1] == c) {
+            count++;
+            i++;
+        }
+
+        if (c == 'Y' || c == 'M' || c == 'D') {
+            regex += "\\d{" + to_string(count) + "}";
+        }
+        else {
+            if (c == '.' || c == '^' || c == '$' || c == '*' || c == '+' ||
+                c == '?' || c == '{' || c == '}' || c == '[' || c == ']' ||
+                c == '\\' || c == '|' || c == '(' || c == ')') {
+                regex += "\\";
+                }
+            regex += c;
+        }
+    }
+
+    return regex;
+}
+
+
+vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool commitChanges) {
     SPDLOG_INFO("Model::executeRenamingChain");
     vector<pair<string, string>> returnPairList;
 
@@ -275,14 +304,54 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
 
         returnPair.first += currentFileExtension;
 
-        returnPairList.push_back(returnPair);
 
-        if(renameFiles) {
+
+        if(commitChanges) {
             SPDLOG_INFO("Renaming file {} to {}", getCurrentWorkingDirectory() + "/" + currentFilename, getCurrentWorkingDirectory() + "/" + returnPair.first);
             rename((getCurrentWorkingDirectory() + "/" + currentFilename).c_str(), (getCurrentWorkingDirectory() + "/" + returnPair.first).c_str());
         }
 
-        if(renameDateTakenOriginal) {
+        if(parseResultFilenameForMetadataCreateDateOriginal) {
+            SPDLOG_INFO("Parsing the filename for a date, then setting Metadata Original Create Date to that");
+
+            string stringToWorkOn = "";
+            stringToWorkOn = returnPair.first;
+            SPDLOG_INFO("Parsing {}", stringToWorkOn);
+
+            vector<string> formats = p_ModelConfigfile -> getDateFormatsParsed();
+            string year;
+            string month;
+            string day;
+            for(string& it : formats) {
+                bool found = false;
+                string found_equivalent = "";
+                regex regex_format(patternToRegex(it));
+                smatch match;
+
+                std::string::const_iterator searchStart(stringToWorkOn.cbegin());
+                while(regex_search(searchStart, stringToWorkOn.cend(), match, regex_format)) {
+                    found = true;
+                    found_equivalent = match[0];
+                    break;
+                }
+
+                if(found) {
+                    for(int i = 0; i < it.size(); i++) {
+                        if(it[i] == 'Y') {
+                            year.push_back(found_equivalent[i]);
+                        } else if(it[i] == 'M') {
+                            month.push_back(found_equivalent[i]);
+                        } else if(it[i] == 'D') {
+                            day.push_back(found_equivalent[i]);
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            string exif_date = year + ":" + month + ":" + day + " 12:00:00";
+            SPDLOG_INFO("Extracted EXIF date {}", exif_date);
 
             // If currentFileExtension is not in the list of filetypes we can only edit the filenames, try to edit the metadata
             bool file_type_we_can_only_edit_filename = false;
@@ -292,7 +361,7 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
                     file_type_we_can_only_edit_filename = true;
                 }
 
-            if (!file_type_we_can_only_edit_filename) {
+            if ((!file_type_we_can_only_edit_filename) && (commitChanges == true)) {
                 try {
                     // int year = 0, month = 0, day = 0;
                     //
@@ -304,16 +373,24 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
                     //
                     // exifData["Exif.Photo.DateTimeOriginal"] = newDate;
 
-                    exifData["Exif.Photo.DateTimeOriginal"] = returnPair.second;
+                    // exifData["Exif.Photo.DateTimeOriginal"] = returnPair.second;
+                    exifData["Exif.Photo.DateTimeOriginal"] = exif_date;
 
                     image->writeMetadata();
 
-                    SPDLOG_INFO("Renamed {}'s date time original to {}", currentFilename, returnPair.second);
+                    SPDLOG_INFO("Renamed {}'s date time original to {}", currentFilename, exif_date);
                 } catch(Exiv2::Error& e) {
                     SPDLOG_ERROR("Couldn't rename {}'s EXIF Current Date Taken Original");
                 }
             }
+            returnPair.second = exif_date;
         }
+
+        if (setMetadataCreateDateOriginalFromGivenValues) {
+            SPDLOG_INFO("Setting Metadata Original Create Date to the values given");
+        }
+
+        returnPairList.push_back(returnPair);
     }
 
     return returnPairList;

@@ -88,7 +88,7 @@ public:
     virtual void exitApplication() = 0;
 
     virtual void clearRenamingChain() = 0;
-    virtual vector<pair<string, string>> executeRenamingChain(vector<int> rows, bool renameFiles, bool renameDateTakenOriginal) = 0;
+    virtual vector<pair<string, string>> executeRenamingChain(vector<int> rows, bool commitChanges) = 0;
     virtual void emptyRenamningChainAndRebuild(vector<EngineTypes> newChain) = 0;
 };
 
