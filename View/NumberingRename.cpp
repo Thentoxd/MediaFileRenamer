@@ -47,6 +47,7 @@ void NumberingRename::groupBoxToggled(bool state) {
 
 void NumberingRename::connectSlots() {
     connect(p_dateQGroupBox, &QGroupBox::toggled, this, &NumberingRename::groupBoxToggled);
+    // connect(p_spinBox1, &QSpinBox::valueChanged, this, &NumberingRename::updateStartingValue);
     connect(p_spinBox1, &QSpinBox::valueChanged, this, &NumberingRename::updateStartingValue);
     connect(p_spinBox2, &QSpinBox::valueChanged, this, &NumberingRename::updatePaddingValue);
 }
