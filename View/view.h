@@ -40,6 +40,8 @@ private:
     vector<NumberingRename *> numberingRenameVector;
     vector<QGroupBox *> qGroupBoxVector;
 
+    QSpacerItem *horizontalSpacer;
+
     void updateTable();
     void setYearMonthDayButtonsEnabled(bool newValue);
     void createChainWidgets();

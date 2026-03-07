@@ -248,6 +248,10 @@ void mediaFileRenamerMainView::createChainWidgets() {
 
         }
     }
+
+    // We add a final horizontal spacer at the end of the horizontal layout - just to make the spacing look OK
+    horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Maximum);
+    renamingChainHorizontalLayout->addSpacerItem(horizontalSpacer);
 }
 
 
@@ -286,11 +290,6 @@ void mediaFileRenamerMainView::create_window() {
     connect(this -> useFixedDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::metadataUseFixedDate);
 
     this -> createChainWidgets();
-
-    // We add a final horizontal spacer at the end of the horizontal layout - just to make the spacing look OK
-    QSpacerItem *horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Maximum);
-    renamingChainHorizontalLayout->addSpacerItem(horizontalSpacer);
-
 
     // We need to add widgets to the renamingChainHorizontalLayout widget
     // QLabel *test_label = new QLabel(this);
@@ -660,6 +659,9 @@ void mediaFileRenamerMainView::updateUIChain(vector<EngineTypes> param_newChain)
         delete eachQGroupBox;
     }
     qGroupBoxVector.clear();
+
+    renamingChainHorizontalLayout->removeItem(horizontalSpacer);
+    delete horizontalSpacer;
 
     p_model -> emptyRenamningChainAndRebuild(param_newChain);
         this -> createChainWidgets();
