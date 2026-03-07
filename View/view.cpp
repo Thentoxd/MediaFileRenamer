@@ -653,7 +653,7 @@ void mediaFileRenamerMainView::updateUIChain(vector<EngineTypes> param_newChain)
         eachNumberingRename -> disconnectSlots();
         delete eachNumberingRename;
     }
-    filenameBodyRenameVector.clear();
+    numberingRenameVector.clear();
 
     for (QGroupBox * eachQGroupBox : qGroupBoxVector) {
         delete eachQGroupBox;
