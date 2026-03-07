@@ -95,6 +95,10 @@ public slots:
         // void setmetaDataCheckBoxToggled(bool state);
         void metadataParseFilenameForDateCheckBoxToggled(bool state);
         void metadataUseFixedDate(bool newValue);
+        void metadataFetchDateAndCallInterface();
+        void metadataYearLineEditChange();
+        void metadataMonthLineEditChange();
+        void metadataDayLineEditChange();
 };
 
 class dateRename: public QObject {

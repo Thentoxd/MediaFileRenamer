@@ -27,7 +27,11 @@ Model::Model() {
     p_ModelConfigfile -> loadConfigFile("config.json");
     this -> setCurrentWorkingDirectory(p_ModelConfigfile -> getCurrentWorkingDirectory());
     date_formats_parsed = p_ModelConfigfile -> getDateFormatsParsed();
-
+    parseResultFilenameForMetadataCreateDateOriginal = false;
+    setMetadataCreateDateOriginalFromGivenValues  = false;
+    metadataYear = "";
+    metadataMonth = "";
+    metadataDay = "";
 }
 
 
@@ -316,13 +320,21 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
 }
 
 
-void Model::setMetadataOriginalTakenDateFromFilename() {
+void Model::setMetadataOriginalTakenDateFromFilename(bool state) {
     SPDLOG_INFO("Model::setMetadataOriginalTakenDateFromFilename");
+    SPDLOG_INFO("Setting parseResultFilenameForMetadataCreateDateOriginal to {}", state);
+    parseResultFilenameForMetadataCreateDateOriginal = state;
 }
 
 
-void Model::setMetadataOriginalTakenDateFromUserGivenYearMonthDay(string param_year, string param_month, string param_day) {
+void Model::setMetadataOriginalTakenDateFromUserGivenYearMonthDay(bool state, string param_year, string param_month, string param_day) {
     SPDLOG_INFO("Model::setMetadataOriginalTakenDateFromFilename");
+    metadataYear = param_year;
+    metadataMonth = param_month;
+    metadataDay = param_day;
+    SPDLOG_INFO("Set stored year, month, day to {}, {}, {}", metadataYear, metadataMonth, metadataDay);
+    setMetadataCreateDateOriginalFromGivenValues = state;
+    SPDLOG_INFO("Setting setMetadataCreateDateOriginalFromGivenValues to {}", state);
 }
 
 

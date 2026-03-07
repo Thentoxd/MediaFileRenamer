@@ -77,18 +77,20 @@ private:
     string dateFormat = "YYYY-MM-DD";
     vector<FileEntry> fileEntries;
 
-    string separatorA = " ";
-    string separatorB = " ";
-
     ModelConfigfile * p_ModelConfigfile;
     ModelRemamingQueue * p_ModelRemamingQueue;
 
     vector<string> date_formats_parsed;
 
-    // In the old model, we had just three renaming engines in a fixed formation in the queue
-    // ModelRenamingEngineDate * p_ModelRenamingEngineDate;
-    // ModelRenamingEngineTextBody * p_ModelRenamingEngineTextBody;
-    // ModelRenamingEngineCounter * p_ModelRenamingEngineCounter;
+    // When setting metadata, we run in one of two modes
+    // If this is true, we parse the resulting filename for the Metadata Create Date (Original)
+    bool parseResultFilenameForMetadataCreateDateOriginal;
+    // If this is true, we use the Year, Month, Date given
+    bool setMetadataCreateDateOriginalFromGivenValues;
+    string metadataYear;
+    string metadataMonth;
+    string metadataDay;
+
 
 public:
     Model();
@@ -190,8 +192,8 @@ public:
     string getDateFormat();
 
     // void setRenamingEngineDateSetOriginalDateTaken(int instanceNumber, bool newValue) override;
-    void setMetadataOriginalTakenDateFromFilename() override;
-    void setMetadataOriginalTakenDateFromUserGivenYearMonthDay(string param_year, string param_month, string param_day) override;
+    void setMetadataOriginalTakenDateFromFilename(bool state) override;
+    void setMetadataOriginalTakenDateFromUserGivenYearMonthDay(bool state, string param_year, string param_month, string param_day) override;
 
 
 

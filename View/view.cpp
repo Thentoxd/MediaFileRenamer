@@ -286,8 +286,21 @@ void mediaFileRenamerMainView::create_window() {
     // Connect up the slots for the metadata renaming widgets
     // setMetadataOriginalCreateDateCheckBox
     // connect(this -> setMetadataOriginalCreateDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::setmetaDataCheckBoxToggled);
+
+    QDate todaysDate = QDate::currentDate();
+    QString yearQString = todaysDate.toString("yyyy");
+    QString monthQString = todaysDate.toString("MM");
+    QString dayQString = todaysDate.toString("dd");
+    metadataYearLineEdit -> setText(yearQString);
+    metadataMonthLineEdit -> setText(monthQString);
+    metadataDayLineEdit -> setText(dayQString);
+
     connect(this -> metadataParseFilenameForDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::metadataParseFilenameForDateCheckBoxToggled);
     connect(this -> useFixedDateCheckBox, &QCheckBox::checkStateChanged, this, &mediaFileRenamerMainView::metadataUseFixedDate);
+    connect(this -> metadataYearLineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::metadataYearLineEditChange);
+    connect(this -> metadataMonthLineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::metadataMonthLineEditChange);
+    connect(this -> metadataDayLineEdit, &QLineEdit::textChanged, this, &mediaFileRenamerMainView::metadataDayLineEditChange);
+
 
     this -> createChainWidgets();
 
@@ -915,23 +928,20 @@ void mediaFileRenamerMainView::seperatorBEntered() {
 void mediaFileRenamerMainView::metadataParseFilenameForDateCheckBoxToggled(bool state) {
     if (state == false) {
         SPDLOG_INFO("metadataParseFilenameForDateCheckBoxToggled to OFF");
-        // metadataParseFilenameForDateCheckBox -> setChecked(FALSE);
-        // useFixedDateCheckBox -> setEnabled(TRUE);
-        // useFixedDateCheckBox -> setChecked(TRUE);
-        // fixedYearLabel -> setEnabled(TRUE);
-        // fixedMonthLabel -> setEnabled(TRUE);
-        // fixedDayLabel -> setEnabled(TRUE);
-        // metadataYearlineEdit -> setEnabled(TRUE);
-        // metadataMonthLineEdit -> setEnabled(TRUE);
-        // metadataDayLineEdit -> setEnabled(TRUE);
-        // metadataParseFilenameForDateCheckBox -> setEnabled(FALSE);
-        // metadataParseFilenameForDateCheckBox -> setChecked(FALSE);
+        useFixedDateCheckBox -> setEnabled(true);
+        metadataYearLineEdit -> setEnabled(true);
+        metadataMonthLineEdit -> setEnabled(true);
+        metadataDayLineEdit -> setEnabled(true);
+        p_model -> setMetadataOriginalTakenDateFromFilename(state);
     }
     else {
         SPDLOG_INFO("metadataParseFilenameForDateCheckBoxToggled to ON");
-        // metadataParseFilenameForDateCheckBox -> setEnabled(TRUE);
-        // metadataParseFilenameForDateCheckBox -> setChecked(TRUE);
-        p_model -> setMetadataOriginalTakenDateFromFilename();
+        useFixedDateCheckBox -> setChecked(false);
+        useFixedDateCheckBox -> setEnabled(false);
+        metadataYearLineEdit -> setEnabled(false);
+        metadataMonthLineEdit -> setEnabled(false);
+        metadataDayLineEdit -> setEnabled(false);
+        p_model -> setMetadataOriginalTakenDateFromFilename(state);
     }
 
     onSelectedRowsChange();
@@ -944,15 +954,51 @@ void mediaFileRenamerMainView::metadataUseFixedDate(bool state) {
     }
     else {
         SPDLOG_INFO("mediaFileRenamerMainView::useFixedDate toggled to ON");
-        // metadataParseFilenameForDateCheckBox -> setEnabled(TRUE);
-        // metadataParseFilenameForDateCheckBox -> setChecked(TRUE);
-
-        // This is the call I want to make - not yet implemented
-        // p_model -> setMetadataOriginalTakenDateFromUserGivenYearMonthDay(param_year, param_month, param_day);
+        metadataParseFilenameForDateCheckBox -> setChecked(false);
+        QString yearEntered = metadataYearLineEdit -> text();
+        QString monthEntered = metadataMonthLineEdit -> text();
+        QString dayEntered = metadataDayLineEdit -> text();
+        string yearEnteredAsString = yearEntered.toStdString();
+        string monthEnteredAsString = monthEntered.toStdString();
+        string dayEnteredAsString = dayEntered.toStdString();
+        p_model -> setMetadataOriginalTakenDateFromUserGivenYearMonthDay(state, yearEnteredAsString, monthEnteredAsString, dayEnteredAsString);
     }
-
     onSelectedRowsChange();
 }
+
+
+void mediaFileRenamerMainView::metadataFetchDateAndCallInterface() {
+    QString yearEntered = metadataYearLineEdit -> text();
+    QString monthEntered = metadataMonthLineEdit -> text();
+    QString dayEntered = metadataDayLineEdit -> text();
+    string yearEnteredAsString = yearEntered.toStdString();
+    string monthEnteredAsString = monthEntered.toStdString();
+    string dayEnteredAsString = dayEntered.toStdString();
+    bool state = metadataParseFilenameForDateCheckBox -> checkState();
+    p_model -> setMetadataOriginalTakenDateFromUserGivenYearMonthDay(state, yearEnteredAsString, monthEnteredAsString, dayEnteredAsString);
+    onSelectedRowsChange();
+}
+
+
+void mediaFileRenamerMainView::metadataYearLineEditChange() {
+    SPDLOG_INFO("mediaFileRenamerMainView::metadataYearLineEditChange");
+    this -> metadataFetchDateAndCallInterface();
+}
+
+
+
+void mediaFileRenamerMainView::metadataMonthLineEditChange() {
+    SPDLOG_INFO("mediaFileRenamerMainView::metadataMonthlineEditChange");
+    this -> metadataFetchDateAndCallInterface();
+}
+
+
+
+void mediaFileRenamerMainView::metadataDayLineEditChange() {
+    SPDLOG_INFO("mediaFileRenamerMainView::metadataDaylineEditChange");
+    this -> metadataFetchDateAndCallInterface();
+}
+
 
 
 int mediaFileRenamerMainView::displayWindow() {

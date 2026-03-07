@@ -191,7 +191,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="metadataYearlineEdit">
+         <widget class="QLineEdit" name="metadataYearLineEdit">
           <property name="enabled">
            <bool>true</bool>
           </property>

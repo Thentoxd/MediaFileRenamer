@@ -54,8 +54,8 @@ public:
 
 
     // These are the new "set metadata" controls - these are hardcoded into the UI and not part of the renaming chain
-    virtual void setMetadataOriginalTakenDateFromFilename() = 0;;
-    virtual void setMetadataOriginalTakenDateFromUserGivenYearMonthDay(string param_year, string param_month, string param_day) = 0;;
+    virtual void setMetadataOriginalTakenDateFromFilename(bool state) = 0;;
+    virtual void setMetadataOriginalTakenDateFromUserGivenYearMonthDay(bool state, string param_year, string param_month, string param_day) = 0;;
 
 
     // This block defines the interfaces for the Date engines
