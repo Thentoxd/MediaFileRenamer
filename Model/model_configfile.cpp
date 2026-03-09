@@ -97,9 +97,42 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
 
     file_types_processed = json_data_from_file["filetypes_parsed"].get<std::vector<string>>();
     SPDLOG_INFO("Loaded filetypes_parsed from config file");
+    if (file_types_processed.empty()) {
+        file_types_processed.push_back("jpg");
+        file_types_processed.push_back("JPG");
+        file_types_processed.push_back("jpeg");
+        file_types_processed.push_back("png");
+        json_data_from_file["filetypes_parsed"] = file_types_processed;
+        this->saveConfigFile();
+    }
+
+    if (json_data_from_file["filetypes_can_only_edit_filename"] == nlohmann::detail::value_t::null) {
+        SPDLOG_INFO("filetypes_can_only_edit_filename is null in the config file!");
+        filetypes_can_only_edit_filename.push_back("mp4");
+        filetypes_can_only_edit_filename.push_back("CR2");
+        json_data_from_file["filetypes_can_only_edit_filename"] = filetypes_can_only_edit_filename;
+        this->saveConfigFile();
+    }
 
     filetypes_can_only_edit_filename = json_data_from_file["filetypes_can_only_edit_filename"].get<std::vector<string>>();
     SPDLOG_INFO("Loaded filetypes_can_only_edit_filename from config file");
+    if (filetypes_can_only_edit_filename.empty()) {
+        filetypes_can_only_edit_filename.push_back("mp4");
+        filetypes_can_only_edit_filename.push_back("CR2");
+        json_data_from_file["filetypes_can_only_edit_filename"] = filetypes_can_only_edit_filename;
+        this->saveConfigFile();
+    }
+
+    if (json_data_from_file["renaming_chain"] == nlohmann::detail::value_t::null) {
+        SPDLOG_INFO("renaming_chain is null in the config file!");
+        renaming_chain_parsed.push_back(DateEngine);
+        renaming_chain_parsed.push_back(SeperatorEngine);
+        renaming_chain_parsed.push_back(FilenameBodyEngine);
+        renaming_chain_parsed.push_back(SeperatorEngine);
+        renaming_chain_parsed.push_back(NumberingEngine);
+        json_data_from_file["renaming_chain"] = renaming_chain_parsed;
+        this->saveConfigFile();
+    }
 
     vector<EngineTypes> renaming_chain = json_data_from_file["renaming_chain"];
     SPDLOG_INFO("Loaded last renaming chain from config file");
