@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QGroupBox>
 
-#include "dateRename.h"
+#include "view.h"
 
 int dateRename::nextID = 0;
 

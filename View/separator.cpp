@@ -2,7 +2,7 @@
 // Created by Alex Nicklin on 03/03/2026.
 //
 
-#include "separator.h"
+#include "view.h"
 
 int separator::nextID = 0;
 

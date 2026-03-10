@@ -19,6 +19,6 @@ using namespace std;
 // SPDLOG_ERROR("This is a error level message {}", 1);
 // SPDLOG_CRITICAL("This is a critical level message");
 
-enum EngineTypes {DateEngine, SeperatorEngine, FilenameBodyEngine, NumberingEngine};
+enum EngineTypes {DateEngine, SeperatorEngine, FilenameBodyEngine, NumberingEngine, AddText, RemoveText, RegEx};
 
 #endif //MEDIAFILERENAMER_MAIN_H

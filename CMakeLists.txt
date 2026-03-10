@@ -73,13 +73,12 @@ add_executable(MediaFileRenamer main.cpp
         View/chain_editor.cpp
         Model/model_renaming_engine_seperator.h
         Model/model_renaming_engine_seperator.cpp
-        View/dateRename.h
         View/dateRename.cpp
-        View/separator.h
         View/separator.cpp
-        View/FilenameBodyRename.h
         View/FilenameBodyRename.cpp
         View/NumberingRename.cpp
+        View/removetext.cpp
+        View/regex.cpp
 )
 
 target_link_libraries(MediaFileRenamer

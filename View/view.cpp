@@ -16,10 +16,6 @@
 
 #include "chain_editor.h"
 #include "types.hpp"
-#include "dateRename.h"
-#include "separator.h"
-#include "FilenameBodyRename.h"
-#include "NumberingRename.h"
 
 #include "CLI/App.hpp"
 

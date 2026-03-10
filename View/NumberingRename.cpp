@@ -2,7 +2,8 @@
 // Created by Surface on 05/03/2026.
 //
 
-#include "NumberingRename.h"
+#include "view.h"
+
 #include <QSpinBox>
 
 int NumberingRename::nextID = 0;

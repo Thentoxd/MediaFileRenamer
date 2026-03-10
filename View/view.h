@@ -204,4 +204,28 @@ public:
     void updatePaddingValue(int newValue);
     void groupBoxToggled(bool state);
 };
+
+class AddTextRename: public QObject {
+protected:
+    static int nextID;
+private:
+    int id;
+    ModelInterface* p_model;
+    mediaFileRenamerMainView* p_mainView;
+    QGroupBox * p_addtextQGroupBox;
+    QSpinBox* p_position;
+public:
+    AddTextRename(ModelInterface* param_model, QGroupBox * param_QGroupBox, mediaFileRenamerMainView* param_mainView, QSpinBox* param_position);
+    ~AddTextRename();
+
+    void connectSlots();
+    void disconnectSlots();
+    int getID();
+
+    // Slots
+    void updateTextToAddValue(int newValue);
+    void updatePositionValue(int newValue);
+    void groupBoxToggled(bool state);
+};
+
 #endif //MEDIAFILERENAMER_VIEW_H

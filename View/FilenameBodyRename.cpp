@@ -2,7 +2,7 @@
 // Created by Alex Nicklin on 05/03/2026.
 //
 
-#include "FilenameBodyRename.h"
+#include "view.h"
 
 int FilenameBodyRename::nextID = 0;
 
