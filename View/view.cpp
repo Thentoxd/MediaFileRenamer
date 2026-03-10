@@ -242,6 +242,47 @@ void mediaFileRenamerMainView::createChainWidgets() {
                 break;
             }
 
+            case AddText: {
+                SPDLOG_INFO("Creating a AddText widget");
+                QGroupBox *addTextGroupBox = new QGroupBox(this);
+                addTextGroupBox -> setTitle("Add Text");
+                addTextGroupBox -> setCheckable(TRUE);
+                addTextGroupBox -> setChecked(TRUE);
+                addTextGroupBox->setMinimumWidth(200);
+
+                QLabel * p_addTextLabel = new QLabel("Add Text: ", this);
+
+                QLineEdit *addTextLineEdit = new QLineEdit(this);
+
+                QHBoxLayout * addTextHLayout = new QHBoxLayout();
+                addTextHLayout -> addWidget(p_addTextLabel);
+                addTextHLayout -> addWidget(addTextLineEdit);
+                addTextGroupBox -> setLayout(addTextHLayout);
+
+                QHBoxLayout * addTextPositionHLayout = new QHBoxLayout();
+
+                QLabel * p_addTextPositionLabel = new QLabel("Position: ", this);
+                QSpinBox * p_addTextPositionSpimBox = new QSpinBox(this);
+                p_addTextPositionSpimBox -> setValue(1);
+                addTextHLayout -> addWidget(p_addTextPositionLabel);
+                addTextHLayout -> addWidget(p_addTextPositionSpimBox);
+                addTextGroupBox -> setLayout(addTextPositionHLayout);
+
+                uiRenamingRootObjects.append(addTextGroupBox);
+                renamingChainHorizontalLayout -> addWidget(addTextGroupBox);
+
+                auto p_addText = new AddTextRename(p_model, addTextGroupBox, this, addTextLineEdit, p_addTextPositionSpimBox);
+                p_addText -> connectSlots();
+
+                // If the UI is changed, well need to disconnect the slots and delete this dateRename object
+                addTextVector.push_back(p_addText);
+
+                // If the UI is changed, we'll need to clean up all these dynamic widgets/layouts. Store on this list to do that.
+                qGroupBoxVector.push_back(addTextGroupBox);
+
+                break;
+            }
+
         }
     }
 
@@ -663,6 +704,13 @@ void mediaFileRenamerMainView::updateUIChain(vector<EngineTypes> param_newChain)
         delete eachNumberingRename;
     }
     numberingRenameVector.clear();
+
+
+    for (AddTextRename * eachAddTextRename : addTextVector) {
+        eachAddTextRename -> disconnectSlots();
+        delete eachAddTextRename;
+    }
+    addTextVector.clear();
 
     for (QGroupBox * eachQGroupBox : qGroupBoxVector) {
         delete eachQGroupBox;

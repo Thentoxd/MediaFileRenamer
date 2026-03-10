@@ -85,6 +85,13 @@ public:
     virtual void setEngineSeparatorState(int instanceNumber, bool state) = 0;
     virtual void setSeperator(int instanceNumber, string newValue) = 0;
 
+
+    // This block are for the AddText engine
+    virtual void setAddTextState(int instanceNumber, bool state) = 0;
+    virtual void setAddTextText(int instanceNumber, string newValue) = 0;
+    virtual void setAddTextPosition(int instanceNumber, int newValue) = 0;
+
+
     virtual void exitApplication() = 0;
 
     virtual void clearRenamingChain() = 0;

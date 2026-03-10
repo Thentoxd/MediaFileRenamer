@@ -133,6 +133,10 @@ public:
     void setSeperator(int instanceNumber, string newValue) override;
 
 
+    // This block is for calls for the AddText engines
+    void setAddTextState(int instanceNumber, bool state) override;;
+    void setAddTextText(int instanceNumber, string newValue) override;
+    void setAddTextPosition(int instanceNumber, int newValue) override;;
 
     void reload() override ;
     void clear() override ;

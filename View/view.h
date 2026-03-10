@@ -21,6 +21,7 @@ class dateRename;
 class separator;
 class FilenameBodyRename;
 class NumberingRename;
+class AddTextRename;
 
 class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer {
     QApplication * p_QApplication;
@@ -38,6 +39,7 @@ private:
     vector<separator *> seperatorRenameVector;
     vector<FilenameBodyRename *> filenameBodyRenameVector;
     vector<NumberingRename *> numberingRenameVector;
+    vector<AddTextRename *> addTextVector;
     vector<QGroupBox *> qGroupBoxVector;
 
     QSpacerItem *horizontalSpacer;
@@ -205,6 +207,7 @@ public:
     void groupBoxToggled(bool state);
 };
 
+
 class AddTextRename: public QObject {
 protected:
     static int nextID;
@@ -213,9 +216,12 @@ private:
     ModelInterface* p_model;
     mediaFileRenamerMainView* p_mainView;
     QGroupBox * p_addtextQGroupBox;
-    QSpinBox* p_position;
+    QLineEdit * p_addTextLineEdit;
+    QSpinBox* p_addTextPositionSpinBox;
+
 public:
-    AddTextRename(ModelInterface* param_model, QGroupBox * param_QGroupBox, mediaFileRenamerMainView* param_mainView, QSpinBox* param_position);
+    AddTextRename(ModelInterface* param_model, QGroupBox * param_addtextQGroupBox, mediaFileRenamerMainView* param_mainView, QLineEdit * param_addTextLineEdit, QSpinBox* param_addTextPositionSpimBox);
+
     ~AddTextRename();
 
     void connectSlots();
@@ -223,7 +229,7 @@ public:
     int getID();
 
     // Slots
-    void updateTextToAddValue(int newValue);
+    void updateTextToAdd();
     void updatePositionValue(int newValue);
     void groupBoxToggled(bool state);
 };

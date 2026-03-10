@@ -580,4 +580,26 @@ void Model::setSeperator(int instanceNumber, string newValue) {
 }
 
 
+//
+// This block handles all the AddText methods
+//
+
+void Model::setAddTextState(int instanceNumber, bool state) {
+    SPDLOG_INFO("Model::setAddTextState");
+    assert(0);
+}
+
+
+void Model::setAddTextText(int instanceNumber, string newValue) {
+    SPDLOG_INFO("Model::setAddTextText");
+    assert(0);
+}
+
+
+void Model::setAddTextPosition(int instanceNumber, int newValue) {
+    SPDLOG_INFO("Model::setAddTextPosition");
+    assert(0);
+}
+
+
 
