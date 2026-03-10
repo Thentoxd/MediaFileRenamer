@@ -53,6 +53,7 @@ void dateRename::setdateTryExtractButtonClicked(bool state) {
         p_dateYearLineEdit -> setEnabled(false);
         p_dateMonthLineEdit -> setEnabled(false);
         p_dateDayLineEdit -> setEnabled(false);
+        p_dateUseMetadataOriginalDateCheckBox -> setChecked(false);
         p_model -> setRenamingEngineDateTryExtractDate(id, state);
     }
     else {
@@ -113,6 +114,8 @@ void dateRename::setDay() {
 
 void dateRename::tryUseMetadata(bool state) {
     SPDLOG_INFO("dateRename::tryUseMetadata");
+    // p_dateTryExtractCheckBox -> setEnabled((false));
+    p_dateTryExtractCheckBox -> setChecked(false);
     p_model -> setRenamingEngineDateUseOriginalDateTaken(id, state);
     p_mainView -> onSelectedRowsChange();
 }
