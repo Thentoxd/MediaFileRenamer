@@ -79,6 +79,7 @@ add_executable(MediaFileRenamer main.cpp
         View/NumberingRename.cpp
         View/removetext.cpp
         View/regex.cpp
+        View/AddTextRename.cpp
 )
 
 target_link_libraries(MediaFileRenamer
