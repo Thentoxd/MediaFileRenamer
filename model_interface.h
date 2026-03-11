@@ -86,10 +86,16 @@ public:
     virtual void setSeperator(int instanceNumber, string newValue) = 0;
 
 
-    // This block are for the AddText engine
+    // This block is for the AddText engine
     virtual void setAddTextState(int instanceNumber, bool state) = 0;
     virtual void setAddTextText(int instanceNumber, string newValue) = 0;
     virtual void setAddTextPosition(int instanceNumber, int newValue) = 0;
+
+
+    // This block is for the RemoveText engine
+    virtual void setRemoveTextState(int instanceNumber, bool state) = 0;
+    virtual void setRemoveTextPositiom(int instanceNumber, int newValue) = 0;
+    virtual void setRemoveTextCount(int instanceNumber, int newValue) = 0;
 
 
     virtual void exitApplication() = 0;

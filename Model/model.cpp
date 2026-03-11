@@ -602,4 +602,23 @@ void Model::setAddTextPosition(int instanceNumber, int newValue) {
 }
 
 
+// This block is for the RemoveText engine
+void Model::setRemoveTextState(int instanceNumber, bool state) {
+    SPDLOG_INFO("Model::setRemoveTextState");
+    assert(0);
+}
+
+
+void Model::setRemoveTextPositiom(int instanceNumber, int newValue) {
+    SPDLOG_INFO("Model::setRemoveTextPositiom");
+    assert(0);
+}
+
+
+void Model::setRemoveTextCount(int instanceNumber, int newValue) {
+    SPDLOG_INFO("Model::setRemoveTextCount");
+    assert(0);
+}
+
+
 

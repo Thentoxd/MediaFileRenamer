@@ -134,9 +134,16 @@ public:
 
 
     // This block is for calls for the AddText engines
-    void setAddTextState(int instanceNumber, bool state) override;;
+    void setAddTextState(int instanceNumber, bool state) override;
     void setAddTextText(int instanceNumber, string newValue) override;
-    void setAddTextPosition(int instanceNumber, int newValue) override;;
+    void setAddTextPosition(int instanceNumber, int newValue) override;
+
+    // This block is for the RemoveText engine
+    void setRemoveTextState(int instanceNumber, bool state) override;
+    void setRemoveTextPositiom(int instanceNumber, int newValue) override;
+    void setRemoveTextCount(int instanceNumber, int newValue) override;
+
+
 
     void reload() override ;
     void clear() override ;
