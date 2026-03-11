@@ -250,23 +250,29 @@ void mediaFileRenamerMainView::createChainWidgets() {
                 addTextGroupBox -> setChecked(TRUE);
                 addTextGroupBox->setMinimumWidth(200);
 
+                QVBoxLayout * addTextVLayout = new QVBoxLayout();
+
                 QLabel * p_addTextLabel = new QLabel("Add Text: ", this);
 
-                QLineEdit *addTextLineEdit = new QLineEdit(this);
+                QLineEdit *addTextLineEdit = new QLineEdit("Add Text: ", this);
 
                 QHBoxLayout * addTextHLayout = new QHBoxLayout();
                 addTextHLayout -> addWidget(p_addTextLabel);
                 addTextHLayout -> addWidget(addTextLineEdit);
-                addTextGroupBox -> setLayout(addTextHLayout);
+
+                addTextVLayout -> addLayout(addTextHLayout);
 
                 QHBoxLayout * addTextPositionHLayout = new QHBoxLayout();
-
                 QLabel * p_addTextPositionLabel = new QLabel("Position: ", this);
                 QSpinBox * p_addTextPositionSpimBox = new QSpinBox(this);
                 p_addTextPositionSpimBox -> setValue(1);
-                addTextHLayout -> addWidget(p_addTextPositionLabel);
-                addTextHLayout -> addWidget(p_addTextPositionSpimBox);
-                addTextGroupBox -> setLayout(addTextPositionHLayout);
+                p_addTextPositionSpimBox->setMinimumWidth(50);
+                addTextPositionHLayout -> addWidget(p_addTextPositionLabel);
+                addTextPositionHLayout -> addWidget(p_addTextPositionSpimBox);
+
+                addTextVLayout -> addLayout(addTextPositionHLayout);
+
+                addTextGroupBox -> setLayout(addTextVLayout);
 
                 uiRenamingRootObjects.append(addTextGroupBox);
                 renamingChainHorizontalLayout -> addWidget(addTextGroupBox);
@@ -279,6 +285,56 @@ void mediaFileRenamerMainView::createChainWidgets() {
 
                 // If the UI is changed, we'll need to clean up all these dynamic widgets/layouts. Store on this list to do that.
                 qGroupBoxVector.push_back(addTextGroupBox);
+
+                break;
+            }
+
+
+            case RemoveText: {
+                SPDLOG_INFO("Creating a RemoveText widget");
+                QGroupBox *removeTextGroupBox = new QGroupBox(this);
+                removeTextGroupBox -> setTitle("Remove Text");
+                removeTextGroupBox -> setCheckable(TRUE);
+                removeTextGroupBox -> setChecked(TRUE);
+                removeTextGroupBox->setMinimumWidth(200);
+
+                QVBoxLayout * removeTextVLayout = new QVBoxLayout();
+
+                QLabel * p_removeTextLabel = new QLabel("Remove Text start positions: ", this);
+
+                QSpinBox * p_removeTextPositionSpimBox = new QSpinBox(this);
+                p_removeTextPositionSpimBox -> setValue(1);
+                p_removeTextPositionSpimBox->setMinimumWidth(50);
+
+                QHBoxLayout * addTextHLayout = new QHBoxLayout();
+                addTextHLayout -> addWidget(p_removeTextLabel);
+                addTextHLayout -> addWidget(p_removeTextPositionSpimBox);
+
+                removeTextVLayout -> addLayout(addTextHLayout);
+
+                QHBoxLayout * removeTextCountHLayout = new QHBoxLayout();
+                QLabel * p_removeTextPositionLabel = new QLabel("Width to remove: ", this);
+                QSpinBox * p_removeTextCountSpimBox = new QSpinBox(this);
+                p_removeTextCountSpimBox -> setValue(1);
+                p_removeTextCountSpimBox->setMinimumWidth(50);
+                removeTextCountHLayout -> addWidget(p_removeTextPositionLabel);
+                removeTextCountHLayout -> addWidget(p_removeTextCountSpimBox);
+
+                removeTextVLayout -> addLayout(removeTextCountHLayout);
+
+                removeTextGroupBox -> setLayout(removeTextVLayout);
+
+                uiRenamingRootObjects.append(removeTextGroupBox);
+                renamingChainHorizontalLayout -> addWidget(removeTextGroupBox);
+
+                auto p_removeText = new RemoveTextRename(p_model, removeTextGroupBox, this, p_removeTextPositionSpimBox, p_removeTextCountSpimBox);
+                p_removeText -> connectSlots();
+
+                // If the UI is changed, well need to disconnect the slots and delete this dateRename object
+                removeTextVector.push_back(p_removeText);
+
+                // If the UI is changed, we'll need to clean up all these dynamic widgets/layouts. Store on this list to do that.
+                qGroupBoxVector.push_back(removeTextGroupBox);
 
                 break;
             }

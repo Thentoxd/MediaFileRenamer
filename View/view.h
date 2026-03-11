@@ -22,6 +22,7 @@ class separator;
 class FilenameBodyRename;
 class NumberingRename;
 class AddTextRename;
+class RemoveTextRename;
 
 class mediaFileRenamerMainView: public QMainWindow, public Ui::MediaFileRenamer {
     QApplication * p_QApplication;
@@ -40,6 +41,8 @@ private:
     vector<FilenameBodyRename *> filenameBodyRenameVector;
     vector<NumberingRename *> numberingRenameVector;
     vector<AddTextRename *> addTextVector;
+    vector<RemoveTextRename *> removeTextVector;
+
     vector<QGroupBox *> qGroupBoxVector;
 
     QSpacerItem *horizontalSpacer;
