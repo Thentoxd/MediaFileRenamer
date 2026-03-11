@@ -234,4 +234,32 @@ public:
     void groupBoxToggled(bool state);
 };
 
+
+class RemoveTextRename: public QObject {
+protected:
+    static int nextID;
+private:
+    int id;
+    ModelInterface* p_model;
+    mediaFileRenamerMainView* p_mainView;
+    QGroupBox * p_removeTextQGroupBox;
+    QSpinBox* p_removeTextPositionSpinBox;
+    QSpinBox* p_removeTextCountSpimBox;
+
+public:
+    RemoveTextRename(ModelInterface* param_model, QGroupBox * param_removeTextQGroupBox, mediaFileRenamerMainView* param_mainView, QSpinBox* param_addTextPositionSpimBox, QSpinBox* param_removeTextCountSpimBox);
+
+    ~RemoveTextRename();
+
+    void connectSlots();
+    void disconnectSlots();
+    int getID();
+
+    // Slots
+    void groupBoxToggled(bool state);
+    void updateTextToRemoveCount(int newValue);
+    void updatePositionValue(int newValue);
+
+};
+
 #endif //MEDIAFILERENAMER_VIEW_H

@@ -80,6 +80,7 @@ add_executable(MediaFileRenamer main.cpp
         View/removetext.cpp
         View/regex.cpp
         View/AddTextRename.cpp
+        View/removeTextRename.cpp
 )
 
 target_link_libraries(MediaFileRenamer

@@ -33,7 +33,6 @@ int AddTextRename::getID() {
 void AddTextRename::updateTextToAdd() {
     QString addTextEnteredQstring = p_addTextLineEdit -> text();
     string addTextEntered = addTextEnteredQstring.toStdString();
-
     SPDLOG_DEBUG("AddTextRename::updateTextToAdd: {}", addTextEntered);
     p_model -> setAddTextText(id, addTextEntered);
     p_mainView -> onSelectedRowsChange();
