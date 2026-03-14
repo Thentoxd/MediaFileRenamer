@@ -149,7 +149,7 @@ pair<string, string> ModelRenamingEngineDate::execute(pair<string, string> input
     //         newDateTakenOriginal = year + ":" + month + ":" + day + " 12:00:00";
     //     }
     // }
-
+    return_string = input_parameter.first + return_string;
     return make_pair(return_string, newDateTakenOriginal);
 }
 

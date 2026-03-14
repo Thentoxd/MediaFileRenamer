@@ -50,14 +50,8 @@ pair<string, string> ModelRemamingQueue::executeQueue(const pair<string, string>
         if(each_engine->isActive()) {
             pair<string, string> return_pair = each_engine -> execute(input_parameter);
 
-            // unfortunately - this will work for everything BUT an add text engine
-            if (return_pair.first != input_parameter.first) {
-                renamed_filename += return_pair.first;
-            }
-
-            if (return_pair.second != input_parameter.second) {
-                renamed_datecreated += return_pair.second;
-            }
+            renamed_filename = return_pair.first;
+            renamed_datecreated = return_pair.second;
         }
     }
 

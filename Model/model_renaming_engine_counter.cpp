@@ -42,11 +42,10 @@ pair<string, string> ModelRenamingEngineCounter::execute(pair<string, string> in
         counterString.insert(0, paddingSize, '0');
     }
 
-    return_value.first = counterString;
+    return_value.first = input_parameter.first + counterString;
     return_value.second = input_parameter.second;
 
     counter++;
-
     return return_value;
 }
 

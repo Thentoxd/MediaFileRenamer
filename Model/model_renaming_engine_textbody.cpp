@@ -33,7 +33,7 @@ pair<string, string> ModelRenamingEngineTextBody::execute(pair<string, string> i
 
     pair<string, string> return_value;
 
-    return_value.first = textbody;
+    return_value.first = input_parameter.first + textbody;
     return_value.second = input_parameter.second;
 
     return return_value;

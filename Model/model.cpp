@@ -302,13 +302,18 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
         string currentFilename = entry->getCurrentFileName();
         string currentFileExtension = currentFilename.substr(currentFilename.find("."));
 
-        pair<string, string> returnPair = p_ModelRemamingQueue->executeQueue(make_pair(entry->getCurrentFileName(), entry->getCurrentDateTakenOriginal()));
+        size_t dot_positon = currentFilename.find(".");
 
-        SPDLOG_INFO("RETURNED VALUE: {}", returnPair.first);
+        // If there is a dot
+        if (dot_positon != string::npos) {
+            currentFilename = currentFilename.substr(0, dot_positon);
+        }
+
+        pair<string, string> returnPair = p_ModelRemamingQueue->executeQueue(make_pair(currentFilename, entry->getCurrentDateTakenOriginal()));
 
         returnPair.first += currentFileExtension;
 
-
+        SPDLOG_INFO("RETURNED VALUE: {}", returnPair.first);
 
         if(commitChanges) {
             SPDLOG_INFO("Renaming file {} to {}", getCurrentWorkingDirectory() + "/" + currentFilename, getCurrentWorkingDirectory() + "/" + returnPair.first);
@@ -357,6 +362,7 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
             string exif_date = year + ":" + month + ":" + day + " 12:00:00";
             SPDLOG_INFO("Extracted EXIF date {}", exif_date);
 
+
             // If currentFileExtension is not in the list of filetypes we can only edit the filenames, try to edit the metadata
             bool file_type_we_can_only_edit_filename = false;
             vector<std::string> file_types_filename_only = p_ModelConfigfile -> getFileTypesFilenameOnlyProcessed();
@@ -392,6 +398,39 @@ vector<pair<string, string>> Model::executeRenamingChain(vector<int> rows, bool 
 
         if (setMetadataCreateDateOriginalFromGivenValues) {
             SPDLOG_INFO("Setting Metadata Original Create Date to the values given");
+            string exif_date = metadataYear + ":" + metadataMonth + ":" + metadataDay + " 12:00:00";
+            SPDLOG_INFO("Give EXIF date {}", exif_date);
+            // If currentFileExtension is not in the list of filetypes we can only edit the filenames, try to edit the metadata
+            bool file_type_we_can_only_edit_filename = false;
+            vector<std::string> file_types_filename_only = p_ModelConfigfile -> getFileTypesFilenameOnlyProcessed();
+            for(const string& each_file_type : file_types_filename_only)
+                if (currentFileExtension == each_file_type) {
+                    file_type_we_can_only_edit_filename = true;
+                }
+
+            if ((!file_type_we_can_only_edit_filename) && (commitChanges == true)) {
+                try {
+                    // int year = 0, month = 0, day = 0;
+                    //
+                    string fullFilePath = getCurrentWorkingDirectory() + "/" + currentFilename;
+                    // string newDate = format("{:04d}:{:02d}:{:02d}", year, month, day);
+                    //
+                    Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(fullFilePath);
+                    Exiv2::ExifData &exifData = image->exifData();
+                    //
+                    // exifData["Exif.Photo.DateTimeOriginal"] = newDate;
+
+                    // exifData["Exif.Photo.DateTimeOriginal"] = returnPair.second;
+                    exifData["Exif.Photo.DateTimeOriginal"] = exif_date;
+
+                    image->writeMetadata();
+
+                    SPDLOG_INFO("Renamed {}'s date time original to {}", currentFilename, exif_date);
+                } catch(Exiv2::Error& e) {
+                    SPDLOG_ERROR("Couldn't rename {}'s EXIF Current Date Taken Original");
+                }
+            }
+            returnPair.second = exif_date;
         }
 
         returnPairList.push_back(returnPair);
