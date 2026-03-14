@@ -14,6 +14,7 @@
 // In the basic modes, we have a few fixed chains. The user can customise the individual engines, but not the sequence or seperator.
 // In a later advanced mode, the end user can custom create a chain
 
+#include "model_renaming_engine_add_text.h"
 #include "model_renaming_engine_date.h"
 #include "model_renaming_engine_counter.h"
 #include "model_renaming_engine_textbody.h"
@@ -37,6 +38,7 @@ public:
     ModelRenamingEngineTextBody * getNthTextbodyEngine(int instanceNumber);
     ModelRenamingEngineSeperator * getNthSeperatorEngine(int instanceNumber);
     ModelRenamingEngineCounter * getNthCounterEngine(int instanceNumber);
+    ModelRenamingEngineAddText * getNthAddTextEngine(int instanceNumber);
 
     pair<string, string> executeQueue(const pair<string, string>& input_parameter);
 

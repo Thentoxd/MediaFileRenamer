@@ -36,6 +36,7 @@ void ModelConfigfile::loadConfigFile(const string config_file_name_param) {
 
         renaming_chain_parsed.push_back(DateEngine);
         renaming_chain_parsed.push_back(SeperatorEngine);
+        renaming_chain_parsed.push_back(AddText);
         renaming_chain_parsed.push_back(FilenameBodyEngine);
         renaming_chain_parsed.push_back(SeperatorEngine);
         renaming_chain_parsed.push_back(NumberingEngine);

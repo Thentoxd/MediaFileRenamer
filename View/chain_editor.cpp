@@ -37,6 +37,7 @@ void chain_editor::onOkClick() {
             parsed_renaming_engine.push_back(NumberingEngine);
         }
     }
+
     p_mediaFileRenamerMainView -> updateUIChain(parsed_renaming_engine);
     close();
 }

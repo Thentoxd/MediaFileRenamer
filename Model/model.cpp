@@ -42,9 +42,6 @@ void Model::resetRenamingChain() {
 
 
 void Model::initialise() {
-
-
-
     // In the first version of this program we hardcoded the sequence of renaming components
     // We now allow dynamic chains, so first read the last chain from the config file and
     // create the renaming queue
@@ -85,6 +82,13 @@ void Model::initialise() {
                 SPDLOG_INFO("Appending a numbering renaming engine to the renaming queue");
                 auto * p_newRenamingNumbering = new ModelRenamingEngineCounter();
                 p_ModelRemamingQueue -> appendEngine(p_newRenamingNumbering);
+                break;
+            }
+
+            case EngineTypes::AddText: {
+                SPDLOG_INFO("Appending a numbering renaming engine to the renaming queue");
+                auto * p_newAddText = new ModelRenamingEngineAddText();
+                p_ModelRemamingQueue -> appendEngine(p_newAddText);
                 break;
             }
         }
@@ -585,20 +589,26 @@ void Model::setSeperator(int instanceNumber, string newValue) {
 //
 
 void Model::setAddTextState(int instanceNumber, bool state) {
-    SPDLOG_INFO("Model::setAddTextState");
-    assert(0);
+    SPDLOG_INFO("Model::setAddTextState: {}", instanceNumber);
+    ModelRenamingEngineAddText * p_ModelRenamingEngineAddText = p_ModelRemamingQueue -> getNthAddTextEngine(instanceNumber);
+    assert(p_ModelRenamingEngineAddText != nullptr);
+    p_ModelRenamingEngineAddText -> setActive(state);
 }
 
 
 void Model::setAddTextText(int instanceNumber, string newValue) {
     SPDLOG_INFO("Model::setAddTextText");
-    assert(0);
+    ModelRenamingEngineAddText * p_ModelRenamingEngineAddText = p_ModelRemamingQueue -> getNthAddTextEngine(instanceNumber);
+    assert(p_ModelRenamingEngineAddText != nullptr);
+    p_ModelRenamingEngineAddText -> setTextToAdd(newValue);
 }
 
 
 void Model::setAddTextPosition(int instanceNumber, int newValue) {
     SPDLOG_INFO("Model::setAddTextPosition");
-    assert(0);
+    ModelRenamingEngineAddText * p_ModelRenamingEngineAddText = p_ModelRemamingQueue -> getNthAddTextEngine(instanceNumber);
+    assert(p_ModelRenamingEngineAddText != nullptr);
+    p_ModelRenamingEngineAddText -> setStartingPosition(newValue);
 }
 
 

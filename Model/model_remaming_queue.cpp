@@ -150,6 +150,20 @@ ModelRenamingEngineDate * ModelRemamingQueue::getNthDateEngine(int instanceNumbe
     return(nullptr);
 }
 
+ModelRenamingEngineAddText* ModelRemamingQueue::getNthAddTextEngine(int instanceNumber) {
+    SPDLOG_INFO("ModelRemamingQueue::getNthAddTextEngine");
+    // Work down the renaming_engine vector. Find the nth (instance number) of type ModelRenamingEngineAddText *
+    int count = 1;
+    for (auto each_engine : renaming_engine) {
+        if (typeid(*each_engine) == typeid(ModelRenamingEngineAddText)) {
+            if (count == instanceNumber) {
+                return(dynamic_cast<ModelRenamingEngineAddText*>(each_engine));
+            }
+            count++;
+        }
+    }
+    return(nullptr);
+}
 
 void ModelRemamingQueue::emptyQueue() {
     SPDLOG_INFO("ModelRemamingQueue::emptyQueue");
