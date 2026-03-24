@@ -9,7 +9,7 @@
 
 class ModelRenamingEngineAddText : public ModelRenamingEngine {
 private:
-    int startingPosition;
+    int startingPosition = 1;
     string textToAdd = "";
 
 public:

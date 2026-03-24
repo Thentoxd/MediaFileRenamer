@@ -17,8 +17,6 @@ using namespace std;
 class ModelRenamingEngineDate : public ModelRenamingEngine {
 
 private:
-    bool tryToExtractDateFromInputFilename = false;
-
     string inputFilename = "";
     string inputDateCreatedOriginal = ""; // Format is a string: "YYYY:MM:DD HH:MM:SS" with the time shown in 24-hour format
 

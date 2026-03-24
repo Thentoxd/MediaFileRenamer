@@ -254,7 +254,7 @@ void mediaFileRenamerMainView::createChainWidgets() {
 
                 QLabel * p_addTextLabel = new QLabel("Add Text: ", this);
 
-                QLineEdit *addTextLineEdit = new QLineEdit("Add Text: ", this);
+                QLineEdit *addTextLineEdit = new QLineEdit( this);
 
                 QHBoxLayout * addTextHLayout = new QHBoxLayout();
                 addTextHLayout -> addWidget(p_addTextLabel);

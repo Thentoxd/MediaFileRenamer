@@ -81,6 +81,7 @@ add_executable(MediaFileRenamer main.cpp
         View/regex.cpp
         View/AddTextRename.cpp
         View/removeTextRename.cpp
+        Model/model_renaming_engine_add_text.cpp
 )
 
 target_link_libraries(MediaFileRenamer

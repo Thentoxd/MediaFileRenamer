@@ -32,7 +32,9 @@ pair<string, string> ModelRenamingEngineAddText::execute(pair<string, string> in
     SPDLOG_DEBUG("ModelRenamingEngineAddText::execute");
     pair<string, string> return_value;
 
-    return_value.first = input_parameter.first + textToAdd;
+    // return_value.first = input_parameter.first + textToAdd;
+    return_value.first = input_parameter.first. insert(startingPosition-1, textToAdd);
+
     return_value.second = input_parameter.second;
 
     return return_value;
